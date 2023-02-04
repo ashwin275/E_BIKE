@@ -1,0 +1,59 @@
+{% extends 'vendor_temp\panel.html' %}
+
+
+    {% block content %}
+    
+
+
+    <div class="col-12">
+        <div class=" rounded h-100 p-4">
+            <h2 class="mb-4">ORDER DETAIL </h2>
+            
+            <hr><hr>
+            <div class="table-responsive">
+             
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ORDER NO</th>
+                            <th scope="col">DATE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">ADDRESS</th>
+                    
+                            <th scope="col"></th>
+
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        <tr>
+                            <th scope="row">{{order.order.order_number}}</th>
+                            <td>{{order.order.created_at}}</td>
+                            <td>{{order.status}}</td>
+                            <td>{{order.order.address.first_name}}{{order.order.address.last_name}} <br> {{order.order.address.email}} ,<br>{{order.order.address.mobile}}, <br>{{order.order.address.addressline1}},{{order.order.address.addressline2}} <br>{{order.order.address.city}},{{order.order.address.state}} <br>{{order.order.address.country}}</td>
+                            <td></td>
+                            <td></td>
+                            
+                            
+                            
+                            
+                        </tr>
+                   
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+           
+          
+        
+      </div>
+
+
+
+
+
+    {% endblock  %}

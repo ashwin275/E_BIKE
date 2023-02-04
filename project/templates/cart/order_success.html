@@ -1,0 +1,122 @@
+{% extends 'user_temp\home.html' %}
+
+
+{% block content %} 
+
+
+<div class="card">
+    <div class="card-body">
+      <div class="container mb-5 mt-3">
+        <div class="row d-flex align-items-baseline">
+          <div class="col-xl-9">
+            <p style="color: #7e8d9f;font-size: 20px;">Invoice  <strong></strong></p>
+          </div>
+          <!-- <div class="col-xl-3 float-end">
+            <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
+                class="fas fa-print text-primary"></i> Print</a>
+            <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
+                class="far fa-file-pdf text-danger"></i> Export</a>
+          </div> -->
+          <hr>
+        </div>
+  
+        <div class="container">
+          <div class="col-md-12">
+            <div class="text-center">
+             
+           <h2>ORDER SUCCESS</h2>
+            </div>
+  
+          </div>
+  
+  
+          <div class="row">
+            <div class="col-xl-8">
+              <ul class="list-unstyled">
+                <li class="text-muted">To: <span style="color:#5d9fc5 ;">{{address.first_name}}{{address.last_name}}</span></li>
+                <li class="text-muted">{{address.address1}},{{address.addressline2}}</li>
+                <li class="text-muted">{{address.city}},{{address.state}}</li>
+                <li class="text-muted"><i class="fas fa-phone"></i> {{address.mobile}}</li>
+              </ul>
+            </div>
+            <div class="col-xl-4">
+              <p class="text-muted">Invoice</p>
+              <ul class="list-unstyled">
+                <li class="text-muted"> <span
+                   
+                    class="fw-bold">ID :</span>{{get_order.order_number}}</li>
+                   
+                <li class="text-muted"> <span
+                    class="fw-bold"> Date: </span>{{get_order.created_at}}</li>
+                <!-- <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                    class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
+                    Unpaid</span></li> -->
+              </ul>
+            </div>
+          </div>
+  
+          <div class="row my-2 mx-1 justify-content-center">
+            <table class="table-responsive">
+              <thead style="background-color:#84B0CA ;" class="text-white">
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Vehicle</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Qty</th>
+                  <th scope="col">Sub Total</th>
+                
+                </tr>
+              </thead>
+              <tbody>
+                     {% for items in ordered_item %} 
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{items.vehicles.vehicle_name}}</td>
+                  <td><img src="{{items.vehicles.image.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                  <td>{{items.quantity}}</td>
+                  <td>{{items.sub_total}}</td>
+                  
+                  <td></td>
+                </tr>
+                {% endfor %} 
+               
+              </tbody>
+              <hr>
+            </table>
+          </div>
+          <div class="row">
+            <div class="col-xl-8">
+              <p class="ms-3"></p>
+  
+            </div>
+            <div class="col-xl-3">
+              <ul class="list-unstyled">
+                <li class="text-muted ms-3"><span class="text-black me-4">Total</span>{{total}}</li>
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax</span>{{tax}}</li>
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Total Amount</span>{{grand_total}}</li>
+                <hr>
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Booking Amount</span>{{booking_price}}</li>
+              </ul>
+              <p class="text-black float-start"><span class="text-black me-3">Balance</span><span
+                  style="font-size: 25px;">{{balance}}</span></p>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xl-10">
+              <p>Thank you for your purchase</p>
+            </div>
+            <!-- <div class="col-xl-2">
+              <button type="button" class="btn btn-primary text-capitalize"
+                style="background-color:#60bdf3 ;">Pay Now</button>
+            </div> -->
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock  %}

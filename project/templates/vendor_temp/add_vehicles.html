@@ -1,0 +1,64 @@
+{% extends 'vendor_temp\panel.html' %}
+    
+    {% block content %} 
+    {% load crispy_forms_tags %} 
+    
+                <div class="d-table-cell align-middle">
+
+                    <div class="text-center mt-4">
+                        <h1 class="h2">ADD VEHICLES </h1>
+                        <p class="lead">
+                             <!-- User : <span class="sp">{{upd.username}}</span> -->
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="m-sm-4">
+                                    
+                                <form    method="POST" action="addvehicle" enctype="multipart/form-data" >
+                                  {% csrf_token  %}
+                                  {{ form.as_p }}
+                                    <!-- <div class="form-group">
+                                        <label></label>
+                                        <input class="form-control form-control-lg" type="text" name="vehicle_name" placeholder="vehicle name">
+                                    </div>
+                                   
+                                    <div class="form-group mt-4">
+                                        <label></label>
+                                        <input class="form-control form-control-lg" type="text" name="category" placeholder="category">
+                                    </div>
+                                    <div class="form-group mt-4">
+                                        <label></label>
+                                        <input class="form-control form-control-lg" type="text" name="range"placeholder="Range"  >
+                                    </div>
+                                    <div class="form-group mt-4">
+                                        <label></label>
+                                        <input class="form-control form-control-lg" type="text" name="speed"placeholder="speed"  >
+                                    </div>
+                                    <div class="form-group mt-4">
+                                        <label></label>
+                                        <input class="form-control form-control-lg" type="text" name="slug"placeholder="slug"  >
+                                    </div>
+                                    
+                                    <div class="form-group mt-4">
+                                        <label></label>
+                                        <input class="form-control form-control-lg" type="file" name="image" placeholder="image" >
+                                    </div> -->
+                                     <div class="text-center mt-3">
+                                      <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-share-alt"></span>
+                                        ADD
+                                      </button>
+                                    </div> 
+
+
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+           
+    {% endblock  %}

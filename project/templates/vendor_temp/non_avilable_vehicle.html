@@ -1,0 +1,70 @@
+{% extends 'vendor_temp\panel.html' %}
+
+
+    {% block content %} 
+    
+    
+    <div class="col-12">
+        <div class=" rounded h-100 p-4">
+            <h2 class="mb-4">VEHICLES </h2>
+            
+            <hr><hr>
+            <div class="table-responsive">
+             
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO</th>
+                            <th scope="col">Vehicle</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">SLUG</th>
+                    
+                            <th scope="col">Avaliable</th>
+
+                            <th scope="col">IMAGE</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for items in vehicle %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{items.vehicle_name}}</td>
+                            <td>{{items.category}}</td>
+                            <td>{{items.slug}}</td>
+                            <td>{{items.is_available}}</td>
+                            
+                            
+                            
+                            
+                    <td><img src="{{items.image.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                    <td><a href="{% url 'vendor:edit_vehicle' items.id %}"><button   class="un del btn btn-outline-success">EDIT</button></a> </td>
+                   
+                    <td> <a href="{% url 'vendor:delete_vehicle' items.id %}"> <button type="button" class="btn btn-outline-danger btn-sm me-2">DELETE</button></a></td>
+                       
+                    
+                         {%if items.is_available == False%}
+                            <td><a href="activevehicle/{{items.pk}}"><button class="un btn btn-outline-success">ACTIVE</button></a></td>
+                             {%else%}
+                               <td>  <a href="deactivevehicle/{{items.pk}}"><button class="del btn btn-outline-danger">DE_ACTIVE</button></a></td>
+                              
+                               {%endif%}
+                                 <!-- <td><a href="addvariant/{{items.pk}}"><button   class="del">ADD VARIENT</button></a></td> -->
+                    
+                            <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+           
+          
+        
+      </div>
+    
+    
+    
+    
+    {% endblock  %}

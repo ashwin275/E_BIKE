@@ -1,0 +1,116 @@
+
+                            <!DOCTYPE html>
+                            <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>body{
+                                    margin-top:20px;
+                                    background-color: #f2f3f8;
+                                }
+                                .card {
+                                    margin-bottom: 1.5rem;
+                                    box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+                                }
+                                
+                                .card {
+                                    position: relative;
+                                    display: -ms-flexbox;
+                                    display: flex;
+                                    -ms-flex-direction: column;
+                                    flex-direction: column;
+                                    min-width: 0;
+                                    word-wrap: break-word;
+                                    background-color: #fff;
+                                    background-clip: border-box;
+                                    border: 1px solid #e5e9f2;
+                                    border-radius: .2rem;
+                                }
+                                .sp{
+                                  font-weight: 400;
+                                }
+                                
+                                </style>
+                            
+                            
+                                <title>Document</title>
+                            </head>
+                            <body>
+                                
+                            
+                                <div class="container h-100">
+                                    <div class="row h-100">
+                                        <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+                                            <div class="d-table-cell align-middle">
+                            
+                                                <div class="text-center mt-4">
+                                                    <h1 class="h2">UPDATE VEHICLES </h1>
+                                                    <p class="lead">
+                                                         <!-- User : <span class="sp">{{upd.username}}</span> -->
+                                                    </p>
+                                                </div>
+                            
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="m-sm-4">
+                                                                
+                                                            <form    method="POST" action="" enctype="multipart/form-data" >
+                                                              {% csrf_token  %}
+                                                              {{ form.as_p }}
+                                                                <div class="form-group">
+                                                                    
+                                                                    <input class="form-control form-control-lg" type="text" name="vehicle_name" placeholder="vehicle_name"value='{{vehicle.vehicle_name}}'>
+                                                                </div>
+                                                               
+                                                                <div class="form-group mt-4">
+                                                                    <label></label>
+                                                                    <input class="form-control form-control-lg" type="text" name="category" placeholder="category" value="{{vehicle.category}}">
+                                                                </div>
+                                                                <div class="form-group mt-4">
+                                                                    <label>Range</label>
+                                                                    <input class="form-control form-control-lg" type="text" name="range"placeholder="" value="{{vehicle.range}}" >
+                                                                </div>
+                                                                <div class="form-group mt-4">
+                                                                    <label>speed</label>
+                                                                    <input class="form-control form-control-lg" type="text" name="speed"placeholder="" value="{{vehicle.top_speed}}" >
+                                                                </div>
+                                                                <div class="form-group mt-4">
+                                                                    <label>slug</label>
+                                                                    <input class="form-control form-control-lg" type="text" name="slug"placeholder="" value="{{vehicle.slug}}" >
+                                                                </div>
+                                                                
+                                                                <div class="form-group mt-4">
+                                                                    <label></label>
+                                                                    <input class="form-control form-control-lg" type="file" name="image" placeholder="image" >
+                                                                </div>
+                                                                 <div class="text-center mt-3">
+                                                                  <button type="submit" class="btn btn-primary">
+                                                                    <span class="glyphicon glyphicon-share-alt"></span>
+                                                                    UPDATE
+                                                                  </button>
+                                                                </div> 
+                            
+                            
+                                                                
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </body>
+                            </html>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

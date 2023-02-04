@@ -1,0 +1,70 @@
+{% extends 'admin_temp\admin_panel.html' %}
+
+
+    {% block content %} 
+
+    
+
+        
+    <div class="col-12">
+      <div class="bg-secondary rounded h-100 p-4">
+          <h1 class="mb-4">CATEGORY MANAGEMENT </h1>
+          
+          <hr><hr>
+          <div class="table-responsive">
+            <td><a href="addcategory"><button>ADD CATEGORY</button></a> </td><br><br>
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th scope="col">NO</th>
+                          <th scope="col">CATEGORY</th>
+                          <th scope="col">DESCRIPTIONS</th>
+                          <th scope="col">SLUG</th>
+                          <th scope="col">IMAGE</th>
+                          <th scope="col"></th>
+                          <th scope="col"></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for items in category %}
+                      <tr>
+                          <th scope="row">{{forloop.counter}}</th>
+                          <td>{{items.category_name}}</td>
+                          <td>{{items.description}}</td>
+                          <td>{{items.slug}}</td>
+                          <td><img src="{{items.image.url}}" class="img-fluid rounded-start" style="height: 150px; width: 150px;"  alt="..."></td>
+                          <td><a href="deletecategory/{{items.pk}}"><button  class="del">DELETE</button></a> </td>
+                          <td><a href="editcategory/{{items.pk}}"><button>EDIT</button></a> </td>
+                          <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+         
+        
+      
+    </div>
+    {% endblock  %}
+
+
+
+
+
+
+    <div class="card mb-3 pt-5 bg-dark text-white card border-warning" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{items.image.url}}" class="img-fluid rounded-start" style="height: 150px; width: 200px;"  alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{items.category_name}}</h5>
+            <p class="card-text">{{items.description}}</p>
+            <p class="card-text"><small class="text-muted">{{items.description}}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>

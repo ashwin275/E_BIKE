@@ -1,0 +1,78 @@
+{% extends 'user_temp\home.html' %}
+
+
+{% block content %} 
+
+
+<div class="container h-100 w-100">
+  <div class="row h-100 w-100">
+      <div class="col-12 mx-auto d-table h-100 w-50">
+          <div class="d-table-cell align-middle">
+
+              <div class="text-center mt-4">
+                  <h1 class="h2" style="color: rgb(5, 5, 6);"> USER REGISTER </h1>
+                  <p class="lead">
+                        <span class="sp"></span>
+                  </p>
+              </div>
+
+              <div class="card">
+                  <div class="card-body">
+                      <div class="m-sm-4">
+
+                          <div style="color: red;">
+                  
+                              {% for messag in messages %}
+                                  <h6>{{messag}}</h6>
+                              {%endfor%}
+                            </div>
+                              
+                          <form style="width: 5;"    method="POST" action="" role="form">
+                            {% csrf_token  %}
+
+                            <div class="form-group">
+                                <label> </label>
+                                <input class="form-control form-control-lg" type="text" name="first_name" placeholder="First_name">
+                            </div><div class="form-group">
+                                <label> </label>
+                                <input class="form-control form-control-lg" type="text" name="last_name" placeholder="last_name">
+                            </div><div class="form-group">
+                                <label> </label>
+                                <input class="form-control form-control-lg" type="text" name="mobile" placeholder="Mobile">
+                            </div>
+
+
+
+                              <div class="form-group">
+                                  <label> </label>
+                                  <input class="form-control form-control-lg" type="text" name="email" placeholder="email">
+                              </div>
+                              <div class="form-group">
+                                  <label> </label>
+                                  <input class="form-control form-control-lg" type="password" name="password" placeholder="password">
+                              </div>
+                             
+
+
+
+
+                              <div class="text-center mt-3">
+                                  <button type="submit" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-share-alt"></span>
+                                    submit
+                                  </button>
+                                
+                                </div> 
+                               
+                          
+                          </form>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+{% endblock  %}

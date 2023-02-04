@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title >E-BIKE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<!-- login -->
+
+
+
+
+    <link rel="apple-touch-icon" href="{% static 'user_css/assets/img/apple-icon.png' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'user_css/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user_css/assets/css/templatemo.css' %}">
+    <link rel="stylesheet" href="{% static 'user_css/assets/css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'user_css/cutomize_css/ebike.css' %}">
+    <link rel="stylesheet" href="{% static 'user_css/cutomize_css/cart.css' %}">
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    
+
+   
+
+    <!-- Load fonts style after rendering the layout styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="{% static 'user_css/assets/css/fontawesome.min.css' %}">
+
+     
+  
+      <!-- Slick -->
+      <link rel="stylesheet" type="text/css" href="{% static 'user_css/assets/css/slick.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'user_css/assets/css/slick-theme.css' %}">
+
+
+
+      
+<!--
+    
+TemplateMo 559 Zay Shop
+
+https://templatemo.com/tm-559-zay-shop
+
+-->
+</head>
+
+<body>
+    <!-- Start Top Nav -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">ebike@gmail.com</a>
+                    <!-- <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">+91-9645640108</a> -->
+                </div>
+                <div>
+                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
+                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
+                </div>
+            </div>
+        </div>
+    </nav> 
+    <!-- Close Top Nav -->
+
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand  logo h1 align-self-center " style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;"   href="#">
+                E-BIKE
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <!-- <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user:home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'user:Shop' %}">Bikes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Contact</a>
+                        </li>
+                       
+                    </ul>
+                </div> -->
+                <!-- <div class="navbar align-self-center d-flex">
+                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                        <div class="input-group">
+                            
+                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                            <div class="input-group-text">
+                                <i class="fa fa-fw fa-search"></i>
+                            </div>
+                        </div> 
+                    </div>  
+                     <a class="nav-icon d-none d-lg-inline" href="" data-bs-toggle="modal" data-bs-target="#templatemo_search" style="text-decoration: none;">
+                        WELCOME
+                    </a> -->
+                   
+                   
+                    <!-- <a class="nav-icon position-relative text-decoration-none" href="usersignin">
+                        <button style="border: none;">signup</button>
+                        
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="logout-user">
+                        
+                        <button style="border: none;" >Logout</button>
+                    </a>
+                    </a>
+                    <a class="nav-icon position-relative text-decoration-none" href="vendor/">
+                        
+                        <button  style="border: none;">Vendors</button>
+                    </a> 
+
+                  
+                </div> -->
+            </div>
+
+        </div>
+    </nav>
+  
+  
+
+   
+
+
+
+
+    <div class="container rounded bg-light mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right">
+    
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                      <img src="" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                      <h5 class="my-3"></h5>
+                      <p class="text-muted mb-1"></p>
+                      <p class="text-muted mb-4"></p>
+                     
+                    </div>
+                  </div>
+                  <div class="card mb-4 mb-lg-0">
+                    <div class="card-body text-center">
+                     
+                        <div class="list-group">
+                           
+                            <a href="" class="list-group-item list-group-item-action list-group-item-success">PROFILE</a>
+                            <a href="{% url 'vendor:view_vehicles' %}" class="list-group-item list-group-item-action list-group-item-success">AVAILABLE VEHICLES</a>
+                            <a href="{% url 'vendor:Non_Available_vehicles' %}" class="list-group-item list-group-item-action list-group-item-success">NON AVAILABLE VEHICLES</a>
+                            <a href="{% url 'vendor:add_vehicle' %}" class="list-group-item list-group-item-action list-group-item-success">ADD VEHICLES</a>
+                            <a href="{% url 'vendor:Orders' %}" class="list-group-item list-group-item-action list-group-item-success">ORDERS</a>
+                            <a href="{% url 'vendor:vendor_logout' %}" class="list-group-item list-group-item-action list-group-item-success">LOGOUT</a>
+                           
+                          </div>
+    
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
+            <div class="col-md-9 border-right">
+                {% block content %} 
+
+              
+                    <div class="card mb-4">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <p class="mb-0">Full Name</p>
+                          </div>
+                          <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{detail.first_name}}{{detail.last_name}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <p class="mb-0">Email</p>
+                          </div>
+                          <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{detail.email}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <p class="mb-0">Mobile</p>
+                          </div>
+                          <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{detail.mobile}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <p class="mb-0">GST NO</p>
+                          </div>
+                          <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{detail.gst_no}}</p>
+                          </div>
+                        </div>
+                        <hr>
+                        <!-- <div class="row">
+                          <div class="col-sm-3">
+                            <p class="mb-0">Address</p>
+                          </div>
+                           <div class="col-sm-9">
+                            <p class="text-muted mb-0">{{detail.addressline1}},{{detail.addressline2}} , {{detail.city}} ,{{detail.state}} ,{{detail.country}}</p>
+                          </div> 
+                        </div> -->
+                      </div>
+                    </div>
+                    
+
+                {% endblock  %}
+    
+            </div>
+        
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+   
+    <!-- End Footer -->
+
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
+</body>
+
+</html>

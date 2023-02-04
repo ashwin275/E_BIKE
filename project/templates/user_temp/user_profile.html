@@ -1,0 +1,98 @@
+{% extends 'user_temp\home.html' %}
+
+
+{% block content %} 
+
+
+
+
+<div class="container rounded bg-light mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                  <img src="" alt="avatar"
+                    class="rounded-circle img-fluid" style="width: 150px;">
+                  <h5 class="my-3"></h5>
+                  <p class="text-muted mb-1">{{users.first_name}}</p>
+                  <p class="text-muted mb-4">{{users.email}}</p>
+                  <!-- <div class="d-flex justify-content-center mb-2">
+                    <button type="button" class="btn btn-primary">Follow</button>
+                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                  </div> -->
+                </div>
+              </div>
+              <div class="card mb-4 mb-lg-0">
+                <div class="card-body text-center">
+                 
+                    <div class="list-group">
+                       
+                        <a href="{% url 'user:user_profile' %}" class="list-group-item list-group-item-action list-group-item-success">PROFILE</a>
+                        <a href="{% url 'user:add_address' %}" class="list-group-item list-group-item-action list-group-item-success">ADD ADDRESS</a>
+                        <a href="{% url 'user:view_orders' %}" class="list-group-item list-group-item-action list-group-item-success">ORDERS</a>
+                        <a href="{% url 'user:forgot_password' %}" class="list-group-item list-group-item-action list-group-item-success">FORGOT PASSWORD</a>
+                       
+                      </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
+            
+            <div class="col-md-9">
+              <div class="card mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Full Name</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{detail.first_name}}{{detail.last_name}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Email</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{detail.email}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Mobile</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{detail.mobile}}</p>
+                    </div>
+                  </div>
+                  <hr>
+<!--                 
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <p class="mb-0">Address</p>
+                    </div>
+                    <div class="col-sm-9">
+                      <p class="text-muted mb-0">{{detail.addressline1}},{{detail.addressline2}} , {{detail.city}} ,{{detail.state}} ,{{detail.country}}</p>
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+              </div>
+
+
+
+        
+    
+    </div>
+</div>
+</div>
+</div>
+
+
+
+{% endblock  %}

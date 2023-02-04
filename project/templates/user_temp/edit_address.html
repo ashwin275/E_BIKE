@@ -1,0 +1,68 @@
+{% extends 'user_temp\home.html' %}
+
+
+{% block content %} 
+
+
+
+
+<div class="container rounded bg-light mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <form   method="POST" action="" role="form">
+
+                    {% csrf_token  %}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">EDIT ADDRESS</h4>
+
+
+                </div>
+                <!-- <div style="color: rgb(195, 175, 175);">
+                  
+                    {% for messag in messages %}
+                        <h6>{{messag}}</h6>
+                    {%endfor%}
+                  </div> -->
+                    
+
+               
+                
+                    
+                <div class="row mt-2">
+                    <div class="col-md-6"><label class="labels"></label><input type="text" name="first_name" class="form-control" placeholder="first name" value="{{address.first_name}}"></div>
+                    <div class="col-md-6"><label class="labels"></label><input type="text" name="last_name"class="form-control" value="{{address.last_name}}" placeholder="surname"></div>
+                </div>
+                <div class="row mt-3">
+                   
+                    <div class="col-md-12"><label class="labels"></label><input type="text" name="mobile" class="form-control" placeholder="enter phone number" value="{{address.mobile}}"></div>
+                    <div class="col-md-12"><label class="labels"></label><input type="text"name="email" class="form-control" placeholder="enter email id" value="{{address.email}}"></div>
+                    <div class="col-md-12"><label class="labels"></label><input type="text" name="address1" class="form-control" placeholder="enter address line 1" value="{{address.addressline1}}"></div>
+                    
+                    <div class="col-md-12"><label class="labels"></label><input type="text"name="address2" class="form-control" placeholder="enter address line 2" value="{{address.addressline2}}"></div>
+                    <div class="col-md-12"><label class="labels"></label><input type="text"name="city" class="form-control" placeholder="" value="{{address.city}}"></div>
+                  
+                   
+                   
+                   
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels"></label><input type="text"name="country" class="form-control" placeholder="country" value="{{address.country}}"></div>
+                    <div class="col-md-6"><label class="labels"></label><input type="text"name="state" class="form-control" value="{{address.state}}" placeholder="state"></div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+            </form>
+            </div>
+        </div>
+    
+    </div>
+</div>
+</div>
+</div>
+
+
+
+{% endblock  %}

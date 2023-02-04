@@ -1,0 +1,52 @@
+{% extends 'admin_temp\admin_panel.html' %}
+
+
+    {% block content %} 
+  
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h1 class="mb-4">USER MANAGEMENT</h1>
+        <hr><hr>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Active</th>
+                        <th scope="col"></th>
+
+
+
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for obj in users %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{obj.first_name}}</td>
+                        <td>{{obj.last_name}}</td>
+                        <td>{{obj.mobile}}</td>
+                        <td>{{obj.email}}</td>
+                        <td>{{obj.is_active}}</td>
+                        <td><a href="blockuser/{{obj.pk}}"><button >BLOCK</button></a> </td>
+                        <td><a href="unblockuser/{{obj.id}}"><button class="un">UNBLOCK</button></a> </td>
+                        <td><a href="deleteuser/{{obj.id}}"><button class="del">DELETE</button></a> </td>
+                        <!-- <td><a href="deleteuser/{{obj.id}}"><i class="fa-solid fa-trash del"></i></a> </td> -->
+                        <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+ 
+    
+ {% endblock  %}
+
+

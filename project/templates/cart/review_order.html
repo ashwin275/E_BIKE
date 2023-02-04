@@ -1,0 +1,106 @@
+{% extends 'user_temp\home.html' %}
+
+
+{% block content %} 
+<style>
+     .gradient-custom {
+        /* fallback for old browsers */
+        background: #262328;
+        
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+        
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to top left, rgb(218, 216, 221), rgba(246, 243, 255, 1))
+        }
+</style>
+
+
+<section class="h-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-10 col-xl-8">
+          <div class="card" style="border-radius: 10px;">
+            <div class="card-header px-4 py-5">
+              <h5 class="text-muted mb-0">Review your Order, <span style="color: #a8729a;">{{user.first_name}}{{user.last_name}}</span>!</h5>
+            </div>
+            <div class="card-body p-4">
+                {% for items in cart_items %}
+              <div class="card shadow-0 border mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="{{items.product.image.url}}"
+                        class="img-fluid" alt="Phone">
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0">{{items.product}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">{{items.product.category}}</p>
+                    </div>
+                     <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">  Price: {{items.product.price}}</p>
+                    </div> 
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">Qty:{{items.quantity}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">Sub Total: {{items.sub_total}}</p>
+                    </div>
+                  </div>
+                  <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                 
+
+                </div>
+              </div>
+              {% endfor  %}
+  
+              <div class="d-flex justify-content-between pt-2">
+                <p class="fw-bold mb-0">Address</p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> {{total}}</p>
+              </div>
+  
+             
+  
+              <div class="d-flex justify-content-between">
+                <p class="text-muted mb-0">{{address.first_name}}{{address.last_name}}</p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">GST 18%</span> {{tax}}</p>
+              </div>
+              <div class="d-flex justify-content-between pt-2">
+                <p class="text-muted mb-0">{{address.email}},<br>{{address.mobile}},<br>{{address.addressline1}},{{address.addressline2}},<br>{{address.city}},{{address.state}} <br>{{address.country}}</p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Discount :</span> {{reduction}}</p>
+              </div>
+             
+
+              <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+              <div class="d-flex justify-content-between mb-5">
+                <p class="text-muted mb-0"></p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Grand total</span>{{grand_total}}</p>
+              </div>
+              <div class="d-flex justify-content-between mb-5">
+                <p class="text-muted mb-0"></p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Booking Price</span>{{booking_price}}</p>
+              </div>
+              <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+
+              <div class="d-flex justify-content-between mb-5">
+                <p class="text-muted mb-0"></p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Balance</span>{{balance}}</p>
+              </div>
+            </div>
+            <div class="card-footer border-0 px-4 py-5">
+                
+                    <a href="" style="text-decoration: none; color: white;"> <button type="submit" class="btn btn btn-outline-success btn-lg"  >PLACE ORDER</button></a>
+               
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+{% endblock  %}
