@@ -1,0 +1,79 @@
+{% extends 'vendor_temp\panel.html' %}
+
+
+    {% block content %} 
+    <div style=" color:rgb(20, 102, 20)">
+        {% for message in messages  %}
+           <span> {{message}}</span>
+            {% endfor %}
+          </div>
+    
+    
+    <div class="col-12">
+        <div class=" rounded h-100 p-4">
+            <h2 class="mb-4">VARIANTS </h2>
+            
+            <hr><hr>
+            <div class="table-responsive">
+             
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO</th>
+                            <th scope="col">Vehicle</th>
+                          
+                            <th scope="col">Price</th>
+                    
+                            <th scope="col">Avaliable</th>
+
+                            
+                            <th scope="col">Remaining</th>
+                            <th scope="col">IMAGE 1</th>
+                            <th scope="col">IMAGE 2</th>
+                            <th scope="col">IMAGE 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for items in vehicle %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{items.vehicle_id.vehicle_name}}</td>
+                           
+                            <td>{{items.price}}</td>
+                            <td>{{items.is_available}}</td>
+                            <td>{{items.remaining}}</td>
+                            
+                            
+                            
+                            
+                    <td><img src="{{items.image1.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                    <td><img src="{{items.image2.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                    <td><img src="{{items.image3.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                    <td><a href="{% url 'vendor:edit_variant' items.id %}"><button   class="un del btn btn-outline-success btn-sm">EDIT</button></a> </td>
+                    <td><a href="{% url 'vendor:delete_variant' items.id %}"><button   class="un del btn btn-outline-danger btn-sm">DELETE</button></a> </td>
+
+                    {%if items.is_available == False%}
+                    <td><a href="{% url 'vendor:active_variant' items.id %}"><button   class="un del btn btn-outline-success btn-sm">ACTIVE</button></a> </td>
+                    {%else%}
+                    <td><a href="{% url 'vendor:de_active_variant' items.id %}"><button   class="un del btn btn-outline-danger btn-sm">DE-ACTIVE</button></a> </td>
+                    {%endif%}
+                    
+                                 <!-- <td><a href="addvariant/{{items.pk}}"><button   class="del">ADD VARIENT</button></a></td> -->
+                    
+                            <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+           
+          
+        
+      </div>
+    
+    
+    
+    
+    {% endblock  %}

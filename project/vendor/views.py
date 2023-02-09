@@ -3,11 +3,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.db import models
 from user.models import myuser,Userdetail
-from product.models import Vehicles
+from product.models import Vehicles,Variant
 from categories.models import Category
 from user.otp import check_otp,sentOTP
 from django.views.decorators.cache import cache_control
-from product.forms import Vehicleforms
+from product.forms import Vehicleforms ,Variantform
 from orders.models import OrderVehicle,Orders
 from django.views.decorators.cache import never_cache
 #from django.contrib.auth.decorators import login_required
@@ -190,22 +190,6 @@ def add_vehicles(request):
             else:
                  messages.success(request, ('Data is not valid!'))
                  
-		   
-
-
-
-            # vehicle_name = request.POST['vehicle_name']
-            # category = request.POST['category']
-            # Range = request.POST['range']
-            # speed = request.POST['speed']
-            # slug = request.POST['slug']
-            # image = request.FILES['image']
-            # email = request.user.email
-            # vendor = myuser.objects.get(email =email)
-
-            # vehicle =Vehicles.objects.create(vendor_id = vendor,vehicle_name=vehicle_name,category=Category.objects.get(category_name=category,),
-            # range=Range,top_speed= speed,image=image,slug=slug)
-            # vehicle.save()
             return redirect('vendor:view_vehicles')
     return render(request,'vendor_temp/add_vehicles.html',{'form':form})
 
@@ -241,6 +225,75 @@ def edit_vehicle(request,pk):
             #messages.info(request,'Not a valid data please check')
 
     return render(request,'vendor_temp/update_vehicle.html',{'vehicle':vehicle})
+
+
+def add_variant(request,pk):
+    if 'vendor' in request.session:
+        form = Variantform()
+        vehicle = Vehicles.objects.get(id = pk)
+       
+        if request.method == 'POST':
+            email = request.user.email
+            vendor = myuser.objects.get(email =email)
+            form = Variantform(request.POST, request.FILES)
+            if form.is_valid():   
+                form.instance.vehicle_id = vehicle 
+                form.save()
+                messages.success(request, ('VARIANT Added!'))
+            else:
+                 messages.success(request, ('Data is not valid!'))
+            return redirect('vendor:view_vehicles')
+    return render (request,'vendor_temp/add_variant.html',{'form':form})
+
+
+def view_variant(request,pk):
+    if 'vendor' in request.session:
+        
+        try:
+
+            #vendor = myuser.objects.get(email=request.user.email)
+            variant = Variant.objects.filter(  vehicle_id =pk).order_by('is_available')
+            return render(request,'vendor_temp/view_variant.html',{'vehicle':variant})
+        except:
+            messages.success(request, ('Data is not valid!'))
+            return redirect('vendor:view_vehicles')
+    return render(request,'vendor_temp/view_variant.html')
+     
+def edit_variant(request,pk):
+     if 'vendor' in request.session:
+         variant = Variant.objects.get(id =pk)
+         if request.method == 'POST':
+            form = Variantform(request.POST, request.FILES,instance=variant)
+            if form.is_valid():
+                form.instance.vehicle_id = variant.vehicle_id  
+                form.save()
+                messages.success(request, ('VARIANT updated!'))
+            else:
+                 messages.success(request, ('Data is not valid!'))
+            return redirect('vendor:view_vehicles')
+         else:
+             form = Variantform( instance=variant)
+     return render(request,'vendor_temp/update_variant.html',{'form':form})
+
+def delete_variant(request,id):
+    vehicle= Variant.objects.get(id=id)
+    vehicle.delete()
+    return redirect('vendor:view_vehicles',)
+
+def active_variant(request,pk):
+    vehicle= Variant.objects.get(id=pk)
+    vehicle.is_available = True
+    vehicle.save()
+    return redirect('vendor:view_vehicles',)
+
+def de_active_variant(request,pk):
+    vehicle= Variant.objects.get(id=pk)
+    vehicle.is_available = False
+    vehicle.save()
+    return redirect('vendor:view_vehicles',)
+
+
+
 
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
 def active_vehicle(request,pk):
@@ -311,4 +364,17 @@ def order_details(request,pk):
 #         return redirect('view_vehicles')
 
 
+
+ # vehicle_name = request.POST['vehicle_name']
+            # category = request.POST['category']
+            # Range = request.POST['range']
+            # speed = request.POST['speed']
+            # slug = request.POST['slug']
+            # image = request.FILES['image']
+            # email = request.user.email
+            # vendor = myuser.objects.get(email =email)
+
+            # vehicle =Vehicles.objects.create(vendor_id = vendor,vehicle_name=vehicle_name,category=Category.objects.get(category_name=category,),
+            # range=Range,top_speed= speed,image=image,slug=slug)
+            # vehicle.save()
 #     return render(request,'vendor_temp/add_variant.html')

@@ -1,0 +1,40 @@
+{% extends 'vendor_temp\panel.html' %}
+    
+    {% block content %} 
+    {% load crispy_forms_tags %} 
+    
+                <div class="d-table-cell align-middle">
+
+                    <div class="text-center mt-4">
+                        <h1 class="h2">UPDATE VARIANTS </h1>
+                        <p class="lead">
+                             <!-- User : <span class="sp">{{upd.username}}</span> -->
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="m-sm-4">
+                                    
+                                <form    method="POST" action="" enctype="multipart/form-data" >
+                                  {% csrf_token  %}
+                                  {{ form.as_p }}
+                                  
+                                    
+                                     <div class="text-center mt-3">
+                                      <button type="submit" class="btn btn-primary">
+                                        <span class="glyphicon glyphicon-share-alt"></span>
+                                        UPDATE
+                                      </button>
+                                    </div> 
+
+
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+           
+    {% endblock  %}

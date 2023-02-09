@@ -31,7 +31,8 @@
                         <a href="{% url 'user:user_profile' %}" class="list-group-item list-group-item-action list-group-item-success">PROFILE</a>
                         <a href="{% url 'user:add_address' %}" class="list-group-item list-group-item-action list-group-item-success">ADD ADDRESS</a>
                         <a href="{% url 'user:view_orders' %}" class="list-group-item list-group-item-action list-group-item-success">ORDERS</a>
-                        <a href="{% url 'user:forgot_password' %}" class="list-group-item list-group-item-action list-group-item-success">FORGOT PASSWORD</a>
+                        <a href="{% url 'user:cancelled_orders' %}" class="list-group-item list-group-item-action list-group-item-success">CANCELLED ORDERS</a>
+                        <a href="{% url 'user:forgot_password' %}" class="list-group-item list-group-item-action list-group-item-success"> CHANGE PASSWORD</a>
                        
                       </div>
 
@@ -41,6 +42,7 @@
             <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
           <div class="col-md-9">
              {%if orders%}
+             
             {% for items in orders %}
           
                       <!-- <p><span class="h2">Shopping Cart </span><span class="h4">(1 item in your cart)</span></p> -->

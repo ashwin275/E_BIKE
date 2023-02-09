@@ -15,7 +15,11 @@ urlpatterns = [
     path('logout-user',views.logout_user,name='logout_user'),
 
     path('singleproducts/<int:pk>',views.single_products,name='single_products'),
+
+    path('variant-detail/<int:pk>',views.variant_detail,name='variant_detail'),
     path('Shop',views.Shop,name='Shop'),
+
+
          
    # path('Userdetail',Userdetail.as_view(),name='Userdetail'),
    # path('userprofile',user_profile.as_view(),name='user_profile'),
@@ -31,6 +35,12 @@ urlpatterns = [
     path('view_orders',views.view_orders,name='view_orders'),
     path('cancel_order/<int:pk>',views.cancel_order,name="cancel_order"),
     path('order_details/<int:pk>',views.order_details,name='order_details'),
+    path('canceled-order',views.cancelled_orders,name='cancelled_orders'),
+
+
+    path('search',views.search,name="search"),
+
+    path('category/<int:id>',views.category_filter,name="category_filter")
 
 
 ]

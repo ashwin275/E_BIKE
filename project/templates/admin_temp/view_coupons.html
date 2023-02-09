@@ -1,0 +1,56 @@
+{% extends 'admin_temp\admin_panel.html' %}
+
+
+    {% block content %} 
+    <div style="color: rgb(26, 24, 24);">
+                  
+        {% for messag in messages %}
+            <h6>{{messag}}</h6>
+        {%endfor%}
+      </div>
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h1 class="mb-4">COUPON MANAGEMENT</h1>
+        <hr><hr>
+        <div class="table-responsive">
+            <td><a href="{% url 'add_coupons' %}"><button>ADD COUPONS</button></a> </td><br><br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">Coupon Code</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Active</th>
+                        
+
+
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for obj in coupon %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{obj.coupon_code}}</td>
+                        <td>{{obj.discount}}</td>
+                        <td>{{obj.is_active}}</td>
+                         
+                        {% if obj.is_active == True %}
+                        <td><a href="{% url 'block_coupon' obj.id %}"><button class="del">Block</button></a> </td>
+                        {% else %}
+                        <td><a href="{% url 'un_block_coupon' obj.id %}"><button >un-block</button></a> </td>
+                        {% endif %}
+                        <!-- <td><a href="deleteuser/{{obj.id}}"><i class="fa-solid fa-trash del"></i></a> </td> -->
+                        <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+ 
+    
+ {% endblock  %}
+
+

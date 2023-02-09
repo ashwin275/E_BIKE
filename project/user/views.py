@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from user.otp import check_otp,sentOTP
 #from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
-from product.models import Vehicles
+from product.models import Vehicles,Variant
 from categories.models import Category
 from Cartapp.models import CartItem
 from.models import myuser,Userdetail
@@ -29,12 +29,16 @@ import uuid
 def home(request):
        if 'username' in request.session:
             category = Category.objects.all
+            image = Category.objects.filter(category_name = 'SPORTS')
             vehicles = Vehicles.objects.filter(is_available=True)
             cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
+            print(image)
+            print('ioioi')
             context ={
            'category':category,
             'vehicles':vehicles,
-            'cart_itemscount':cart_itemscount
+            'cart_itemscount':cart_itemscount,
+            'image':image
             
              }
        else:
@@ -111,6 +115,7 @@ def verify_otp(request):
             del request.session['first_name']
             del request.session['last_name']
             del request.session['mobile'] 
+
             del request.session['password']
 
             user = myuser.objects.create_user(first_name=first_name,last_name=Last_name,mobile=mobile,email=email,password=password)
@@ -180,29 +185,73 @@ def single_products(request,pk):
     vehicle = Vehicles.objects.get(id=pk)
     featured = Vehicles.objects.filter(is_available=True)
     category = Category.objects.get(category_name=vehicle.category)
+    all_variants = Variant.objects.filter(vehicle_id =pk)
+    variants = Variant.objects.filter(vehicle_id =pk)[0:3]
+   
+    print(variants)
+   
     #cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
     #variant = Variant.objects.get(vehicle_id=pk)
-
-   
     context = {
         'vehicle': vehicle,
         'category': category,
         'featured':featured,
+        'variants': variants,
+        'all_variants':all_variants,
         # 'cart_itemscount':cart_itemscount,
         #'variant':variant,
     }
     return render(request,'user_temp/single_products.html',context)
 
+
+def variant_detail(request,pk):
+    varient = Variant.objects.get(id=pk)
+    all_varient = Variant.objects.filter(vehicle_id = varient.vehicle_id.id)
+    print(all_varient)
+    context = {
+       'varient':varient ,
+       'all_varient': all_varient
+    }
+    return render(request,'user_temp/variants_detail_page.html',context)
+
+
+
 def Shop(request):
     vehicles = Vehicles.objects.filter(is_available=True)
-    #cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
-
+    category= Category.objects.all
     context = {
         'vehicles':vehicles,
+        'category':category
         # 'cart_itemscount':cart_itemscount
     }
-
     return render(request,'user_temp/shop.html',context)
+
+
+
+def search(request):
+    if request.method == 'GET':
+        search = request.GET.get('query')
+        vehicles = Vehicles.objects.all().filter(vehicle_name__icontains=search,is_available=True)
+        category= Category.objects.all
+    context = {
+        'vehicles':vehicles,
+        'category':category,
+        # 'cart_itemscount':cart_itemscount
+    }
+    return render(request,'user_temp/shop.html',context)
+
+def category_filter(request,id):
+     
+     vehicles = Vehicles.objects.filter(category=id,is_available=True)
+     category= Category.objects.all
+     context = {
+        'vehicles':vehicles,
+        'category':category,
+        # 'cart_itemscount':cart_itemscount
+    }
+     return render(request,'user_temp/shop.html',context)
+    
+    
 
 #=======================================user Profile=================================================================
 # class user_profile(TemplateView):
@@ -334,13 +383,19 @@ def edit_address(request,pk):
 def forgot_password(request):
     if request.method == 'POST':
         email = request.POST['email']
-        user_obj = myuser.objects.get(email=email)
-        token = str(uuid.uuid4())
+       
+
+        try:
+           user_obj = myuser.objects.get(email=email)
+           token = str(uuid.uuid4())
        # profile_obj = myuser.objects.get(user = user_obj)
-        user_obj.forgot_password_token = token
-        user_obj.save()
-        send_forget_password_mail(user_obj,token)
-        messages.info(request,'an email is sent to your account')
+           user_obj.forgot_password_token = token
+           user_obj.save()
+           send_forget_password_mail(user_obj,token)
+           messages.info(request,'an email is sent to your account')
+        except:
+             messages.info(request,'Email is not matching')
+             
         return redirect('user:forgot_password')
 
 
@@ -385,9 +440,7 @@ def change_password(request,token):
 
 def view_orders(request):
     user = request.user
-
-
-    orders= Orders.objects.filter(user = user).order_by('-id')
+    orders= Orders.objects.filter(user = user,).order_by('-id').exclude(status = 'Cancelled')
     print(orders)
    
     #order = Orders.objects.filter(user = request.user ).order_by('-id')
@@ -396,6 +449,16 @@ def view_orders(request):
         
     }
     return render(request,'user_temp/orders.html',context)
+
+
+def cancelled_orders(request):
+       user = request.user
+       orders = Orders.objects.filter(user = user,status = 'Cancelled')
+     
+       context = {
+        'orders': orders,
+           }
+       return render(request,'user_temp/canceled_order.html',context)
 
 def cancel_order(request,pk):
     if request.user.is_authenticated:
@@ -418,5 +481,8 @@ def order_details(request,pk):
     }
 
     return render(request,'user_temp/order_detail.html',context)
+
+
+
 
    

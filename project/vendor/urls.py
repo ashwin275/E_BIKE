@@ -20,6 +20,13 @@ urlpatterns = [
     path('activevehicle/<int:pk>',views.active_vehicle,name='active_vehicle'),
     path('deactivevehicle/<int:pk>',views.deactive_vehicle,name='deactive_vehicle'),
 
+    path('addvariant/<int:pk>',views.add_variant,name='add_variant'),
+    path('viewvariant/<int:pk>',views.view_variant,name='view_variant'),
+    path('edit-variant/<int:pk>',views.edit_variant,name='edit_variant'),
+    path('delete-variant/<int:pk>',views.delete_variant,name='delete_variant'),
+    path('active-variant/<int:pk>',views.active_variant,name='active_variant'),
+    path('de-activevariant/<int:pk>',views.de_active_variant,name='de_active_variant'),
+
     path('Orders',views.Orders,name='Orders'),
     path('cancel-order/<int:pk>',views.cancel_order,name='cancel_order'),
     path('order_detail/<int:pk>',views.order_details,name='order_details'),

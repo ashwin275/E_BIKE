@@ -3,7 +3,7 @@
 
 {% block content %} 
 
-<section class="h-100 h-custom" style="background-color: #d2c9ff;">
+<section class="h-100 h-custom" style="background-color: #f9f9fd;">
     <div class="container py-5 h-100">
        
 
@@ -40,7 +40,7 @@
                     <div class="row mb-4 d-flex justify-content-between align-items-center">
                       <div class="col-md-2 col-lg-2 col-xl-2">
                         <img
-                          src="{{items.product.image.url}}"
+                          src="{{items.product.image1.url}}"
                           class="img-fluid rounded-3" alt="Cotton T-shirt">
                       </div>
                       <div class="col-md-3 col-lg-3 col-xl-3">
@@ -72,18 +72,21 @@
                     {% endfor  %}
 					
   
-                  
-  
+    
                     <div class="pt-5">
-                      <h6 class="mb-0"><a href="{% url 'user:Shop' %}" class="text-body"><i
-                            class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+
+                      <h6 class="mb-0"><a href="{% url 'user:Shop' %}" class="text-body">
+        <button type="button" class="btn btn-outline-success">                 <i
+          class="fas fa-long-arrow-alt-left me-2"></i> Back to shop</button>
+                          </a></h6>
                     </div>
                   </div>
                 </div>
+                {% if cart_items %}
                 <div class="col-lg-4 bg-grey">
                   <div class="p-5">
                     <h3 class="fw-bold mb-5 mt-2 pt-1"></h3>
-                    <hr class="my-4">
+                    
   
                     <div class="d-flex justify-content-between mb-4">
                       <h5 class="text-uppercase"></h5>
@@ -100,27 +103,10 @@
                         <option value="4">Four</option>
                       </select>
                     </div>
-   -->
+   -->              
                     <h5 class="text-uppercase mb-3"></h5>
   
-                    <div class="mb-5">
-                      <div class="form-outline">
-                        <form action="{% url 'Cartapp:coupon_apply'%}" method="POST">
-                                {% csrf_token  %}
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="Coupon_Code" placeholder="Coupon code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <span class="input-group-text" id="basic-addon2"><a href="" style="text-decoration: none; color: black;"><button type="submit" style="border: none;">Apply Coupon</button></a></span>
-                          </div>
-                            <div style=" color:green">
-                          {% for message in messages  %}
-                             <span> {{message}}</span>
-                              {% endfor %}
-                            </div>
-                        </form>
-                       
-                      </div>
-                      
-                    </div>
+                   
   
                     <hr class="my-4">
   
@@ -143,13 +129,14 @@
                       <h6><i class="fa-sharp fa-solid fa-indian-rupee-sign"></i> {{booking_price}}</h6>
                     </div>
   
-                    <a href="{% url 'Cartapp:checkout' %}"><button type="button"  class="btn btn-dark btn-block btn-lg"
+                    <a href="{% url 'Cartapp:checkout' %}"><button type="button"  class="btn btn-outline-dark btn-lg"
                       data-mdb-ripple-color="dark">Check Out</button></a>
   
                   </div>
                 </div>
               </div>
             </div>
+            {% endif%}
           </div>
         </div>
       </div>

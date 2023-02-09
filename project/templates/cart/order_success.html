@@ -4,7 +4,7 @@
 {% block content %} 
 
 
-<div class="card">
+<div class="card  container shadow-lg p-3 mb-5 bg-body rounded  mt-5 rare-wind-gradient color-block mb-3 mx-auto  z-depth-1-half">
     <div class="card-body">
       <div class="container mb-5 mt-3">
         <div class="row d-flex align-items-baseline">
@@ -23,8 +23,8 @@
         <div class="container">
           <div class="col-md-12">
             <div class="text-center">
-             
-           <h2>ORDER SUCCESS</h2>
+             <p><i class="fa-solid fa-circle-check fa-2xl " style="color: green;"></i></p>
+           <h2> ORDER SUCCESS</h2>
             </div>
   
           </div>
@@ -57,13 +57,14 @@
   
           <div class="row my-2 mx-1 justify-content-center">
             <table class="table-responsive">
-              <thead style="background-color:#84B0CA ;" class="text-white">
+              <thead style="background-color:#edf0f3 ;" class="text-black">
                 <tr>
                   <th scope="col">No</th>
                   <th scope="col">Vehicle</th>
                   <th scope="col">Image</th>
                   <th scope="col">Qty</th>
                   <th scope="col">Sub Total</th>
+                  <th scope="col">Payment Method</th>
                 
                 </tr>
               </thead>
@@ -71,11 +72,12 @@
                      {% for items in ordered_item %} 
                 <tr>
                   <th scope="row">{{forloop.counter}}</th>
-                  <td>{{items.vehicles.vehicle_name}}</td>
-                  <td><img src="{{items.vehicles.image.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                  <td>{{items.vehicles.vehicle_id.vehicle_name}}</td>
+                  <td><img src="{{items.vehicles.image1.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
                   <td>{{items.quantity}}</td>
                   <td>{{items.sub_total}}</td>
                   
+                  <td>{{payment.payment_method}}</td>
                   <td></td>
                 </tr>
                 {% endfor %} 
@@ -89,7 +91,7 @@
               <p class="ms-3"></p>
   
             </div>
-            <div class="col-xl-3">
+            <div class="col-xl-3 rounded border" >
               <ul class="list-unstyled">
                 <li class="text-muted ms-3"><span class="text-black me-4">Total</span>{{total}}</li>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax</span>{{tax}}</li>

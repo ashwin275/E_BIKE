@@ -1,8 +1,11 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from product.models import Vehicles
+from product.models import Vehicles,Variant
 from .models import Cart,CartItem,Coupon,Used_Coupon
 from user.models import Userdetail,myuser
 from django.contrib import messages
+
+import razorpay
+from django.conf import settings
 # Create your views here.
 
 
@@ -17,10 +20,10 @@ def _cart_id(request):
 
 def add_to_cart(request,pk):
 
-    vehicle = Vehicles.objects.get(id=pk)
+    vehicle = Variant.objects.get(id=pk)
 
-    if request.user.is_authenticated:
-        is_cart_item_exist = CartItem.objects.filter(product=vehicle,user=request.user).exists()
+    if 'username' in request.session:
+        is_cart_item_exist = CartItem.objects.filter(product=pk,user=request.user).exists()
 
         if is_cart_item_exist:
             cartitem = CartItem.objects.get(user = request.user,product = vehicle)
@@ -34,36 +37,38 @@ def add_to_cart(request,pk):
         print("my-user")
         return redirect('Cartapp:cart')
     else:
-        try:
-            cart=Cart.objects.get(cart_id=_cart_id(request))
-            print(cart+'helo')
+        messages.info(request,'Please sign in')
+        return redirect('user:user_signin')
+        # try:
+        #     cart=Cart.objects.get(cart_id=_cart_id(request))
+        #     print(cart+'helo')
 
-        except Cart.DoesNotExist:
-            cart=Cart.objects.create(
-                cart_id=_cart_id(request)
-            )
-            cart.save()
-            print(cart)
-            print('33333333333')
-        try:
-            cart_item=CartItem.objects.get(product=vehicle,cart = int(cart))
-            cart_item.quantity += 1
-            cart_item.save()
-        except:
-            cart_item=CartItem.objects.create(
-                product=vehicle,
-                quantity=1,
-                cart_id=cart
-            )
-            cart_item.save()
-        print("no-user")
-        return redirect('Cartapp:cart')
+        # except Cart.DoesNotExist:
+        #     cart=Cart.objects.create(
+        #         cart_id=_cart_id(request)
+        #     )
+        #     cart.save()
+        #     print(cart)
+        #     print('33333333333')
+        # try:
+        #     cart_item=CartItem.objects.get(product=vehicle,cart = int(cart))
+        #     cart_item.quantity += 1
+        #     cart_item.save()
+        # except:
+        #     cart_item=CartItem.objects.create(
+        #         product=vehicle,
+        #         quantity=1,
+        #         cart_id=cart
+        #     )
+        #     cart_item.save()
+        # print("no-user")
+        
         
         
 def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total =0, reduction =0):
 
      
-    if request.user.is_authenticated:
+    if 'username' in request.session:
             if 'coupon_code' in request.session:
                 coupon_code = request.session['coupon_code']
                 coupon = Coupon.objects.get(coupon_code =coupon_code)
@@ -72,7 +77,6 @@ def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total
                 messages.success(request,'Coupon applyed')
                 print( reduction)
                
-
             else:
                 reduction=0
 
@@ -84,8 +88,6 @@ def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total
                total += item.product.price*item.quantity
                total_qty  +=item.quantity
             
-
-
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
             booking_price = round(( grand_total/2))
@@ -99,13 +101,18 @@ def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total
                       'booking_price':booking_price,   
                     }
             return render(request,'cart/cart.html',context)
-    return render(request,'cart/cart.html')
+    
+    else:
+         messages.info(request,'Please sign in')
+         return redirect('user:user_signin')
+
+   
 
 
 
 def remove_cart_item(request,pk):
 
-    vehicle = get_object_or_404(Vehicles,id = pk)
+    vehicle = get_object_or_404(Variant,id = pk)
     if request.user.is_authenticated:
         cart_item=CartItem.objects.get(product=vehicle,user=request.user)
     else:
@@ -117,7 +124,7 @@ def remove_cart_item(request,pk):
 
 
 def decrement_quantity(request,pk):
-    vehicle = get_object_or_404(Vehicles,id = pk)
+    vehicle = get_object_or_404(Variant,id = pk)
     try:
         if request.user.is_authenticated:
             cart_item =CartItem.objects.get(product=vehicle,user=request.user)
@@ -207,29 +214,44 @@ def address_default(request,id):
 def coupon_apply(request):
     if request.method == 'POST':
         coupon = request.POST['Coupon_Code']
+       
         print(coupon)
-
-        coupon_exist = Coupon.objects.get(coupon_code = coupon)
-
         try:
-            if Used_Coupon.objects.get(coupon=coupon_exist,user=request.user):
-                print('coupon used')
-                messages.error(request,"coupon already used")
-                return redirect('Cartapp:cart')
+           coupon_exist = Coupon.objects.get(coupon_code = coupon , is_active = True )
+           print(coupon_exist)
         except:
-            request.session['coupon_code'] = coupon
-            messages.success(request,'Coupon applyed')
-    return redirect('Cartapp:cart')
+            messages.error(request,"Please Enter the valid coupon code")
+            return redirect('Cartapp:review_order')
+
+        if coupon_exist:
+            try:
+                print('exist')
+                if Used_Coupon.objects.get(coupon=coupon_exist,user=request.user):
+                    print('coupon used')
+                    messages.error(request,"coupon already used")
+                    return redirect('Cartapp:review_order')
+            except:
+                   print('noooo')
+                   request.session['coupon_code'] = coupon
+                   print('session created')
+                  
+                   return redirect('Cartapp:review_order')
+def cancel_coupon(request):
+    del request.session['coupon_code']
+    messages.success(request,'Coupon Cancelled')
+    return redirect('Cartapp:review_order')
+
+    
 
 def review_order(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total =0, reduction =0):
     user = myuser.objects.get(email = request.user.email)
-   
+
     if request.user.is_authenticated:
             if 'coupon_code' in request.session:
                 coupon_code = request.session['coupon_code']
                 coupon = Coupon.objects.get(coupon_code =coupon_code)
                 reduction = coupon.discount
-                messages.success(request,'Coupon applyed')
+                #messages.success(request,'Coupon applyed')
                 print( reduction)
             else:
                 reduction=0
@@ -243,8 +265,13 @@ def review_order(request, total = 0 , total_qty =0 , tax =0,cart_items=None, gra
                total_qty  +=item.quantity
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
-            booking_price = round(( grand_total/2))
+            booking_price = 100000
             balance = grand_total- booking_price
+
+            #===========razor pay ==============#
+            client = razorpay.Client(auth = (settings.KEY,settings.SECRET))
+            payment = client.order.create({'amount':booking_price *100,'currency': 'INR',})
+            print(payment)
             context = {
                     'cart_items':cart_items,
                      'total':total,
@@ -256,8 +283,10 @@ def review_order(request, total = 0 , total_qty =0 , tax =0,cart_items=None, gra
                       'address': address,
                       'user':user,
                       'reduction':reduction,
-                      'balance':balance
+                      'balance':balance,
+                      'payment':payment
                     }
+            
     return render(request,'cart/order_review.html',context)
 
 

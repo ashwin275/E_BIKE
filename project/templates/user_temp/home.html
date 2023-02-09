@@ -23,8 +23,8 @@
     <link rel="stylesheet" href="{% static 'user_css/assets/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'user_css/assets/css/templatemo.css' %}">
     <link rel="stylesheet" href="{% static 'user_css/assets/css/custom.css' %}">
-    <link rel="stylesheet" href="{% static 'user_css/cutomize_css/ebike.css' %}">
-    <link rel="stylesheet" href="{% static 'user_css/cutomize_css/cart.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'user_css/customiz_css/ebike.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'user_css/customiz_css/cart.css' %}">
 
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -32,7 +32,8 @@
 
 
     
-
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    
 
     <!-- Load fonts style after rendering the layout styles -->
@@ -119,10 +120,17 @@ https://templatemo.com/tm-559-zay-shop
                                 <i class="fa fa-fw fa-search"></i>
                             </div>
                         </div> -->
-                    </div>  
+                    </div> 
+                    {% if 'username' not in request.session %} 
                     <a class="nav-icon d-none d-lg-inline" href="{% url 'user:user_signin' %}" data-bs-toggle="modal" data-bs-target="#templatemo_search" style="text-decoration: none;">
                         Login/Register
                     </a>
+                    {% endif %}
+                    {% if 'username' in request.session %} 
+                    <a class="nav-icon d-none d-lg-inline" href="{% url 'user:logout_user'%}" data-bs-toggle="modal" data-bs-target="#templatemo_search" style="text-decoration: none;">
+                        Logout
+                    </a>
+                    {% endif %}
                     <a class="nav-icon position-relative text-decoration-none" href="{% url 'Cartapp:cart' %}">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">{{cart_itemscount}}</span>
@@ -177,11 +185,7 @@ https://templatemo.com/tm-559-zay-shop
 
    
 
-    <!-- Start Banner Hero -->
-    <!-- Start Banner Hero -->
    
-    <!-- End Banner Hero -->
-    <!-- End Banner Hero -->
 
 
   
@@ -248,9 +252,9 @@ https://templatemo.com/tm-559-zay-shop
         <div class="row">
             {% for items in category %}
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="{% url 'user:Shop' %}"><img src="{{items.image.url}}" style="height: 35vh;" class="rounded-circle img-fluid border"></a>
+                <a href="{% url 'user:category_filter' items.id %}"><img src="{{items.image.url}}" style="height: 35vh;" class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3">{{items.category_name}}</h5>
-                <p class="text-center"><a class="btn btn-success" href="{% url 'user:Shop' %}">Explore Now</a></p>
+                <p class="text-center"><a class=" btn btn-outline-success" href="{% url 'user:category_filter' items.id %}">Explore Now</a></p>
             </div>
 
             {% endfor %}
@@ -353,7 +357,7 @@ https://templatemo.com/tm-559-zay-shop
                               Range:  {{items.range}}
                             </p>
                             <p class="text-muted">{{items.top_speed}}Km/hr</p>
-                            <p class="text-center"><a class="btn " style="background-color: rgb(242, 245, 246);" href="{% url 'user:single_products' items.pk%}">Explore Now</a></p>
+                            <p class="text-center"><a class="btn  btn-outline-secondary" style="background-color: rgb(242, 245, 246);" href="{% url 'user:single_products' items.pk%}">Explore Now</a></p>
                         </div>
                     </div>
                 </div>
@@ -362,6 +366,43 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </section>
     <!-- End Featured Product -->
+
+   
+<!-- Banner Start -->
+<!-- <div class="container-fluid banner my-5 py-5" data-parallax="scroll" data-image-src="{% static 'image.jpeg' %}">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm-4">
+                        <img class="img-fluid rounded" src="{{items.image.url}}" alt="">
+                    </div>
+                    <div class="col-sm-8">
+                        <h2 class="text-black mb-3">We Sell Best Dairy Products</h2>
+                        <p class="text-white mb-4">Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo
+                            justo magna dolore erat amet</p>
+                        <a class="btn btn-secondary rounded-pill py-2 px-4" href="">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <div class="row g-4 align-items-center">
+                    <div class="col-sm-4">
+                        <img class="img-fluid rounded" src="{% static 'image.jpeg' %}" alt="">
+                    </div>
+                    <div class="col-sm-8">
+                        <h2 class="text-black mb-3">We Deliver Fresh Mild Worldwide</h2>
+                        <p class="text-black mb-4">Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo
+                            justo magna dolore erat amet</p>
+                        <a class="btn btn-secondary rounded-pill py-2 px-4" href="">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- Banner End -->
+
 
 
     <!-- Start Footer -->

@@ -24,4 +24,9 @@ urlpatterns = [
     path('addcategory',views.add_category,name='add_category'),
     path('editcategory/<int:pk>',views.edit_category,name='edit_category'),
 
+    path('view-coupons',views.view_coupon,name='view_coupon'),
+    path('add-coupons',views.add_coupons,name='add_coupons'),
+    path('block/<int:id>',views.block_coupon,name='block_coupon'),
+    path('un-block/<int:id>',views.un_block_coupon,name='un_block_coupon'),
+
 ]

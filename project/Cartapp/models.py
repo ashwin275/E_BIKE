@@ -1,6 +1,6 @@
 from django.db import models
 from user.models import myuser
-from product.models import Vehicles
+from product.models import Variant
 
 # Create your models here.
 
@@ -20,7 +20,7 @@ class Cart(models.Model):
 
 class CartItem(models.Model):
     user = models.ForeignKey(myuser, on_delete=models.CASCADE, null=True)
-    product = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
+    product = models.ForeignKey(Variant, on_delete=models.CASCADE)
    
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField()
@@ -31,8 +31,7 @@ class CartItem(models.Model):
     def sub_total(self):
         return self.product.price*self.quantity
     
-    def __str__(self):
-        return self.product
+    
     
 
     
@@ -40,6 +39,7 @@ class Coupon(models.Model):
     coupon_code = models.CharField(max_length=10,blank=True)
     discount = models.FloatField()
     is_active = models.BooleanField(default=True)
+   
 
 
     def __str__(self):

@@ -166,12 +166,16 @@ VERIFICATION_SID = 'VA85509cc07ea0b9550cbb765bb2025222'
 
 
 # email
-
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ashwinraj275@gmail.com'
 EMAIL_HOST_PASSWORD = 'csjaaagjxzlhqphh'
+
+#Razor pay integration
+
+
+KEY = 'rzp_test_iDaGh3N8pyOuDO'
+SECRET = 'PNTLDNpHH9iiWAZqnMY5qVPz'
+

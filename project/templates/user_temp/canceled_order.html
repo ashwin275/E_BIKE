@@ -1,0 +1,119 @@
+{% extends 'user_temp\home.html' %}
+
+
+{% block content %} 
+
+
+
+
+<div class="container rounded bg-light mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                  <img src="" alt="avatar"
+                    class="rounded-circle img-fluid" style="width: 150px;">
+                  <h5 class="my-3"></h5>
+                  <p class="text-muted mb-1">{{users.first_name}}</p>
+                  <p class="text-muted mb-4">{{users.email}}</p>
+                  <!-- <div class="d-flex justify-content-center mb-2">
+                    <button type="button" class="btn btn-primary">Follow</button>
+                    <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                  </div> -->
+                </div>
+              </div>
+              <div class="card mb-4 mb-lg-0">
+                <div class="card-body text-center">
+                 
+                    <div class="list-group">
+                       
+                        <a href="{% url 'user:user_profile' %}" class="list-group-item list-group-item-action list-group-item-success">PROFILE</a>
+                        <a href="{% url 'user:add_address' %}" class="list-group-item list-group-item-action list-group-item-success">ADD ADDRESS</a>
+                        <a href="{% url 'user:view_orders' %}" class="list-group-item list-group-item-action list-group-item-success">ORDERS</a>
+                        <a href="{% url 'user:forgot_password' %}" class="list-group-item list-group-item-action list-group-item-success">CHANGE PASSWORD</a>
+                       
+                      </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
+          <div class="col-md-9">
+             {%if orders%}
+            {% for items in orders %}
+          
+                      <!-- <p><span class="h2">Shopping Cart </span><span class="h4">(1 item in your cart)</span></p> -->
+              
+                      <div class="card mb-4 mt-5">
+                        <div class="card-body p-4">
+              
+                          <div class="row align-items-center">
+                            
+                            <div class="col-md-2 d-flex justify-content-center">
+                              <div>
+                                <p class="small text-muted mb-4 pb-2">Order No</p>
+                                <p class="lead fw-normal mb-0">{{items.order_number}}</p>
+                              </div>
+                            </div>
+                            
+                            <!-- <div class="col-md-2 d-flex justify-content-center">
+                              <div>
+                                <p class="small text-muted mb-4 pb-2">Quantity</p>
+                                <p class="lead fw-normal mb-0">1</p>
+                              </div>
+                            </div> -->
+                            <div class="col-md-3 d-flex justify-content-center">
+                              <div>
+                                <p class="small text-muted mb-4 pb-2">Status</p>
+                                <p class="lead fw-normal mb-0">{{items.status}}</p>
+                              </div>
+                            </div>
+                            <div class="col-md-3 d-flex justify-content-center">
+                              <div>
+                                <p class="small text-muted mb-4 pb-2">Orderd Date</p>
+                                <p class="lead fw-normal mb-0">{{items.created_at}}</p>
+                              </div>
+                            </div>
+
+                            <div class="col-md-2 d-flex justify-content-center">
+                                <a href="{% url 'user:order_details' items.id %}"> <button type="button" class="btn btn-outline-success btn-sm me-2">Order Details</button></a>
+                                <!-- <button type="button" class="btn btn-primary btn-lg">Add to cart</button> -->
+                              </div>
+                              {%if items.status != 'Cancelled'%}
+                            <div class="col-md-2 d-flex justify-content-center">
+                               <a href="{% url 'user:cancel_order' items.id %}"> <button type="button" class="btn btn-outline-danger btn-sm me-2">Cancel Order</button></a>
+                                <!-- <button type="button" class="btn btn-primary btn-lg">Add to cart</button> -->
+                              </div>
+                              {%endif%}
+
+                             
+                              
+    
+                          </div>
+              
+                        </div>
+                      </div>
+              
+                     
+                     
+              
+              
+
+            {% endfor %}
+            {%else%}     
+
+            
+            <div class="text-center mt-5"><h1>Sorry you dont have any order yet!</h1></div>
+                              {%endif%}
+           
+    
+    </div>
+</div>
+
+{% endblock  %}
+
+
+
+
+      

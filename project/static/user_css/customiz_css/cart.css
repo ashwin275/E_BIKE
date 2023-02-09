@@ -1,37 +1,43 @@
-@media (min-width: 1025px) {
-    .h-custom {
-    height: 100vh !important;
-    }
-    }
-    
-    .card-registration .select-input.form-control[readonly]:not([disabled]) {
-    font-size: 1rem;
-    line-height: 2.15;
-    padding-left: .75em;
-    padding-right: .75em;
-    }
-    
-    .card-registration .select-arrow {
-    top: 13px;
-    }
-    
-    .bg-grey {
-    background-color: #eae8e8;
-    }
-    
-    @media (min-width: 992px) {
-    .card-registration-2 .bg-grey {
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
-    }
-    }
-    
-    @media (max-width: 991px) {
-    .card-registration-2 .bg-grey {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    }
-    }
 
 
-   
+
+   /* zoom */
+.zoom-image-container {
+  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+  }
+  
+  .zoom-image {
+    
+    position: relative;
+    
+  }
+  
+  .zoom-image img {
+    
+    cursor: zoom-in;
+    
+    
+    /* box-shadow: 0 18px 5px -15px rgba( 0, 0, 0, .5 ); */
+    
+  }
+  
+  .hover-image {
+    
+    position: fixed;
+    width:200px;
+    height: 200px;
+    
+    border-radius: 10%;
+    
+    transform: translate( -0%, -20% );
+    
+    pointer-events: none;
+    
+    box-shadow: 0 0 10px rgba( 0, 0, 0, .1 );
+    
+  }

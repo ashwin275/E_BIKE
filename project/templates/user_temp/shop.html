@@ -6,42 +6,43 @@
     <!-- Start Content -->
     <div class="container py-5">
         <div class="row">
+            <div class="col-md-5 mx-auto">
+                
+                <div class="input-group d-flex ">
+                    <form class="d-flex" method="GET" action="search">
+                      
+                    <input class="form-control  border-end-0 border rounded-pill  " name="query" type="search" placeholder="Search" >
+                    
+                        <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    
+                </form>
 
-            <div class="col-lg-3">
-                <h1 class="h2 pb-4">Categories</h1>
-                <!-- <ul class="list-unstyled templatemo-accordion">
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Gender
-                            <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                
+                </div>
+            </div>
+        </div>
+       
+        <div class="row">
+
+            <div class="col-lg-3 text-center  ">
+                <h1 class="h2 pb-4">CATEGORIES</h1>
+                 <ul class="list-unstyled templatemo-accordion">
+
+                   {% for i in category %}
+                 
+                    <li class="pb-3  " style="display: flex;justify-content: center;">
+                        <a class="collapsed d-flex   text-decoration-none  mt-1  text-black text-capitalize" href="{% url 'user:category_filter' i.id %}" >  
+                            <button class="btn shadow  bg-body rounded" style="width: 15rem;"> {{i.category_name}}  </button>
+                            
                         </a>
-                        <ul class="collapse show list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Men</a></li>
-                            <li><a class="text-decoration-none" href="#">Women</a></li>
-                        </ul>
                     </li>
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Sale
-                            <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                        </a>
-                        <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Sport</a></li>
-                            <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        </ul>
-                    </li>
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Product
-                            <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                        </a>
-                        <ul id="collapseThree" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Bag</a></li>
-                            <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                            <li><a class="text-decoration-none" href="#">Sunglass</a></li>
-                        </ul>
-                    </li>
-                </ul> -->
+                  
+                    {% endfor %}
+                    
+                   
+                </ul> 
             </div>
 
             <div class="col-lg-9">
@@ -69,9 +70,10 @@
                         </div>
                     </div>
                 </div>
+                {% if vehicles %}
                 <div class="row">
 
-
+             
                     {% for items in vehicles %}
 
                     <div class="col-md-4">
@@ -82,7 +84,7 @@
                                     <ul class="list-unstyled">
                                       
                                         <li><a class="btn btn-success text-white mt-2" href="{% url 'user:single_products' items.id %}"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="{% url 'Cartapp:add_to_cart' items.id %}"><i class="fas fa-cart-plus"></i></a></li>
+                                        <!-- <li><a class="btn btn-success text-white mt-2" href="{% url 'Cartapp:add_to_cart' items.id %}"><i class="fas fa-cart-plus"></i></a></li> -->
                                     </ul>
                                 </div>
                             </div>
@@ -139,10 +141,12 @@
 
         </div>
     </div>
+   
+   
     <!-- End Content -->
 
     <!-- Start Brands -->
-    <section class="bg-light py-5">
+    <section class="bg-light py-5 container mb-5">
         <div class="container my-4">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
@@ -162,8 +166,8 @@
                         <!--End Controls-->
 
                         <!--Carousel Wrapper-->
-                        <div class="col">
-                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+                        <div class="col ">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0 container" id="multi-item-example" data-bs-ride="carousel">
                                 <!--Slides-->
                                 <div class="carousel-inner product-links-wap" role="listbox">
 
@@ -244,6 +248,9 @@
     </section>
     <!--End Brands-->
 
+    {% else %}
+    <h1>no data</h1>
+    {% endif %}
 
     <!-- Start Footer -->
    

@@ -1,0 +1,320 @@
+{% extends 'user_temp\home.html' %}
+{% load static %}
+
+    <!-- Close Header -->
+
+    <!-- Modal -->
+    
+
+    {% block content %} 
+
+    <!-- Open Content -->
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                   
+                    <div class="card mb-3 zoom-image">
+                        <img class="card-img img-fluid " id="main_image" src="{{varient.image1.url}}"  alt="" >
+                    </div>
+                    <div class="row">
+                        <!--Start Controls-->
+                        <div class="col-1 align-self-center">
+                            <a href="#multi-item-example" role="button" data-bs-slide="prev">
+                                
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </div>
+                        <!--End Controls-->
+                        <!--Start Carousel Wrapper-->
+                        <div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
+                            <!--Start Slides-->
+                            <div class="carousel-inner product-links-wap" role="listbox">
+
+                                <!--First slide-->
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                     
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img  class="card-img img-fluid"  onclick="change_image(this)" src="{{varient.image1.url}}" style="height: 18vh;" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid"  onclick="change_image(this)" src="{{varient.image2.url}}" style="height: 18vh;" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="#">
+                                                <img class="card-img img-fluid" onclick="change_image(this)" src="{{varient.image3.url}}" style="height: 18vh;" alt="">
+                                            </a>
+                                        </div>
+                                      
+                                        
+                                        
+                                    </div>
+                                </div>
+                               
+                            </div>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">{{vehicle.vehicle_name}}</h1>
+                            <p class="h3 py-2"></p>
+                       
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>NAME:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{vehicle.category}}</strong></p>
+                                </li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Speed :</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{vehicle.top_speed}}Km/hr</strong></p>
+                                </li> <br>
+                                <li class="list-inline-item">
+                                    <h6>Range :</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{vehicle.range}}</strong></p>
+                                </li> <br>
+                               
+                               
+                            <!-- </ul>
+
+                             <h6>Specification:</h6> 
+                             <ul class="list-unstyled pb-3">
+                                <li>Lorem ipsum dolor sit</li>
+                                <li>Amet, consectetur</li>
+                                <li>Adipiscing elit,set</li>
+                                <li>Duis aute irure</li>
+                                <li>Ut enim ad minim</li>
+                                <li>Dolore magna aliqua</li>
+                                <li>Excepteur sint</li>
+                            </ul>  -->
+
+                            <form action="" method="GET">
+                                <input type="hidden" name="product-title" value="Activewear">
+                            
+                                <div class="row pb-3">
+                                   
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg " name="submit" value="addtocard"><a href="{% url 'Cartapp:add_to_cart' varient.id %}" style="text-decoration: none; color: #fff;">ADD TO CART</a></button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+
+    <!-- Start Article -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Varients</h1>
+                    <p>
+                        <!-- Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident. -->
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for items in all_varient %}
+
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card mb-4 product-wap rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid" src="{{items.image1.url}}">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                  
+                                    <li><a class="btn btn-success text-white mt-2" href="{% url 'user:variant_detail' items.pk %}"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="{% url 'Cartapp:add_to_cart' items.id %}"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{items.vehicle_id.vehicle_name}}</h5> <br>
+                            <p class="card-text">{{items.color}}</p>
+                            <p class="card-text">{{items.price}}</p>
+                            <p class="card-text"> </p>
+                          
+                            <p class="text-center mb-0"></p>
+                            <p class="text-center"><a class="btn   btn-outline-warning "  href="{% url 'user:single_products' items.id %}">Explore Now</a></p>
+                        </div>
+                    </div>         
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+   
+    <!-- End Article -->
+
+    
+
+
+    <!-- footer start -->
+
+    <footer class="bg-dark" id="tempaltemo_footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">E-BIKE</h2>
+                    <!-- <ul class="list-unstyled text-light footer-link-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt fa-fw"></i>
+                            
+                        </li>
+                        <li>
+                            <i class="fa fa-phone fa-fw"></i>
+                            <a class="text-decoration-none" href="tel:010-020-0340">     </a>
+                        </li>
+                        <li>
+                            <i class="fa fa-envelope fa-fw"></i>
+                            <a class="text-decoration-none" href="mailto:info@company.com"></a>
+                        </li>
+                    </ul> -->
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h2 class="h2 text-light border-bottom pb-3 border-light"></h2>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                        <li><a class="text-decoration-none" href="#"></a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 pt-5">
+                    <h3 class="h2 text-light border-bottom pb-3 border-light">JOIN ON US</h3>
+                    <ul class="list-unstyled text-light footer-link-list">
+                        <li><a class="text-decoration-none" href="{% url 'vendor:vendor_register'%}">Become a  Vendor</a></li>
+                       
+                        <li ><a class="text-decoration-none" href="{% url 'user:logout_user'%}" style="color: rgb(239, 102, 102);">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a></li>
+                    </ul>
+                </div>
+              
+
+            </div>
+
+            <div class="row text-light mb-4">
+                <div class="col-12 mb-3">
+                    <div class="w-100 my-3 border-top border-light"></div>
+                </div>
+                <div class="col-auto me-auto">
+                    <ul class="list-inline text-left footer-icons">
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item border border-light rounded-circle text-center">
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="col-auto">
+                    <label class="sr-only" for="subscribeEmail">Email address</label>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
+                        <div class="input-group-text btn-success text-light">Subscribe</div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- <div class="w-100 bg-black py-3">
+            <div class="container">
+                <div class="row pt-2">
+                    <div class="col-12">
+                        <p class="text-left text-light">
+                            &copy; 
+                            |  <a rel="sponsored" href="https://templatemo.com" target="_blank"></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+  
+    </footer>
+
+
+    <script>
+        function change_image(image_data){
+        document.getElementById('main_image').src = image_data.src
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        });
+            jQuery(document).ready(function ($) {
+              $('.zoom-image img').click(function (event) {
+                var ix = $(this).offset().left;
+                var iy = $(this).offset().top;
+                console.log(ix + '-' + iy);
+                var mx = event.pageX;
+                var my = event.pageY;
+                console.log(mx + '-' + my);
+              })
+              $('.zoom-image img').hover(function () {
+                var img = $(this).attr('src');
+              $(this).after("<div class='hover-image' style='background-image: url(" + img + "); background-size: 300px;'></div>");
+              $(this).mousemove(function (event) {
+              // Mouse Position
+                var mx = event.pageX;
+                var my = event.pageY;
+              // Image Position
+                var ix = $(this).offset().left;
+                var iy = $(this).offset().top;
+              // Mouse Position Relavtive to Image
+                var x = mx - (ix);
+                var y = my - (iy);
+              // Image Height and Width
+                var w = $(this).width();
+                var h = $(this).height();
+              // Mouse Position Relative to Image, in %
+                var xp = (-x / w) * -100;
+                var yp = (-y / h) * -100;
+              $(this).parent().find('.hover-image').attr('style',
+                "background-image: url(" + img + "); background-size: 1000px; background-repeat: no-repeat; background-position: " + xp + "% " + yp + "%; top: " + y + "px; left: " + x + "px;");
+            });
+          }, function () {
+        $(this).parent().find('.hover-image').remove();
+      });
+    });
+    </script>
+    {% endblock  %}
+
+  
+  

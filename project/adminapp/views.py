@@ -6,6 +6,8 @@ from user.models import myuser
 from categories.models import Category
 #from categories.forms import categoryform
 from django.views.decorators.cache import cache_control
+from.forms import Couponforms
+from Cartapp.models import Coupon
 # Create your views here.
 
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
@@ -180,3 +182,46 @@ def edit_category(request,pk):
     except:
         messages.info(request,'form is not valid please try again')
     return render(request,'admin_temp/edit_category.html',{'edit':edit})
+
+
+
+#========================coupon management=================================#
+
+
+def view_coupon(request):
+    if 'admin' in request.session:
+         coupon =  Coupon.objects.all().order_by( 'is_active')
+         context = {
+             'coupon':coupon
+           }
+    return render(request,'admin_temp/view_coupons.html',context)
+
+
+def add_coupons(request):
+    if 'admin' in request.session:
+        forms = Couponforms(request.POST or None)
+        
+        if request.method == 'POST':
+           if forms.is_valid:
+               forms.save()
+               messages.info(request,'Coupon added succusfully')
+               return redirect('view_coupon') 
+           else:
+               messages.info(request,'Data not valid')
+               return redirect('view_coupon') 
+        context = {
+            'forms':forms
+        }
+        return render(request,'admin_temp/add_coupon.html',context)
+    
+def block_coupon(request,id):
+    coupon = Coupon.objects.get(id=id)
+    coupon. is_active = False
+    coupon.save()
+    return redirect('view_coupon')
+
+def un_block_coupon(request,id):
+    coupon = Coupon.objects.get(id=id)
+    coupon. is_active = True
+    coupon.save()
+    return redirect('view_coupon')

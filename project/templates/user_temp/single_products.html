@@ -8,13 +8,20 @@
 
     {% block content %} 
 
+    <style>
+        
+    </style>
+
     <!-- Open Content -->
-    <section class="bg-light">
+    <section class="bg-light  mt-5">
         <div class="container pb-5">
             <div class="row">
-                <div class="col-lg-5 mt-5">
-                    <div class="card mb-3">
-                        <img class="card-img img-fluid" src="{{vehicle.image.url}}" alt="" id="">
+                <div class="col-md-6 mt-5  ">
+                   
+                    <div class="card mb-3 ">
+                        <div class="zoom-image" data-image="{{vehicle.image.url}}">
+                        <img class="card-img img-fluid" id="main_image" src="{{vehicle.image.url}}"  alt="" id="">
+                    </div>
                     </div>
                     <div class="row">
                         <!--Start Controls-->
@@ -33,21 +40,15 @@
                                 <!--First slide-->
                                 <div class="carousel-item active">
                                     <div class="row">
+                                      {% for items in variants %}
                                         <div class="col-4">
                                             <a href="#">
-                                                <img class="card-img img-fluid" src="{{vehicle.image1.url}}" alt="">
+                                                <img class="card-img img-fluid" onclick="change_image(this)" src="{{items.image1.url}}" style="height: 18vh;" alt="">
                                             </a>
                                         </div>
-                                        <div class="col-4">
-                                            <a href="">
-                                                <img class="card-img img-fluid" src="{{vehicle.image2.url}}" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="col-4">
-                                            <a href="">
-                                                <img class="card-img img-fluid" src="{{vehicle.image3.url}}" alt="">
-                                            </a>
-                                        </div>
+                                        {% endfor %}
+                                        
+                                        
                                     </div>
                                 </div>
                                
@@ -58,7 +59,7 @@
                     </div>
                 </div>
                 <!-- col end -->
-                <div class="col-lg-7 mt-5">
+                <div class="col-md-5 mt-5">
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2">{{vehicle.vehicle_name}}</h1>
@@ -92,36 +93,13 @@
                                 <li class="list-inline-item">
                                     <p class="text-muted"><strong>{{vehicle.range}}</strong></p>
                                 </li> <br>
-                                <li class="list-inline-item">
-                                    <h6>Price :</h6>
-                                </li>
-                                <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{{vehicle.price}}</strong></p>
-                                </li><br>
-                               
-                            <!-- </ul>
-
-                             <h6>Specification:</h6> 
-                             <ul class="list-unstyled pb-3">
-                                <li>Lorem ipsum dolor sit</li>
-                                <li>Amet, consectetur</li>
-                                <li>Adipiscing elit,set</li>
-                                <li>Duis aute irure</li>
-                                <li>Ut enim ad minim</li>
-                                <li>Dolore magna aliqua</li>
-                                <li>Excepteur sint</li>
-                            </ul>  -->
-
-                            <form action="" method="GET">
-                                <input type="hidden" name="product-title" value="Activewear">
-                            
                                 <div class="row pb-3">
                                    
-                                    <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg " name="submit" value="addtocard"><a href="{% url 'Cartapp:add_to_cart' vehicle.id %}" style="text-decoration: none; color: #fff;">ADD TO CART</a></button>
+                                    <div class=>
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm " name="submit" value="addtocard"><a href="#varients" style="text-decoration: none; color: rgb(98, 98, 90);">VIEW VARIENTS</a></button>
                                     </div>
                                 </div>
-                            </form>
+                            
 
                         </div>
                     </div>
@@ -132,11 +110,11 @@
     <!-- Close Content -->
 
     <!-- Start Article -->
-    <section class="bg-light">
+    <section class="bg-light  mb-5" id ='varients'>
         <div class="container py-5">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Featured Product</h1>
+                    <h1 class="h1">Varients</h1>
                     <p>
                         <!-- Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident. -->
@@ -145,48 +123,47 @@
             </div>
             <div class="row">
 
-
-                {% for items in featured %}
+                {% for items in all_variants %}
 
                 <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a href="{% url 'user:single_products' items.id %}">
-                            <img src="{{items.image.url}}" class="card-img-top  img-fluid border" alt="..." style="height: 30vh;">
-                        </a>
-                        <div class="card-body">
-                             <!-- <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li> 
-                                <li class="text-muted text-right"></li>
-                            </ul> -->
-                            <a href="{% url 'user:single_products' items.id %}" class="h2 text-decoration-none text-dark">{{items.vehicle_name}}</a>
-                            <p class="card-text">
-                              Range:  {{items.range}}
-                            </p>
-                            <p class="text-muted"> Top Speed :{{items.top_speed}}Km/hr</p>
-
-
-                            <p class="text-center"><a class="btn   btn-outline-warning "  href="{% url 'user:single_products' items.id %}">Explore Now</a></p>
+                    <div class="card mb-4 product-wap rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid"  src="{{items.image1.url}}" >
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                  
+                                    <li><a class="btn btn-success text-white mt-2" href="{% url 'user:variant_detail' items.pk %}"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="{% url 'Cartapp:add_to_cart' items.id %}"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{items.vehicle_id.vehicle_name}}</h5> <br>
+                            <p class="card-text">Color:{{items.color}}</p>
+                            <p class="card-text"></p>
+                            <p class="card-text">Price: {{items.price}}/rs</p>
+                          
+                            <p class="text-center mb-0"></p>
+                            <p class="text-center"><a class="btn   btn-outline-warning "  href="{% url 'user:variant_detail' items.pk %}">Explore Now</a></p>
+                        </div>
+                    </div>         
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
+
+
+   
     <!-- End Article -->
 
+    
 
 
     <!-- footer start -->
 
     <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
+        <div class="">
             <div class="row">
 
                 <div class="col-md-4 pt-5">
@@ -282,9 +259,52 @@
 
 
 
+<script>
+    function change_image(image_data){
+        document.getElementById('main_image').src = image_data.src
+    }
 
-
-
+   
+      document.addEventListener("DOMContentLoaded", function(event) {
+        });
+            jQuery(document).ready(function ($) {
+              $('.zoom-image img').click(function (event) {
+                var ix = $(this).offset().left;
+                var iy = $(this).offset().top;
+                console.log(ix + '-' + iy);
+                var mx = event.pageX;
+                var my = event.pageY;
+                console.log(mx + '-' + my);
+              })
+              $('.zoom-image img').hover(function () {
+                var img = $(this).attr('src');
+              $(this).after("<div class='hover-image' style='background-image: url(" + img + "); background-size: 300px;'></div>");
+              $(this).mousemove(function (event) {
+              // Mouse Position
+                var mx = event.pageX;
+                var my = event.pageY;
+              // Image Position
+                var ix = $(this).offset().left;
+                var iy = $(this).offset().top;
+              // Mouse Position Relavtive to Image
+                var x = mx - (ix);
+                var y = my - (iy);
+              // Image Height and Width
+                var w = $(this).width();
+                var h = $(this).height();
+              // Mouse Position Relative to Image, in %
+                var xp = (-x / w) * -100;
+                var yp = (-y / h) * -100;
+              $(this).parent().find('.hover-image').attr('style',
+                "background-image: url(" + img + "); background-size: 1000px; background-repeat: no-repeat; background-position: " + xp + "% " + yp + "%; top: " + y + "px; left: " + x + "px;");
+            });
+          }, function () {
+        $(this).parent().find('.hover-image').remove();
+      });
+    });
+    
+    </script>
+    
     
     {% endblock  %}
 
