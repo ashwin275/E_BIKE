@@ -5,7 +5,7 @@
     <div style="color: rgb(26, 24, 24);">
                   
         {% for messag in messages %}
-            <h6>{{messag}}</h6>
+            <h2>{{messag}}</h2>
         {%endfor%}
       </div>
 <div class="col-12">
@@ -39,7 +39,9 @@
                         <td><a href="{% url 'block_coupon' obj.id %}"><button class="del">Block</button></a> </td>
                         {% else %}
                         <td><a href="{% url 'un_block_coupon' obj.id %}"><button >un-block</button></a> </td>
+                       
                         {% endif %}
+                        <td><a href="{% url 'del_coupon' obj.id %}"><button  class="del" >DELETE</button></a> </td>
                         <!-- <td><a href="deleteuser/{{obj.id}}"><i class="fa-solid fa-trash del"></i></a> </td> -->
                         <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
                     </tr>

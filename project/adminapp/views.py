@@ -3,10 +3,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 #from django.db import models
 from user.models import myuser
+from.models import Banner
 from categories.models import Category
 #from categories.forms import categoryform
 from django.views.decorators.cache import cache_control
-from.forms import Couponforms
+from.forms import Couponforms,Bannerforms
 from Cartapp.models import Coupon
 # Create your views here.
 
@@ -225,3 +226,68 @@ def un_block_coupon(request,id):
     coupon. is_active = True
     coupon.save()
     return redirect('view_coupon')
+
+def del_coupon(request,id):
+    coupon = Coupon.objects.get(id=id)
+    coupon.delete()
+    return redirect('view_coupon')
+
+
+
+#=============================Banners===============#
+
+
+def view_banner(request):
+    if 'admin' in request.session:
+        banner = Banner.objects.all()
+        context = {
+              'banner':banner
+          }
+        return render(request,'admin_temp/view_banner.html',context)
+
+
+
+def add_banner(request):
+    if 'admin' in request.session:
+        form = Bannerforms()
+        
+        if request.method == 'POST':
+           form = Bannerforms(request.POST, request.FILES)
+           if form.is_valid:
+               form.save()
+               messages.info(request,'Banner added succusfully')
+               return redirect('view_banner') 
+           else:
+               messages.info(request,'Data not valid')
+               return redirect('view_banner') 
+        context = {
+            'form':form
+        }
+        return render(request,'admin_temp/banner.html',context)
+
+
+    return render(request,'admin_temp/banner.html')
+
+
+def delete_banner(request,id):
+     banner = Banner.objects.get(id=id)
+     banner.delete()
+     return redirect('view_banner') 
+
+def update_banner(request):
+     
+     if 'admin' in request.session:
+         banner = Banner.objects.get(id=id)
+         if request.method == 'POST':
+            form = Bannerforms(request.POST, request.FILES,instance=banner)
+            if form.is_valid():
+                form.save()
+                messages.success(request, ('Banner updated!'))
+            else:
+                 messages.success(request, ('Data is not valid!'))
+            return redirect('view_banner')
+         else:
+             form = Bannerforms( instance=banner)
+
+     return render(request,'vendor_temp/update_variant.html',{'form':form})
+     

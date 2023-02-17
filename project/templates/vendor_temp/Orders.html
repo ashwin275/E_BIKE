@@ -9,7 +9,8 @@
         <div class=" rounded h-100 p-4">
             <h2 class="mb-4">ORDERS </h2>
             
-            <hr><hr>
+            <hr><a href="{% url 'vendor:Returned_orders' %}" ><button class="btn btn-outline-warning btn-sm">Returned Orders</button></a>
+            <hr>
             <div class="table-responsive">
              
                 <table class="table">
@@ -17,33 +18,52 @@
                         <tr>
                             <th scope="col">NO</th>
                             <th scope="col">Vehicle</th>
+                            <th scope="col">Color</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Order number</th>
                     
                             <th scope="col">Status</th>
 
-                            <th scope="col">IMAGE</th>
+                            <th scope="col">Change Status</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
+                        
                       {% for items in orderd_vehicle %}
+                      {%if items.status != 'Returned'%}
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
                             <td>{{items.vehicles}}</td>
+                            <td>{{items.vehicles.color}}</td>
                             <td>{{items.quantity}}</td>
                             <td>{{items.order.order_number}}</td>
                             <td>{{items.status}}</td>
+
                             
-                            
-                            
-                            
-                  
-                    <td><a href="{% url 'vendor:order_details' items.id %}"><button   class="un del btn btn-outline-success">Order Detail</button></a> </td>
-                    {%if items.status != 'Cancelled'%}
-                    <td> <a href="{% url 'vendor:cancel_order' items.id %}"> <button type="button" class="btn btn-outline-danger btn-sm me-2">CANCEL ORDER</button></a></td>
+                            {%if items.status == 'Confirmed'%}
+                            <td><a href="{% url 'vendor:status_change' items.id %}"><button   class="un del btn btn-outline-warning">Shipped</button></a> </td>
+                            {%endif%}
+                            {%if items.status == 'Shipped'%}
+                            <td><a href="{% url 'vendor:status_change' items.id %}"><button   class="un del btn btn-outline-secondary">Out for Delivery</button></a> </td>
+                            {%endif%}
+                            {%if items.status == 'Out_for_delivery'%}
+                            <td><a href="{% url 'vendor:status_change' items.id %}"><button   class="un del btn btn-outline-primary">Deliverd</button></a> </td>
+                            {%endif%}
+                            {%if items.status == 'Delivered'%}
+                            <td><a href="{% url 'vendor:status_change' items.id %}"><button   class="un del btn btn-outline-success">Returned</button></a> </td>
+                            {%endif%}
                        
-                    {%endif%}
+                            
+                            
+                            
+                            
+                            <td> <a href="{% url 'vendor:cancel_order' items.id %}"> <button type="button" class="btn btn-outline-danger btn-sm me-2">CANCEL ORDER</button></a></td>
+                    <td><a href="{% url 'vendor:order_details' items.id %}"><button   class="un del btn btn-outline-success">Order Detail</button></a> </td>
+                    
+                    
+                       
+                   
                          <!-- {%if items.is_available == False%}
                             <td><a href="activevehicle/{{items.pk}}"><button class="un btn btn-outline-success">ACTIVE</button></a></td>
                              {%else%}
@@ -54,6 +74,7 @@
                     
                             <!-- <td><a href="update/{{obj.id}}"><i class="fas fa-edit ic"></i></a></td> -->
                         </tr>
+                        {%endif%}
                         {% endfor %}
                     </tbody>
                 </table>

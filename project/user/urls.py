@@ -39,8 +39,10 @@ urlpatterns = [
 
 
     path('search',views.search,name="search"),
+    path('auto_search_ajax/',views.auto_search_ajax,name='auto_search_ajax'),
 
-    path('category/<int:id>',views.category_filter,name="category_filter")
+    path('category/<int:id>',views.category_filter,name="category_filter"),
+    
 
 
 ]

@@ -4,7 +4,7 @@
 {% block content %} 
 
 
-<div class="container mb-5">
+<div class="container mb-5 section3 mt-5 ">
     <main>
         <div class="py-5 text-center">
             <h2></h2>
@@ -12,15 +12,15 @@
         <div class="row g-5">
             <div class="col-md-5 col-lg-4 order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-primary">Your Address</span>
+                    <span class="text-black">Your Address</span>
                     <span class="badge bg-primary rounded-pill"></span>
                 </h4>
                 
                     {% for adress in address %}
-                    <ul class="list-group mb-3"></ul>
-                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <ul class="list-group mb-3 section3"></ul>
+                    <li class="list-group-item d-flex justify-content-between  section3">
                        
-                        <div class="form-check">
+                        <div class="form-check ">
                             <!-- <input type="checkbox" class="form-check-input" name="" id="same-address">
                             <label class="form-check-label" for="same-address"> -->
                                 
@@ -52,6 +52,11 @@
                 </form>  -->
             </div>
             <div class="col-md-7 col-lg-8">
+                <div style="color: rgb(203, 36, 36);">
+                    {% for messag in messages %}
+                        <h5>{{messag}}</h5>
+                    {%endfor%}
+                </div>
                 <h4 class="mb-3">Billing address</h4>
 
 
@@ -206,7 +211,7 @@
     
                     <hr class="my-4"> -->
     
-                    <button class="w-100 btn btn-danger btn-lg mt-5" type="submit">ADD ADDRESS</button>
+                    <button class="w-100 btn btn-danger btn-lg mt-5 mb-5" type="submit">ADD ADDRESS</button>
 
 
                 </form>

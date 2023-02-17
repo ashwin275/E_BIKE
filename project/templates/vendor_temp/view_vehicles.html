@@ -27,7 +27,7 @@
                             <th scope="col">Avaliable</th>
 
                             
-                            <th scope="col">Remaining</th>
+                          
                             <th scope="col">IMAGE</th>
                         </tr>
                     </thead>
@@ -39,12 +39,12 @@
                             <td>{{items.category}}</td>
                             <td>{{items.slug}}</td>
                             <td>{{items.is_available}}</td>
-                            <td>{{items.remaining}}</td>
                             
                             
                             
                             
-                    <td><img src="{{items.image.url}}" class="img-fluid rounded-start" style="height: 100px; width: 100px;"  alt="..."></td>
+                            
+                    <td><img src="{{items.image.url}}" class="img-fluid rounded-start" style="height: 10vh; width: 10vw;"  alt="..."></td>
                     <td><a href="{% url 'vendor:edit_vehicle' items.id %}"><button   class="un del btn btn-outline-success btn-sm">EDIT</button></a> </td>
                    
                     <td> <a href="{% url 'vendor:delete_vehicle' items.id %}"> <button type="button" class="btn btn-outline-danger btn-sm me-2">DELETE</button></a></td>

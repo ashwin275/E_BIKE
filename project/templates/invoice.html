@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   
+
+
+
+
+    
+    <div class="card  container shadow-lg p-3 mb-5 bg-body rounded  mt-5 rare-wind-gradient color-block mb-3 mx-auto  z-depth-1-half">
+        <div class="card-body">
+          <div class="container mb-5 mt-3">
+            <div class="row d-flex align-items-baseline">
+              <div class="col-xl-9">
+                <p style="color: #7e8d9f;font-size: 20px;">Invoice  <strong></strong></p>
+              </div>
+            
+              <hr>
+            </div>
+      
+            <div class="container">
+              
+      
+      
+              <div class="row">
+                <div class="col-xl-8">
+                  <ul class="list-unstyled">
+                    <li class="text-muted">To: <span style="color:#5d9fc5 ;">{{order.address.first_name}}{{order.address.last_name}}</span></li>
+                    <li class="text-muted">{{order.address.address1}},{{order.address.addressline2}}</li>
+                    <li class="text-muted">{{order.address.city}},{{order.address.state}}</li>
+                    <li class="text-muted"><i class="fas fa-phone"></i> {{order.address.mobile}}</li>
+                  </ul>
+                </div>
+                <div class="col-xl-4">
+                  <p class="text-muted">Invoice</p>
+                  <ul class="list-unstyled">
+                    <li class="text-muted"> <span
+                       
+                        class="fw-bold">ORDER ID :</span>{{order.order_number}}</li>
+                       
+                    <li class="text-muted"> <span
+                        class="fw-bold"> Date: </span>{{order.created_at}}</li>
+                    <!-- <li class="text-muted"><i class="fas fa-circle" style="color:#84B0CA ;"></i> <span
+                        class="me-1 fw-bold">Status:</span><span class="badge bg-warning text-black fw-bold">
+                        Unpaid</span></li> -->
+                  </ul>
+                </div>
+              </div>
+      
+              <div class="row my-2 mx-1 justify-content-center">
+                <table class="table-responsive">
+                  <thead style="background-color:#edf0f3 ;" class="text-black">
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Vehicle</th>
+                      <th scope="col">Qty</th>
+                      <th scope="col">Sub Total</th>
+                      <th scope="col">Payment Method</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                         {% for items in ordered_item %} 
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{items.vehicles.vehicle_id.vehicle_name}}</td>
+                      <td>{{items.quantity}}</td>
+                      <td>{{items.sub_total}}</td>  
+                      <td>{{order.payment_option}}</td>
+                      <td></td>
+                    </tr>
+                    {% endfor %} 
+                   
+                  </tbody>
+                  <hr>
+                </table>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-xl-8">
+                  <p class="ms-3"></p>
+      
+                </div>
+                <div class="col-xl-3 rounded border" >
+                  <ul class="list-unstyled">
+                    <li class="text-muted ms-3"><span class="text-black me-4">Total :</span>{{order.order_total}}</li>
+                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax :</span>{{order.tax}}</li>
+                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Total Amount :</span>{{order.order_total}}</li>
+                    <hr>
+                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Booking Amount :</span>{{order.booking_amount}}</li>
+                    <hr>
+                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Balance :</span>{{order.pending_amount}}</li>
+                  </ul>
+                  
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-xl-10">
+                  <p>Thank you for your purchase</p>
+                </div>
+                <!-- <div class="col-xl-2">
+                  <button type="button" class="btn btn-primary text-capitalize"
+                    style="background-color:#60bdf3 ;">Pay Now</button>
+                </div> -->
+              </div>
+      
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    
+</body>
+</html>

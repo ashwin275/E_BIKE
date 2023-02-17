@@ -12,13 +12,14 @@ STATUS = (
         ('Out_for_delivery','Out_for_delivery'),
         ('Delivered','Delivered'),
         ('Cancelled','Cancelled'),
-        ('Returned','Returned')
+        ('Returned','Returned'),
+        
     )
 
 PAYMENTS=(
        
-        ('Razorpay','Razorpay'),
-        ('cash On delivery','cash On delivery'),
+        ('razorpay','razorpay'),
+        ('COD','COD'),
     )
 
 class Orders(models.Model):
@@ -35,6 +36,7 @@ class Orders(models.Model):
     is_ordered=models.BooleanField(default=False)   
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    booking_amount = models.BigIntegerField(default=0)
 
 class OrderVehicle(models.Model):
     order = models.ForeignKey(Orders,on_delete=models.CASCADE)

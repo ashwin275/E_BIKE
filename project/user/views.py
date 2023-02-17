@@ -21,6 +21,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from.helpers import send_forget_password_mail
 import uuid
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -31,13 +32,13 @@ def home(request):
             category = Category.objects.all
             image = Category.objects.filter(category_name = 'SPORTS')
             vehicles = Vehicles.objects.filter(is_available=True)
-            cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
+           
             print(image)
             print('ioioi')
             context ={
            'category':category,
             'vehicles':vehicles,
-            'cart_itemscount':cart_itemscount,
+          
             'image':image
             
              }
@@ -198,7 +199,7 @@ def single_products(request,pk):
         'featured':featured,
         'variants': variants,
         'all_variants':all_variants,
-        # 'cart_itemscount':cart_itemscount,
+        
         #'variant':variant,
     }
     return render(request,'user_temp/single_products.html',context)
@@ -239,6 +240,18 @@ def search(request):
         # 'cart_itemscount':cart_itemscount
     }
     return render(request,'user_temp/shop.html',context)
+
+
+def auto_search_ajax(request):
+    
+    #vehicles = Vehicles.objects.all
+    vehicles = Vehicles.objects.filter(is_available=True).values_list('vehicle_name',flat=True,)
+    vehicle_list = list(vehicles)
+    print(vehicle_list)
+    return JsonResponse(vehicle_list,safe=False)
+
+
+
 
 def category_filter(request,id):
      

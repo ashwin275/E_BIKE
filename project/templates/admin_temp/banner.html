@@ -1,0 +1,42 @@
+{% extends 'admin_temp\admin_panel.html' %}
+
+
+    {% block content %} 
+
+    {% load crispy_forms_tags %} 
+
+    <div class="d-table-cell align-middle">
+
+        <div class="text-left mt-4">
+            <h1 class="h2">ADD BANNERS </h1>
+            <p class="lead">
+                 <!-- User : <span class="sp">{{upd.username}}</span> -->
+            </p>
+        </div>
+       <hr>
+        <div class="card">
+            <div class="card-body">
+                <div class="m-sm-4">
+                        
+                    <form method="POST" action="" enctype="multipart/form-data"  >
+                      {% csrf_token  %}
+                      {{ form.as_p }}
+                      
+                         <div class="text-left mt-3">
+                          <button type="submit" class="btn btn-primary">
+                            
+                            ADD
+                          </button>
+                        </div> 
+
+
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    {% endblock  %}

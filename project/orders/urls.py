@@ -9,6 +9,7 @@ urlpatterns = [
       
       path('order_success',views.Book_now,name="Book_now"),
       path('handlerrequest',views.handlerrequest,name="handlerrequest"),
-      path('paymentfailed',views.payment_failed,name='payment_failed')
+      
+      path('download_invoice/<int:id>',views.download_invoice,name="download_invoice"),
 
 ]

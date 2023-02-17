@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from user.models import myuser
 from categories.models import Category
+from datetime import datetime
+from django.utils import timezone
 # Create your models here.
 
 class Vehicles(models.Model):

@@ -8,7 +8,7 @@ urlpatterns = [
     path('verifyvender',views.verify_vender,name='verify_vender'),
     path('vendor-signin',views.vendor_signin,name='vendor_signin'),
     path('vendor_logout',views.vendor_logout,name='vendor_logout'),
-    path('vendordashboard',views.vendor_dashboard,name='vendor_dashboard'),
+   # path('vendordashboard',views.vendor_dashboard,name='vendor_dashboard'),
     path('vendor_profile',views.vendor_profile,name='vendor_profile'),
 
 
@@ -28,9 +28,17 @@ urlpatterns = [
     path('de-activevariant/<int:pk>',views.de_active_variant,name='de_active_variant'),
 
     path('Orders',views.Orders,name='Orders'),
+    path('cancelled_orders',views.cancelled_orders,name='cancelled_orders'),
+    path('returned_orders',views.Returned_orders,name='Returned_orders'),
     path('cancel-order/<int:pk>',views.cancel_order,name='cancel_order'),
+    path('status_change/<int:pk>',views.status_change,name='status_change'),
+  
     path('order_detail/<int:pk>',views.order_details,name='order_details'),
+    path('sales_report',views.sales_report,name='sales_report'),
+    path('search_sales_report',views.search_sales_report,name='search_sales_report'),
+    path('dash_board',views.dash_board,name='dash_board'),
+     path('Excel_sales_report', views.download_sales_report, name='download_sales_report'),
    
-
-
+    path('pdf-download',views.sales, name='pdf_download'),
+    path('filter_dash_board',views.filter_dash_board,name='filter_dash_board')
 ]

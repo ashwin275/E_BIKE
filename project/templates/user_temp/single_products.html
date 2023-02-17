@@ -13,8 +13,8 @@
     </style>
 
     <!-- Open Content -->
-    <section class="bg-light  mt-5">
-        <div class="container pb-5">
+    <section class="bg-white ">
+        <div class="container mb-5 shadow-lg  mt-5 bg-body rounded">
             <div class="row">
                 <div class="col-md-6 mt-5  ">
                    
@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <!-- col end -->
-                <div class="col-md-5 mt-5">
+                <div class="col-md-6 mt-5">
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2">{{vehicle.vehicle_name}}</h1>
@@ -110,8 +110,8 @@
     <!-- Close Content -->
 
     <!-- Start Article -->
-    <section class="bg-light  mb-5" id ='varients'>
-        <div class="container py-5">
+    <section class="bg-white   " id ='varients'>
+        <div class="container  shadow-lg p-3 mb-5 bg-body rounded">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
                     <h1 class="h1">Varients</h1>
@@ -128,19 +128,28 @@
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid"  src="{{items.image1.url}}" >
+                            <img class="card-img rounded-0 img-fluid" style="height: 40vh; width: 60vw;"  src="{{items.image1.url}}" >
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                   
                                     <li><a class="btn btn-success text-white mt-2" href="{% url 'user:variant_detail' items.pk %}"><i class="far fa-eye"></i></a></li>
+                                    {% if items.remaining != 0 %}
                                     <li><a class="btn btn-success text-white mt-2" href="{% url 'Cartapp:add_to_cart' items.id %}"><i class="fas fa-cart-plus"></i></a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title text-center">{{items.vehicle_id.vehicle_name}}</h5> <br>
                             <p class="card-text">Color:{{items.color}}</p>
-                            <p class="card-text"></p>
+
+                            {% if items.remaining == 0 %}
+                            
+                               <p style="color: red  ; font-weight: 400 !important; font-size: small;">OUT OF STOCK</p>
+                               {% else%}
+                           
+                            <p class="card-text" style="font-weight: 400 !important; font-size: small;">IN STOCK </p>
+                            {% endif %}
                             <p class="card-text">Price: {{items.price}}/rs</p>
                           
                             <p class="text-center mb-0"></p>

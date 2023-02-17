@@ -52,26 +52,27 @@
               
                           <div class="row align-items-center">
                             
-                            <div class="col-md-2 d-flex justify-content-center">
+                            <div class="col-md-1 d-flex justify-content-center">
                               <div>
-                                <p class="small text-muted mb-4 pb-2">Order No</p>
+                                <p class="small text-muted mb-4 pb-2">Order:No</p>
                                 <p class="lead fw-normal mb-0">{{items.order_number}}</p>
                               </div>
                             </div>
                             
-                            <!-- <div class="col-md-2 d-flex justify-content-center">
-                              <div>
-                                <p class="small text-muted mb-4 pb-2">Quantity</p>
-                                <p class="lead fw-normal mb-0">1</p>
-                              </div>
-                            </div> -->
-                            <div class="col-md-3 d-flex justify-content-center">
+                            
+                            <div class="col-md-2 d-flex justify-content-center">
                               <div>
                                 <p class="small text-muted mb-4 pb-2">Status</p>
                                 <p class="lead fw-normal mb-0">{{items.status}}</p>
                               </div>
                             </div>
-                            <div class="col-md-3 d-flex justify-content-center">
+                            <div class="col-md-1 d-flex justify-content-center">
+                              <div>
+                                <p class="small text-muted mb-4 pb-2">Type</p>
+                                <p class="lead fw-normal mb-0">{{items.payment_option}}</p>
+                              </div>
+                            </div>
+                            <div class="col-md-2 d-flex justify-content-center">
                               <div>
                                 <p class="small text-muted mb-4 pb-2">Orderd Date</p>
                                 <p class="lead fw-normal mb-0">{{items.created_at}}</p>
@@ -80,8 +81,15 @@
 
                             <div class="col-md-2 d-flex justify-content-center">
                                 <a href="{% url 'user:order_details' items.id %}"> <button type="button" class="btn btn-outline-success btn-sm me-2">Order Details</button></a>
+                                
                                 <!-- <button type="button" class="btn btn-primary btn-lg">Add to cart</button> -->
                               </div>
+                              {%if items.payment_option != 'COD'%}
+                            <div class="col-md-2 d-flex justify-content-center">
+                              <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"  href="{% url 'Orders:download_invoice' items.id  %}"><i
+                                class="fas fa-print text-primary"></i> Print</a>
+                              </div>
+                              {%endif%}
                               {%if items.status != 'Cancelled'%}
                             <div class="col-md-2 d-flex justify-content-center">
                                <a href="{% url 'user:cancel_order' items.id %}"> <button type="button" class="btn btn-outline-danger btn-sm me-2">Cancel Order</button></a>

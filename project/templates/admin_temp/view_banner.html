@@ -1,0 +1,55 @@
+{% extends 'admin_temp\admin_panel.html' %}
+
+
+    {% block content %} 
+    <div style="color: rgb(26, 24, 24);">
+                  
+        {% for messag in messages %}
+            <h2>{{messag}}</h2>
+        {%endfor%}
+      </div>
+<div class="col-12">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h1 class="mb-4">BANNER MANAGEMENT</h1>
+        <hr><hr>
+        <div class="table-responsive">
+            <td><a href="{% url 'add_banner' %}"><button>ADD BANNERS</button></a> </td><br><br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Image</th>
+                       
+                        
+
+
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for obj in banner %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{obj.Description}}</td>
+                        <td><img src="{{obj.image.url}}" alt="" style="display: 10vh; width: 10vw;"></td>
+                         
+                     
+                        <td><a href=""><button class="del">Block</button></a> </td>
+                      
+                        <td><a href=""><button >Update</button></a> </td>
+                       
+                  
+                        <td><a href="{% url 'delete_banner' obj.id %}"><button  class="del" >DELETE</button></a> </td>
+
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+ 
+    
+ {% endblock  %}

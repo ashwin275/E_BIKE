@@ -11,12 +11,16 @@
           <div class="col-xl-9">
             <p style="color: #7e8d9f;font-size: 20px;">Invoice  <strong></strong></p>
           </div>
-          <!-- <div class="col-xl-3 float-end">
-            <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"><i
+           <div class="col-xl-3 float-end">
+
+            {%if get_order.payment_option != 'COD'%}
+            <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark"  href="{% url 'Orders:download_invoice' get_order.id  %}"><i
                 class="fas fa-print text-primary"></i> Print</a>
-            <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
-                class="far fa-file-pdf text-danger"></i> Export</a>
-          </div> -->
+                {%endif%}
+
+            <!-- <a class="btn btn-light text-capitalize" data-mdb-ripple-color="dark"><i
+                class="far fa-file-pdf text-danger"></i> Export</a> -->
+          </div> 
           <hr>
         </div>
   

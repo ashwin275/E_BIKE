@@ -1,7 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages 
+from django.http import HttpResponse
+from openpyxl import Workbook
+from django.http import JsonResponse,response
 from django.contrib.auth import authenticate,login,logout
-from django.db import models
+#from django.db import models
+# import pandas as pd 
+from django.db.models import Count,F , Sum
+
 from user.models import myuser,Userdetail
 from product.models import Vehicles,Variant
 from categories.models import Category
@@ -10,6 +16,23 @@ from django.views.decorators.cache import cache_control
 from product.forms import Vehicleforms ,Variantform
 from orders.models import OrderVehicle,Orders
 from django.views.decorators.cache import never_cache
+from django.utils import timezone
+from datetime import datetime
+from django.db.models import Q
+
+
+
+from io import BytesIO
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter, landscape
+
+from django.http import HttpResponse
+from openpyxl import Workbook
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from datetime import date
 #from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -18,7 +41,7 @@ from django.views.decorators.cache import never_cache
 @cache_control(no_cache = True,must_revalidate = True,no_store = True)
 def vendor_register(request):
     if 'vendor' in request.session:
-        return redirect ('vendor:vendor_dashboard')
+        return redirect ('vendor:dash_board')
 
     if request.method == 'POST':
         first_name = request.POST['username']
@@ -78,10 +101,10 @@ def verify_vender(request):
             messages.info(request,'invalid otp number')
     return render(request,'register_otp.html')
 
-@cache_control(no_cache = True,must_revalidate = False,no_store = True)
+@never_cache
 def vendor_signin(request):
     if 'vendor' in request.session:
-        return redirect ('vendor:vendor_dashboard')
+        return redirect ('vendor:dash_board')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -99,16 +122,123 @@ def vendor_signin(request):
                     if vendor.is_active == True:
                           request.session['vendor']=email
                           login(request,vendor)
-                          return redirect('vendor:vendor_dashboard')
+                          return redirect('vendor:dash_board')
                     else:
                          messages.info(request,'you are blocked by admin')
                 else:
                     messages.info(request,'you are not a vendor')
-                    
             else:
                 messages.info(request,'You are blocked by admin')
             return redirect('vendor:vendor_signin')
     return render (request,'vendor_temp/vendor_signin.html')
+
+
+@never_cache
+def dash_board(request):
+    if 'vendor' in request.session:
+        month = timezone.now().month
+        current_month = datetime.now().strftime('%B')
+        print(current_month)
+        vehicle = Vehicles.objects.filter(vendor_id = request.user)
+#  sales chart for monthly saled vehicles and quantity
+        vehicle_list = []
+        quantity = []
+        orders_chart =[]
+        vehicle_order  = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,vehicles__vehicle_id__created_date__month=month)
+        for vehicle in vehicle_order:
+            if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
+               i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
+               quantity[i] += vehicle.quantity
+            else:
+                vehicle_list.append(vehicle.vehicles.vehicle_id.vehicle_name)
+                quantity.append(vehicle.quantity)
+
+      
+
+       
+
+
+    # charts for   cancelled orders and deliverd orders
+        Success_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').count()
+        cancelled_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled').count()
+        orders_chart.append(Success_orders)
+        orders_chart.append(cancelled_orders)
+        print(orders_chart)
+        context = {
+           'vehicle_list':vehicle_list,
+            'quantity':quantity,
+            'orders_chart':orders_chart,
+          }
+        return render(request,'vendor_temp/chart_js.html',context)
+    else:
+        messages.info(request,"please login")
+        return redirect ('vendor:vendor_signin')
+
+def filter_dash_board(request):
+    if 'vendor' in request.session:
+        start_date = request.GET.get('start_date')
+        end_date = request.GET.get('end_date')
+
+        #filter sales and no #
+        vehicle = Vehicles.objects.filter(vendor_id = request.user)
+        vehicle_list = []
+        quantity = []
+        vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__gte=start_date) & Q(order__created_at__lte =end_date))
+
+        for vehicle in vehicle_order:
+            if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
+               i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
+               quantity[i] += vehicle.quantity
+            else:
+                vehicle_list.append(vehicle.vehicles.vehicle_id.vehicle_name)
+                quantity.append(vehicle.quantity)
+        
+        print(quantity)
+        print(vehicle_list)
+       
+
+        # filter order and canceled orders #
+        Success_orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date)).count()
+        cancelled_orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled') &Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date) ).count()
+        print(Success_orders)
+        print(cancelled_orders)
+
+        data = {
+            
+            'data': [Success_orders,cancelled_orders],
+            'vehicle_list':vehicle_list,
+            'quantity':quantity,
+
+        }
+        return JsonResponse(data)
+
+
+
+
+
+
+# def search_dashboard(request):
+#     if request.method == 'GET':
+#             start_date_str = request.GET.get('start_date')
+#             end_date_str = request.GET.get('end_date')
+
+#             start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+#             end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+
+#             vehicle = Vehicles.objects.filter(vendor_id = request.user)
+#             vehicle_list = []
+#             quantity = []
+#             orders_chart =[]
+#             vehicle_order  = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,)
+
+#             context = {
+#            'vehicle_list':vehicle_list,
+#             'quantity':quantity,
+#             'orders_chart':orders_chart,
+#           }
+#             return render(request,'vendor_temp/chart_js.html',context)
+
+
 
 
 def vendor_logout(request):
@@ -118,20 +248,10 @@ def vendor_logout(request):
               return redirect('vendor:vendor_signin')
 
 
-@cache_control(no_cache = True,must_revalidate = False,no_store = True)
-def vendor_dashboard(request):
-    if 'vendor' in request.session:
-       
-        return redirect('vendor:vendor_profile')
-
-        
-    else:
-        messages.info(request,"please login")
-        return redirect ('vendor:vendor_signin')
 
 def vendor_profile(request):
+    print('bnbnbmn')
     try:
-
         email =  request.user.email
         user = request.user
         detail = myuser.objects.get(email = email)
@@ -140,8 +260,10 @@ def vendor_profile(request):
         context = {
             'detail':detail,
             }
+       
         return render(request,'vendor_temp/panel.html',context)
     except:
+       
         return render(request,'vendor_temp/panel.html')
 
     
@@ -153,11 +275,11 @@ def vendor_profile(request):
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
 def view_vehicles(request):
     if 'vendor' in request.session:
-        
+        print('jkhkh')        
         try:
 
-            vendor = myuser.objects.get(email=request.user.email)
-            vehicle = Vehicles.objects.filter(vendor_id = vendor.id ,is_available =True)
+            #vendor = myuser.objects.get(email=request.user.email)
+            vehicle = Vehicles.objects.filter(vendor_id = request.user ,is_available =True)
             return render(request,'vendor_temp/view_vehicles.html',{'vehicle':vehicle})
         except:
             return redirect('vendor:vendor_signin')
@@ -315,13 +437,28 @@ def deactive_vehicle(request,pk):
 def Orders(request):
     if 'vendor' in request.session:
          vendor = myuser.objects.get(email=request.user.email)
-     
     # vehicle = Vehicles.objects.filter(vendor_id = vendor.id )
-         orderd_vehicle =OrderVehicle.objects.filter(vehicles_id__vendor_id =vendor.id)
+         orderd_vehicle =OrderVehicle.objects.filter(vehicles_id__vehicle_id__vendor_id =vendor.id,).order_by('-id').exclude(status ='Cancelled',)
          context = { 
           'orderd_vehicle':orderd_vehicle
            }
          return render (request,'vendor_temp/Orders.html',context)
+    
+def cancelled_orders(request):
+       vendor = myuser.objects.get(email=request.user.email)
+       orderd_vehicle =OrderVehicle.objects.filter(vehicles_id__vehicle_id__vendor_id =vendor.id,status ='Cancelled').order_by('-id')
+       context = { 
+          'orderd_vehicle':orderd_vehicle
+           }
+       return render (request,'vendor_temp/cancelled_orders.html',context)
+
+def Returned_orders(request):
+       vendor = myuser.objects.get(email=request.user.email)
+       orderd_vehicle =OrderVehicle.objects.filter(vehicles_id__vehicle_id__vendor_id =vendor.id,status ='Returned').order_by('-id')
+       context = { 
+          'orderd_vehicle':orderd_vehicle
+           }
+       return render (request,'vendor_temp/cancelled_orders.html',context)
 
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
 def cancel_order(request,pk):
@@ -330,6 +467,23 @@ def cancel_order(request,pk):
          orders.status = 'Cancelled'
          orders.save()
          return redirect('vendor:Orders')
+
+
+def status_change(request,pk):
+    if 'vendor' in request.session:
+         orders= OrderVehicle.objects.get(id = pk)
+         if orders.status == 'Confirmed':
+             orders.status = 'Shipped'
+            
+         elif orders.status == 'Shipped':
+             orders.status = 'Out_for_delivery'
+         elif orders.status == 'Out_for_delivery':
+             orders.status = 'Delivered'
+         else :
+             orders.status = 'Returned'
+         orders.save()   
+         return redirect('vendor:Orders')
+
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
 def order_details(request,pk):
     if 'vendor' in request.session:
@@ -342,39 +496,158 @@ def order_details(request,pk):
 
 
 
+    
+
+
+#===========Sales report================#
+@never_cache
+def sales_report(request):
+    if 'vendor' in request.session:
+        total_revenue = 0
+        orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').order_by('order__created_at')
+
+        for order in orders :
+            total_revenue += order.sub_total()
+    
+        
+        context = {
+
+              'orders':orders,
+              'total_revenue':total_revenue
+           }
+        return render(request,'vendor_temp/sales report.html',context)
+    else:
+        messages.info(request,"please login")
+        return redirect ('vendor:vendor_signin')
+
+@never_cache
+def search_sales_report(request):
+    if 'vendor' in request.session:
+        if request.method == 'GET':
+            start_date_str = request.GET.get('start_date')
+            end_date_str = request.GET.get('end_date')
+            
+     # Convert start_date and end_date to datetime objects
+
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+
+    # Create a Q object to filter based on the date range
+
+            orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date))
+            
+            total_revenue = 0
+    
+            for order in orders :
+                  total_revenue += order.sub_total()
+    
+        
+            context = {
+
+               'orders':orders,
+                'total_revenue':total_revenue
+              }
+            return render(request,'vendor_temp/sales report.html',context)
+        else:
+            messages.info(request,"please login")
+            return redirect ('vendor:vendor_signin')
+
+
+def download_sales_report(request):
+    # Generate sales report data
+    sales_data = [
+        ['Order Id', 'Date', 'Vehicle', 'Color', 'Quantity', 'Price', 'Total'],
+    ]
+    orders = OrderVehicle.objects.filter(
+        vehicles__vehicle_id__vendor_id=request.user,
+        status='Delivered'
+    ).order_by('order__created_at')
+  
+    for order in orders:
+        sub_total = order.quantity * order.price
+        sales_data.append([
+            order.order.order_number,
+            order.order.created_at.strftime('%m/%d/%Y %I:%M %p'),
+            order.vehicles.vehicle_id.vehicle_name,
+            order.vehicles.color,
+            order.quantity,
+            order.price,
+            sub_total
+        ])
+    
+    # Create an Excel file and add the sales report data to it
+    wb = Workbook()
+    ws = wb.active
+    ws.title = 'Sales Report'
+    for row in sales_data:
+        ws.append(row)
+
+    # Offer the Excel file for download
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=sales_report.xlsx'
+    wb.save(response)
+    return response
+
+
+#===============pdf download sales report==================#
+def sales(request):
+    # Retrieve data for the report
+    orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').order_by('order__created_at')
+     # Create a buffer to receive PDF data
+    buffer = BytesIO()
+
+     # Create the PDF object, using the BytesIO object as its "file."
+    doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+    # Set up the response
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="sales_report.pdf"'
+
+    # Create the PDF object
+    doc = SimpleDocTemplate(response, pagesize=letter)
+    elements = []
+
+    # Add the report title and date to the elements list
+    title_style = getSampleStyleSheet()["Title"]
+    elements.append(Paragraph("Sales Report", title_style))
+    date_style = getSampleStyleSheet()["Normal"]
+    date_string = "Date:" + date.today().strftime("%m/%d/%Y")
+    elements.append(Paragraph(date_string, date_style))
+
+    # Create the table object and add it to the elements list
+    data = [
+        ['Order No', 'Date', 'Vehicle','Quantity','Color', 'Price', 'Total'],
+    ]
+    # Initialize the total variable
+    grand_total = 0
+    for sale in orders:
+        total = sale.quantity*sale.price
+        data.append([sale.order.order_number, sale.order.created_at.strftime("%m/%d/%Y"), sale.vehicles.vehicle_id.vehicle_name, sale.quantity,sale.vehicles.color, sale.price, total])
+        grand_total += total
+
+   # Add the grand total to the data list
+    data.append(['', '', '', '', '', 'Grand Total', grand_total])
+    table = Table(data)
+    
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(table)
+
+    # Build the PDF document and return the response
+    doc.build(elements)
+    return response
 
 
 
 
-
-# def add_varient(request,pk):
-#     if request.method == 'POST':
-#         vehicle = Vehicles.objects.get(id=pk)
-#         price =request.POST['price']
-#         image1 = request.FILES['image1']
-#         image2  = request.FILES['image2']
-#         image3 = request.FILES['image3']
-#         color =request.POST['color']
-       
-#         remaining = request.POST['remaining']
-
-
-#         variant = Variant.objects.create(vehicle_id = vehicle,image1=image1,image2=image2,image3=image3,price=price,remaining=remaining,color_name=color)
-#         variant.save()
-#         return redirect('view_vehicles')
-
-
-
- # vehicle_name = request.POST['vehicle_name']
-            # category = request.POST['category']
-            # Range = request.POST['range']
-            # speed = request.POST['speed']
-            # slug = request.POST['slug']
-            # image = request.FILES['image']
-            # email = request.user.email
-            # vendor = myuser.objects.get(email =email)
-
-            # vehicle =Vehicles.objects.create(vendor_id = vendor,vehicle_name=vehicle_name,category=Category.objects.get(category_name=category,),
-            # range=Range,top_speed= speed,image=image,slug=slug)
-            # vehicle.save()
-#     return render(request,'vendor_temp/add_variant.html')

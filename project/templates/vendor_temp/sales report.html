@@ -1,0 +1,92 @@
+{% extends 'vendor_temp\panel.html' %}
+
+
+    {% block content %} 
+
+    <div class="col-12">
+        <div class=" rounded h-100 p-4">
+            <h3 class="mb-4"  style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">Sales Report</h3>
+            
+            <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <a href="{% url 'vendor:download_sales_report' %}"> <button class=" btn btn-outline-success" ><i class="fas fa-file-excel" style="color: green;"></i> &nbsp; Excel</button></a>
+            </div>
+            <div class="col-sm-3">
+                <a href="{% url 'vendor:pdf_download' %}"> <button class=" btn btn-outline-dark" > <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp; PDF</button></a>
+            </div>
+            
+            <div class="col-sm-6">
+                <form action="{% url 'vendor:search_sales_report' %}" method="GET">
+                    
+                 <input type="date" name="start_date" value="{{i.order.created_at}}">&nbsp;&nbsp;
+               
+                 <input type="date" name="end_date">
+              
+                 <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+            </div>
+          
+         </div>
+           
+            </div>
+            <hr>
+            
+            <div class="table-responsive">
+             
+                <table class="table table-bordered   table-hover table-striped table-sm border-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Order</th>
+                            <th scope="col">Vehicle</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Price</th>
+                    
+                            <th scope="col">Quantity</th>
+
+                            
+                          
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for items in orders %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{items.order.created_at.date|date:'d-m-y'}}</td>
+                            <td>{{items.order.order_number}}</td>
+                            <td>{{items.vehicles}}</td>
+                            <td>{{items.vehicles.color}}</td>
+                            <td>{{items.vehicles.price}}</td>
+                            <td>{{items.quantity}}</td>
+                            <td>{{items.sub_total}}</td>
+                        </tr>
+                 
+                        {% endfor %}
+                     
+                    </tbody>
+                  
+                </table>
+
+                <table  class="table table-bordered" >
+                    <tbody>
+                        <tr>
+                            <th>
+                                Total Revenue : {{total_revenue}}
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+           
+          
+        
+      </div>
+
+
+    {% endblock  %}

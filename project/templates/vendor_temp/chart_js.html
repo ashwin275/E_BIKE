@@ -1,0 +1,178 @@
+{% extends 'vendor_temp\panel.html' %}
+
+
+    {% block content %}
+
+
+<!-- 44444444444444444444 -->
+
+
+<div class="col-12">
+    <div class=" rounded h-100 p-4">
+        <h3 class="mb-4"  style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">Sales Report</h3>
+        
+        <hr>
+  
+            <!-- <form action="{% url 'vendor:search_sales_report' %}" method="GET">  -->
+           
+              <div class="row">
+           
+             <div class="col-sm-4">
+             <label for="start_date">Start date:</label>
+             <input type="date" id="start_date" name="start_date"> </div>
+        
+             <div class="col-sm-4">
+             <label for="end_date">End date:</label>
+            <input type="date" id="end_date" name="end_date">
+             </div>
+             <!-- <div class="col-sm-4">
+             <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div> -->
+          </div>
+     
+            <!-- </form> -->
+        
+    
+       
+
+   <div class="row">
+     <div  class="col-sm-6">
+        <div class="me-5 mt-5">
+            <h6>Vehicles Sold</h6>
+        </div>
+        <div class="mt-5">
+
+        
+        <canvas id="myChart" ></canvas>
+    </div>
+      </div>
+    
+
+      <div class="col-sm-6" >
+        <div class="me-5 mt-5">
+            <h6>Deliverd and Cancelled Orders</h6>
+        </div>
+        <div class="mt-5">
+        <canvas id="orders" ></canvas>
+        </div>
+      </div>
+    </div>
+        </div>
+        <hr>
+    </div>
+
+
+
+    <!-- BAR CHART -->
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script>
+        
+        var data =  {{vehicle_list|safe}};
+        var qty =  {{quantity|safe}};
+
+        var ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data,
+            
+            datasets: [{
+              label: 'No of Sales',
+              data:qty,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+
+<!-- PIE CHART -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  var orders_no =  {{orders_chart|safe}};
+  var ctx = document.getElementById('orders');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Orders','Cancelled Orders'],
+      
+      datasets: [{
+        label: 'Orderes',
+        data:orders_no,
+        
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+<!-- =============FILTER PIE CHART=================== -->
+
+<script>
+var orders = Chart.getChart('orders');
+var myChart = Chart.getChart('myChart');
+const start_date = document.querySelector('#start_date');
+const end_date = document.querySelector('#end_date');
+start_date.addEventListener('change', updateChart);
+end_date.addEventListener('change', updateChart);
+
+function updateChart() {
+  const start = start_date.value;
+  const end = end_date.value;
+}
+function updateChart() {
+  const start = start_date.value;
+  const end = end_date.value;
+  
+  $.ajax({
+    url: 'filter_dash_board',
+    data: {
+      'start_date': start,
+      'end_date': end
+    },
+    success: function(data) {
+      myChart.data.labels = data.vehicle_list;
+      myChart.data.datasets[0].data = data.quantity;
+      orders.data.datasets[0].data = data.data;
+      orders.update();
+      myChart.update();
+    }
+  });
+}
+</script>
+
+<!-- ================================ -->
+
+    {% endblock  %}

@@ -3,6 +3,10 @@ from product.models import Vehicles,Variant
 from .models import Cart,CartItem,Coupon,Used_Coupon
 from user.models import Userdetail,myuser
 from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+
 
 import razorpay
 from django.conf import settings
@@ -17,10 +21,20 @@ def _cart_id(request):
     return cart
 
 
+def cart_count(request):
+    cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
+    count = {'cart_itemscount':cart_itemscount}
+    return JsonResponse(count)
 
-def add_to_cart(request,pk):
+
+def add_to_cart(request,pk,):
 
     vehicle = Variant.objects.get(id=pk)
+
+    if vehicle.remaining == 0:
+         messages.info(request,'Vehicle out of stock')
+         return redirect('Cartapp:cart')
+
 
     if 'username' in request.session:
         is_cart_item_exist = CartItem.objects.filter(product=pk,user=request.user).exists()
@@ -28,6 +42,9 @@ def add_to_cart(request,pk):
         if is_cart_item_exist:
             cartitem = CartItem.objects.get(user = request.user,product = vehicle)
             cartitem.quantity += 1
+            if vehicle.remaining < cartitem.quantity :
+                 messages.info(request,'Vehicle out of stock')
+                 return redirect('Cartapp:cart')
             cartitem.save()
             #return redirect('Cartapp:cart')
         else:
@@ -63,31 +80,77 @@ def add_to_cart(request,pk):
         #     cart_item.save()
         # print("no-user")
         
+
+
+
+
+
+def update_cart_quantity(request):
+   
+  if request.method == 'POST':
+    total = 0
+
+    item_id = request.POST['item_id']
+    quantity = int(request.POST['quantity'])
+
+    cart_item = CartItem.objects.get(id=item_id)
+    cart = CartItem.objects.filter(user = request.user)
+    
+    cart_item.quantity = quantity
+    cart_item.save()
+    print( 'qty after'+str(cart_item.quantity))
+    print('jbbmnb')
+    for item in cart:
+               total += item.product.price*item.quantity
+              
+    tax = round(((18 * total) / 100))
+    grand_total = (total+tax)
+    booking_price = round(( grand_total/2))
+    
+
+    return JsonResponse({
+      'quantity': quantity,
+      'total': total,
+      'tax':tax,
+      'grand_total':grand_total,
+      'booking_price':booking_price
+    })
+  else:
+    return JsonResponse({})
+
+
+
+# def update_cart(request, product_id, action):
+#     product = get_object_or_404(Variant, id=product_id)
+#     cart = CartItem.objects.filter(product=product)
+#     if action == 'add':
+#         if cart.exists():
+#             cart = cart.first()
+#             cart.quantity += 1
+#             cart.save()
+#         else:
+#             CartItem.objects.create(product=product, quantity=1)
+#     elif action == 'remove':
+#         cart.delete()
+#     return JsonResponse({'message': 'Cart updated!'})
+
+
+
+def cart_count(request):
+    cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
+    count = {'cart_itemscount':cart_itemscount}
+    return JsonResponse(count)
+
         
         
 def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total =0, reduction =0):
-
-     
     if 'username' in request.session:
-            if 'coupon_code' in request.session:
-                coupon_code = request.session['coupon_code']
-                coupon = Coupon.objects.get(coupon_code =coupon_code)
-               
-                reduction = coupon.discount
-                messages.success(request,'Coupon applyed')
-                print( reduction)
-               
-            else:
-                reduction=0
-
-          
             cart_items = CartItem.objects.filter(user= request.user).order_by("-id")
-            cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
-           
             for item in cart_items:
                total += item.product.price*item.quantity
                total_qty  +=item.quantity
             
+            in_stock = cart_items
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
             booking_price = round(( grand_total/2))
@@ -97,7 +160,7 @@ def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total
                      'total_qty':total_qty,
                       'tax':tax,
                       'grand_total':grand_total,
-                      'cart_itemscount':cart_itemscount,
+                      
                       'booking_price':booking_price,   
                     }
             return render(request,'cart/cart.html',context)
@@ -157,8 +220,7 @@ def checkout(request):
              'address':address
          }
 
-        if request.method == 'POST':
-                  
+        if request.method == 'POST':     
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             email = request.POST['email']
@@ -190,7 +252,7 @@ def checkout(request):
                     return redirect('Cartapp:review_order')
             except:
                     messages.info(request,'Data not valid please try again')
-
+                    return redirect('Cartapp:checkout')
     return render(request,'cart/checkout.html',context)
 
 def address_default(request,id):
@@ -214,7 +276,13 @@ def address_default(request,id):
 def coupon_apply(request):
     if request.method == 'POST':
         coupon = request.POST['Coupon_Code']
-       
+        coupon_id = Coupon.objects.get(coupon_code=coupon)
+        try:
+            used_coupon = Used_Coupon.objects.get(coupon=coupon_id,user = request.user)
+            messages.error(request,"Coupon already used")
+            return redirect('Cartapp:review_order')
+        except:
+            pass
         print(coupon)
         try:
            coupon_exist = Coupon.objects.get(coupon_code = coupon , is_active = True )

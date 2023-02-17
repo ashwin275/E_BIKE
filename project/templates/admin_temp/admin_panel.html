@@ -63,14 +63,14 @@
         <hr>
         
         <ul class="nav nav-pills nav-stacked">
-          <li><a href='vendormgmt'> venders</a></li>
-          <li><a href='usermgmt'>users</a></li>
-          <li><a href='category'> category</a></li>
+          <li><a href="{% url 'vendor_mgmt' %}"> venders</a></li>
+          <li><a href="{% url 'user_mgmt' %}">users</a></li>
+          <li><a href="{% url 'view_category' %}"> category</a></li>
           <li><a href="{% url 'view_coupon' %}"> Coupons</a></li>
-          <li><a href="#"> Banners</a></li>
+          <li><a href="{% url 'view_banner' %}"> Banners</a></li>
           <li><a href="#" >sales</a></li>
           <li><a href="#" ></a></li>
-          <li><td><a href="adminlogout"><button class="del">LOGOUT</button></a> </td></li>
+          <li><td><a href="{% url 'admin_logout' %}"><button class="del">LOGOUT</button></a> </td></li>
           <!-- <li><a href="#" </a></li> -->
         </ul>
         

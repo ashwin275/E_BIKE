@@ -12,7 +12,7 @@
     <section class="bg-light">
         <div class="container pb-5">
             <div class="row">
-                <div class="col-lg-5 mt-5">
+                <div class="col-md-6 mt-5">
                    
                     <div class="card mb-3 zoom-image">
                         <img class="card-img img-fluid " id="main_image" src="{{varient.image1.url}}"  alt="" >
@@ -63,18 +63,32 @@
                     </div>
                 </div>
                 <!-- col end -->
-                <div class="col-lg-7 mt-5">
-                    <div class="card">
+                <div class="col-md-6 mt-5">
+                    <div class="card ">
                         <div class="card-body">
-                            <h1 class="h2">{{vehicle.vehicle_name}}</h1>
+                            <h1 class="h2">{{varient.vehicle_id.vehicle_name}}</h1>
                             <p class="h3 py-2"></p>
                        
                             <ul class="list-inline">
                                 <li class="list-inline-item">
                                     <h6>NAME:</h6>
+                                    
+
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{{vehicle.category}}</strong></p>
+                                    <p class="text-muted"><strong>{{varient.vehicle_id.vehicle_name}}</strong></p>
+                                    
+                                </li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                
+                                    <h6>CATEGORY:</h6>
+
+                                </li>
+                                <li class="list-inline-item">
+                              
+                                    <p class="text-muted"><strong>{{varient.vehicle_id.category.category_name}}</strong></p>
                                 </li>
                             </ul>
                             <ul class="list-inline">
@@ -82,14 +96,34 @@
                                     <h6>Speed :</h6>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{{vehicle.top_speed}}Km/hr</strong></p>
+                                    <p class="text-muted"><strong>{{varient.vehicle_id.top_speed}}Km/hr</strong></p>
                                 </li> <br>
                                 <li class="list-inline-item">
                                     <h6>Range :</h6>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p class="text-muted"><strong>{{vehicle.range}}</strong></p>
+                                    <p class="text-muted"><strong>{{varient.vehicle_id.range}}</strong></p>
                                 </li> <br>
+                                <li class="list-inline-item">
+                                    <h6>Color :</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{varient.color}}</strong></p>
+                                </li> <br>
+                                
+                                <li class="list-inline-item">
+                                    <h6>Price :</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{varient.price}}</strong></p>
+                                </li> <br>
+                                {% if varient.remaining != 0 %}
+                                <li class="list-inline-item">
+                                    <h6>In Stock</h6> 
+                                </li>
+                               
+                                {% endif %}
+                                <br>
                                
                                
                             <!-- </ul>
@@ -105,16 +139,18 @@
                                 <li>Excepteur sint</li>
                             </ul>  -->
 
-                            <form action="" method="GET">
-                                <input type="hidden" name="product-title" value="Activewear">
-                            
-                                <div class="row pb-3">
+                          
+                              
+                               
+                            {% if varient.remaining != 0 %}
                                    
-                                    <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg " name="submit" value="addtocard"><a href="{% url 'Cartapp:add_to_cart' varient.id %}" style="text-decoration: none; color: #fff;">ADD TO CART</a></button>
-                                    </div>
-                                </div>
-                            </form>
+                            <button type="submit" class="btn btn-success btn-lg " name="submit" value="addtocard"><a href="{% url 'Cartapp:add_to_cart' varient.id %}" style="text-decoration: none; color: #fff;">ADD TO CART</a></button>
+                            {%else%}
+                            <p style="color: red  ; font-weight: 400 !important; font-size: small;">OUT OF STOCK</p>
+                            {%endif%}
+                                
+                               
+                       
 
                         </div>
                     </div>
@@ -143,23 +179,33 @@
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" src="{{items.image1.url}}">
+                            <img class="card-img rounded-0 img-fluid" style="height: 40vh; width: 60vw;" src="{{items.image1.url}}">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                   
+                                    
                                     <li><a class="btn btn-success text-white mt-2" href="{% url 'user:variant_detail' items.pk %}"><i class="far fa-eye"></i></a></li>
+                                    {% if items.remaining != 0 %}
                                     <li><a class="btn btn-success text-white mt-2" href="{% url 'Cartapp:add_to_cart' items.id %}"><i class="fas fa-cart-plus"></i></a></li>
+                                    {% endif %}
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body">
                             <h5 class="card-title text-center">{{items.vehicle_id.vehicle_name}}</h5> <br>
                             <p class="card-text">{{items.color}}</p>
+                            {% if items.remaining == 0 %}
+                            
+                            <p style="color: red  ; font-weight: 400 !important; font-size: small;">OUT OF STOCK</p>
+                            {% else%}
+                        
+                             <p class="card-text" style="font-weight: 400 !important; font-size: small;">IN STOCK</p>
+                             {% endif %}
                             <p class="card-text">{{items.price}}</p>
                             <p class="card-text"> </p>
                           
                             <p class="text-center mb-0"></p>
-                            <p class="text-center"><a class="btn   btn-outline-warning "  href="{% url 'user:single_products' items.id %}">Explore Now</a></p>
+                            <p class="text-center"><a class="btn   btn-outline-warning "  href="{% url 'user:variant_detail' items.pk %}">Explore Now</a></p>
                         </div>
                     </div>         
                 </div>

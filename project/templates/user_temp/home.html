@@ -34,6 +34,12 @@
     
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+   
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
    
 
     <!-- Load fonts style after rendering the layout styles -->
@@ -43,8 +49,8 @@
      
   
       <!-- Slick -->
-      <link rel="stylesheet" type="text/css" href="{% static 'user_css/assets/css/slick.min.css' %}">
-      <link rel="stylesheet" type="text/css" href="{% static 'user_css/assets/css/slick-theme.css' %}">
+      <!-- <link rel="stylesheet" type="text/css" href="{% static 'user_css/assets/css/slick.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'user_css/assets/css/slick-theme.css' %}"> -->
 
 
 
@@ -133,7 +139,7 @@ https://templatemo.com/tm-559-zay-shop
                     {% endif %}
                     <a class="nav-icon position-relative text-decoration-none" href="{% url 'Cartapp:cart' %}">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">{{cart_itemscount}}</span>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark" id="count"></span>
                     </a>
                     <a class="nav-icon position-relative text-decoration-none" href="{% url 'user:user_profile' %}">
                         <i class="fa fa-fw fa-user text-dark mr-3"></i>
@@ -208,6 +214,9 @@ https://templatemo.com/tm-559-zay-shop
       
       
         <!-- Background image -->
+       
+
+       
         <div id="intro-example" class="p-5 text-center bg-image"
           style="background-image: url('https://cdn.pixabay.com/photo/2014/07/31/23/10/biker-407123__480.jpg');">
           <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
@@ -220,11 +229,12 @@ https://templatemo.com/tm-559-zay-shop
                 <!-- <a class="btn btn-outline-light btn-lg m-2" href=""
                   role="button" rel="nofollow" target="_blank"></a> -->
                 <a class="btn btn-outline-light btn-lg m-2" href="{% url 'user:Shop' %}"
-                  target="_blank" role="button">Explore Now</a>
+                  target="" role="button">Explore Now</a>
               </div>
             </div>
           </div>
         </div>
+  
         <!-- Background image -->
       </header>
 
@@ -237,10 +247,10 @@ https://templatemo.com/tm-559-zay-shop
 
 
     <!-- Start Categories of The Month -->
-    <section class="container py-5   ">
+    <section class="container py-5 mt-5  shadow-lg p-3 mb-5 bg-body rounded ">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">Categories of The Month</h1>
+                <h1 class="h1 " style="color: rgb(16, 15, 15); font-family: IM FELL Great Primer SC;" >Categories of The Month</h1>
                 <p>
                    
                 </p>
@@ -320,11 +330,11 @@ https://templatemo.com/tm-559-zay-shop
 
 
     <!-- Start Featured Product -->
-    <section class="bg-light">
-        <div class="container py-5">
+    <section class="">
+        <div class="container py-5 shadow-lg p-3 mb-5 bg-body rounded mt-5">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Featured Product</h1>
+                    <h1 class="h1"   style="color: rgb(28, 20, 20); font-family: IM FELL Great Primer SC;" >Featured Product</h1>
                     <p>
                         <!-- Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident. -->
@@ -502,12 +512,31 @@ https://templatemo.com/tm-559-zay-shop
      {% endblock  %}
     <!-- End Footer -->
 
-    <!-- Start Script -->
+    <!-- Start Script
     <script src="assets/js/jquery-1.11.0.min.js"></script>
     <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/custom.js"></script> -->
+
+
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $.ajax({
+          url: "{% url 'Cartapp:cart_count' %}",
+          dataType: 'json',
+          success: function(response) {
+            console.log(response.cart_itemscount)
+            $('#count').text(response.cart_itemscount);
+          }
+        });
+      });
+
+    </script>
     <!-- End Script -->
 </body>
 

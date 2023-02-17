@@ -9,9 +9,9 @@
             <div class="col-md-5 mx-auto">
                 
                 <div class="input-group d-flex ">
-                    <form class="d-flex" method="GET" action="search">
+                    <form class="d-flex" method="GET" action="{% url 'user:search' %}">
                       
-                    <input class="form-control  border-end-0 border rounded-pill  " name="query" type="search" placeholder="Search" >
+                    <input class="form-control  border-end-0 border rounded-pill  " name="query" type="search" placeholder="Search" id ="searchproducts" >
                     
                         <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="submit">
                             <i class="fa fa-search"></i>
@@ -248,13 +248,48 @@
     </section>
     <!--End Brands-->
 
+
+
+
     {% else %}
-    <h1>no data</h1>
+    <h1>NO VEHICLES </h1>
     {% endif %}
 
     <!-- Start Footer -->
    
+
+    
+
+
+<!-- search bar functionality -->
+
+
+
+
+
+<script>
+   
+      var availableTags = [''];
+
+      $.ajax({
+        method: 'GET',
+        url:"/auto_search_ajax/",
+
+        success:function(response){
+            
+            availableTags = response
+            
+            console.log(availableTags)
+            startAutocomplete(response);
+        }
+          });
+        function startAutocomplete(availableTags){
+          $( "#searchproducts" ).autocomplete({
+          source: availableTags
+    });
+}
+      </script>
+
     {% endblock  %}
     <!-- End Footer -->
-
    
