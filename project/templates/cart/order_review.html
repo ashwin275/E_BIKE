@@ -12,6 +12,25 @@
 height: 100vh !important;
 }
 }
+
+/* #message {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+} */
+
+.message {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.message.success {
+  color: rgb(0, 128, 47);
+}
+
+.message.error {
+  color: red;
+}
 </style>
 
 
@@ -76,6 +95,76 @@ height: 100vh !important;
   
               <div class="row">
                 <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
+
+
+                 
+                      
+
+                  
+                  
+                     
+                
+                  <div id="coupon-form-container" style="display: none;">
+                    <div id="message" class="message"></div>
+                    <div class="form-outline">
+                      <form id="coupon-form">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="coupon_code" id="coupon-code" placeholder="Coupon code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <span class="input-group-text" id="basic-addon2">
+                            <button type="submit" id="apply-coupon" style="border: none;">Apply Coupon</button>
+                          </span>
+                         
+                        </div>
+                      </form>
+                    </div>
+                   
+                    <div class="d-flex flex-row pb-3">
+                      <div class="rounded border w-100 p-3">
+                        <button class="btn btn-outline-danger" id="cancel-coupon-btn" type="button" onclick="cancelCoupon()" style="display: none;">Cancel Coupon</button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                    
+               
+
+
+                  <!-- <div class="mt-5"  >
+                    {% if 'coupon_code' not in request.session %}
+                    <div class="form-outline">
+                      <form action="{% url 'Cartapp:coupon_apply'%}" method="POST">
+                              {% csrf_token  %}
+                      <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="Coupon_Code" placeholder="Coupon code" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <span class="input-group-text" id="basic-addon2"><a href="" style="text-decoration: none; color: black;"><button type="submit" style="border: none;">Apply Coupon</button></a></span>
+                        </div>
+                        
+                      </form>
+                     
+                    </div>
+                    {% else %}
+                    <div class="d-flex flex-row pb-3">
+                      
+                      <div class="rounded border w-100 p-3">
+                        <p class="d-flex align-items-center justify-content-around mb-0" style="color: green;">
+                         Coupon Applyed 
+                        <a href="{% url 'Cartapp:cancel_coupon'%}" style="text-decoration: none; color: white;"> <button type="submit" class="btn btn btn-outline-danger btn-sm">CANCEL</button></a>
+                      </p>
+                      <div style=" color:green">
+                        {% for message in messages  %}
+                           <span> {{message}}</span>
+                            {% endfor %}
+                          </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div> -->
+
+
+
+
+
                   <form>
 
 
@@ -114,36 +203,7 @@ height: 100vh !important;
                        <span> {{message}}</span>
                         {% endfor %}
                       </div>
-                  <div class="mt-5">
-                    {% if 'coupon_code' not in request.session %}
-                    <div class="form-outline">
-                      <form action="{% url 'Cartapp:coupon_apply'%}" method="POST">
-                              {% csrf_token  %}
-                      <div class="input-group mb-3">
-                          <input type="text" class="form-control" name="Coupon_Code" placeholder="Coupon code" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                          <span class="input-group-text" id="basic-addon2"><a href="" style="text-decoration: none; color: black;"><button type="submit" style="border: none;">Apply Coupon</button></a></span>
-                        </div>
-                        
-                      </form>
-                     
-                    </div>
-                    {% else %}
-                    <div class="d-flex flex-row pb-3">
-                      
-                      <div class="rounded border w-100 p-3">
-                        <p class="d-flex align-items-center justify-content-around mb-0" style="color: green;">
-                         Coupon Applyed 
-                        <a href="{% url 'Cartapp:cancel_coupon'%}" style="text-decoration: none; color: white;"> <button type="submit" class="btn btn btn-outline-danger btn-sm">CANCEL</button></a>
-                      </p>
-                      <div style=" color:green">
-                        {% for message in messages  %}
-                           <span> {{message}}</span>
-                            {% endfor %}
-                          </div>
-                      </div>
-                    </div>
-                    {% endif %}
-                  </div>
+                
                  
                 </div>
                 <div class="col-md-6 col-lg-4 col-xl-6">
@@ -163,38 +223,42 @@ height: 100vh !important;
 
 
                 </div>
-                <div class="col-lg-4 col-xl-3">
+                <div class="col-lg-4 col-xl-3" id="my-data">
                   <div class="d-flex justify-content-between" style="font-weight: 500;">
                     <p class="mb-2">Total</p>
-                    <p class="mb-2">{{total}}</p>
+                    <p class="mb-2" id="total">{{total}}</p>
                   </div>
   
                   <div class="d-flex justify-content-between" style="font-weight: 500;">
                     <p class="mb-0">TAX</p>
-                    <p class="mb-0">{{tax}}</p>
+                    <p class="mb-0" id="tax">{{tax}}</p>
                   </div>
-                  <div class="d-flex justify-content-between" style="font-weight: 500;">
+                 
+                 
+                  <div class="d-flex justify-content-between"  id="discount-div"  style="font-weight: 500; display: none !important;" >
                     <p class="mb-0">Discount</p>
-                    <p class="mb-0">{{reduction}}</p>
+                    <p class="mb-0" id="reduction">{{reduction}}</p>
                   </div>
+                 
+                 
                   
   
                   <hr class="my-4">
   
                   <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
                     <p class="mb-2">Grand Total</p>
-                    <p class="mb-2">{{grand_total}}</p>
+                    <p class="mb-2" id="grand-total">{{grand_total}}</p>
                   </div>
   
                   <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
                     <p class="mb-2">Booking Price</p>
-                    <p class="mb-2">{{booking_price}}</p>
+                    <p class="mb-2" id="booking-price">{{booking_price}}</p>
                   </div>
                   <hr class="my-4">
 
                   <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
                     <p class="mb-2">Balance</p>
-                    <p class="mb-2">{{balance}}</p>
+                    <p class="mb-2" id="balance">{{balance}}</p>
                   </div>
   
                   
@@ -265,12 +329,137 @@ document.getElementById('rzp-button1').onclick = function(e){
 <script>
   function proceed_razor(){
     document.getElementById('rzp-button1').style.display = 'block'
+    document.getElementById('coupon-form-container').style.display = 'block'
     document.getElementById('COD_BTN').style.display = 'none'
+
   }
   function proceed_cod(){
     document.getElementById('COD_BTN').style.display = 'block'
     document.getElementById('rzp-button1').style.display = 'none'
+    document.getElementById('coupon-form-container').style.display = 'none'
     
   }
 </script>
+
+
+<script>
+    var originalValues = {
+    total: $('#total').text(),
+    tax: $('#tax').text(),
+    discount: $('#reduction').text(),
+    grandtotal: $('#grand-total').text(),
+    booking_price: $('#booking-price').text(),
+    balance: $('#balance').text()
+    };
+
+
+   $(document).ready(function() {
+  
+
+   
+    console.log('hjhgjhg')
+
+  
+    $('#coupon-form').submit(function(event) {
+      
+      event.preventDefault();
+      var couponCode = $('#coupon-code').val();
+      var total = $('#total').text();
+      var tax = $('#tax').text();
+      var discount = $('#reduction').text();
+      var grandtotal = $('#grand-total').text();
+      var booking_price = $('#booking-price').text();
+      var balance = $('#balance').text();
+    
+
+      console.log(couponCode)
+      console.log('jbkjk')
+      console.log(couponCode);
+      console.log(total);
+      console.log(tax);
+      console.log(discount);
+      console.log(grandtotal);
+      console.log(booking_price);
+      console.log(balance);
+      
+      $.ajax({
+        url: 'coupon_apply',
+        type: 'POST',
+        data: {
+        'coupon_code': couponCode,
+        'total':total,
+        'tax':tax,
+        'discount':discount,
+        'grandtotal':grandtotal,
+        'booking_price':booking_price,
+        'balance':balance,
+       
+          'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        },
+        dataType: 'json',
+        success: function(response) {
+          if (response['status'] == 'success') {
+            console.log(response)
+         
+            $('#total').text(response['total']);
+            $('#tax').text(response['tax']);
+            $('#reduction').text(response['discount']);
+            $('#grand-total').text(response['grand_total']);
+            $('#booking-price').text(response['booking_price']);
+            $('#balance').text(response['balance']);
+            $('#message').removeClass('error').addClass('success').text(response['message']);
+            $('#coupon-form').hide();
+            $('#cancel-coupon-btn').show();
+            $('#discount-div').show();
+            
+            $('#message').removeClass('error').addClass('success').text(response['message']);
+          } else {
+            $('#message').removeClass('success').addClass('error').text(response['message']);
+          }
+        },
+        error: function(response) {
+          
+          
+          $('#message').removeClass('success').addClass('error').text('An error occurred. Please try again later.');
+        }
+      });
+    });
+  });
+
+  function cancelCoupon() {
+  
+
+
+
+  $.ajax({
+    url: 'cancel_coupon',
+    type: 'POST',
+    headers: {
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    success: function(response) {
+    if (response['status'] == 'success') {
+      
+      $('#message').removeClass('success').addClass('error').text(response['message']);
+      $('#coupon-form').show();
+      $('#cancel-coupon-btn').hide();
+      $('#total').text(originalValues.total);
+    $('#tax').text(originalValues.tax);
+    $('#reduction').text(originalValues.discount);
+    $('#grand-total').text(originalValues.grandtotal);
+    $('#booking-price').text(originalValues.booking_price);
+    $('#balance').text(originalValues.balance);
+    
+    } 
+    
+  },
+  error: function(response) {
+    $('#message').removeClass('success').addClass('error').text('An error occurred. Please try again later.');
+  }
+  });
+}
+
+  </script>
+  
+
 {% endblock  %}

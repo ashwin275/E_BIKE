@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth.decorators import login_required
 
 import razorpay
 from django.conf import settings
@@ -34,8 +34,6 @@ def add_to_cart(request,pk,):
     if vehicle.remaining == 0:
          messages.info(request,'Vehicle out of stock')
          return redirect('Cartapp:cart')
-
-
     if 'username' in request.session:
         is_cart_item_exist = CartItem.objects.filter(product=pk,user=request.user).exists()
 
@@ -89,10 +87,8 @@ def update_cart_quantity(request):
    
   if request.method == 'POST':
     total = 0
-
     item_id = request.POST['item_id']
     quantity = int(request.POST['quantity'])
-
     cart_item = CartItem.objects.get(id=item_id)
     cart = CartItem.objects.filter(user = request.user)
     
@@ -106,8 +102,6 @@ def update_cart_quantity(request):
     tax = round(((18 * total) / 100))
     grand_total = (total+tax)
     booking_price = round(( grand_total/2))
-    
-
     return JsonResponse({
       'quantity': quantity,
       'total': total,
@@ -143,7 +137,7 @@ def cart_count(request):
 
         
         
-def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total =0, reduction =0):
+def cart(request, total = 0, total_qty =0 , tax =0,cart_items=None, grand_total =0, reduction =0):
     if 'username' in request.session:
             cart_items = CartItem.objects.filter(user= request.user).order_by("-id")
             for item in cart_items:
@@ -153,7 +147,7 @@ def cart(request, total = 0 , total_qty =0 , tax =0,cart_items=None, grand_total
             in_stock = cart_items
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
-            booking_price = round(( grand_total/2))
+            booking_price = round(( grand_total/4))
             context = {
                     'cart_items':cart_items,
                      'total':total,
@@ -272,42 +266,97 @@ def address_default(request,id):
     #return redirect('Cartapp:checkout')
 
 
-
+@login_required
 def coupon_apply(request):
-    if request.method == 'POST':
-        coupon = request.POST['Coupon_Code']
-        coupon_id = Coupon.objects.get(coupon_code=coupon)
+  
+   dixcount = 0
+   if request.method =='POST':
+       
+        coupon_code = request.POST.get('coupon_code')
+        total = request.POST.get('total')
+        tax = request.POST.get('tax')
+        reduction = request.POST.get('reduction')
+        grand_total = request.POST.get('grandtotal')
+        booking_price = request.POST.get('booking_price')
+        balance = request.POST.get('balance')
         try:
-            used_coupon = Used_Coupon.objects.get(coupon=coupon_id,user = request.user)
-            messages.error(request,"Coupon already used")
-            return redirect('Cartapp:review_order')
-        except:
-            pass
-        print(coupon)
-        try:
-           coupon_exist = Coupon.objects.get(coupon_code = coupon , is_active = True )
+           coupon_exist = Coupon.objects.get(coupon_code = coupon_code , is_active = True )
            print(coupon_exist)
         except:
-            messages.error(request,"Please Enter the valid coupon code")
-            return redirect('Cartapp:review_order')
+            return JsonResponse({'status': 'error', 'message': 'Coupon is not valid.'})
+        if 'coupon_code' in request.session:
+            return JsonResponse({'status': 'error', 'message': 'You already used one coupon.'})
 
         if coupon_exist:
             try:
                 print('exist')
                 if Used_Coupon.objects.get(coupon=coupon_exist,user=request.user):
                     print('coupon used')
-                    messages.error(request,"coupon already used")
-                    return redirect('Cartapp:review_order')
+                  
+                    return JsonResponse({'status': 'error', 'message': 'Coupon already used please try with other one .'})
             except:
                    print('noooo')
-                   request.session['coupon_code'] = coupon
+                   request.session['coupon_code'] = coupon_code
+                   discount = coupon_exist.discount
+                   print(discount)
+
+                   grand_total = (int(total)+int(tax))- int(discount )
+                   booking_price = int(round( grand_total/4))
+                   balance = int(grand_total)-int(booking_price)
                    print('session created')
                   
-                   return redirect('Cartapp:review_order')
+                   return JsonResponse({
+                       'status': 'success',
+                         'message': 'Coupon applied successfully!',
+                         'grand_total':str(grand_total),
+                         'booking_price':str(booking_price),
+                         'balance':str(balance),
+                         'discount':str(discount),
+                         })
+                  
+
+# def coupon_apply(request):
+#     if request.method == 'POST':
+#         coupon = request.POST['Coupon_Code']
+#         coupon_id = Coupon.objects.get(coupon_code=coupon)
+#         try:
+#             used_coupon = Used_Coupon.objects.get(coupon=coupon_id,user = request.user)
+#             messages.error(request,"Coupon already used")
+#             return redirect('Cartapp:review_order')
+#         except:
+#             pass
+#         print(coupon)
+#         try:
+#            coupon_exist = Coupon.objects.get(coupon_code = coupon , is_active = True )
+#            print(coupon_exist)
+#         except:
+#             messages.error(request,"Please Enter the valid coupon code")
+#             return redirect('Cartapp:review_order')
+
+#         if coupon_exist:
+#             try:
+#                 print('exist')
+#                 if Used_Coupon.objects.get(coupon=coupon_exist,user=request.user):
+#                     print('coupon used')
+#                     messages.error(request,"coupon already used")
+#                     return redirect('Cartapp:review_order')
+#             except:
+#                    print('noooo')
+#                    request.session['coupon_code'] = coupon
+#                    print('session created')
+                  
+#                    return redirect('Cartapp:review_order')
+            
+
 def cancel_coupon(request):
-    del request.session['coupon_code']
-    messages.success(request,'Coupon Cancelled')
-    return redirect('Cartapp:review_order')
+    if 'coupon_code' in request.session:
+        del request.session['coupon_code']
+        print('coupon deleted')
+        return JsonResponse({'status': 'success', 'message': 'Coupon Deleted!'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'No coupon found in session.'})
+
+    
 
     
 
@@ -333,7 +382,7 @@ def review_order(request, total = 0 , total_qty =0 , tax =0,cart_items=None, gra
                total_qty  +=item.quantity
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
-            booking_price = 100000
+            booking_price = round(( grand_total/4))
             balance = grand_total- booking_price
 
             #===========razor pay ==============#

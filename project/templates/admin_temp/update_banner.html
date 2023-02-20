@@ -2,16 +2,17 @@
     
     {% block content %} 
     {% load crispy_forms_tags %} 
-    
+
+
                 <div class="d-table-cell align-middle">
 
-                    <div class="text-center mt-4">
-                        <h1 class="h2">UPDATE BANNERS</h1>
+                    <div class="text-left mt-4">
+                        <h1 class="h2">UPDATE BANNERS </h1>
                         <p class="lead">
-                            
+                             <!-- User : <span class="sp">{{upd.username}}</span> -->
                         </p>
                     </div>
-
+                   <hr>
                     <div class="card">
                         <div class="card-body">
                             <div class="m-sm-4">
@@ -20,21 +21,20 @@
                                   {% csrf_token  %}
                                   {{ form.as_p }}
                                   
-                                    
-                                     <div class="text-center mt-3">
+                                     <div class="text-left mt-3">
                                       <button type="submit" class="btn btn-primary">
-                                        <span class="glyphicon glyphicon-share-alt"></span>
+                                        
                                         UPDATE
                                       </button>
                                     </div> 
-
-
+            
+            
                                     
                                 </form>
                             </div>
                         </div>
                     </div>
-
+            
                 </div>
            
     {% endblock  %}

@@ -52,7 +52,7 @@ def Book_now(request):
           total_qty  +=item.quantity
           tax = round(((18 * total) / 100))
           grand_total = ((total+tax)-reduction)
-          booking_price = 100000
+          booking_price =round(( grand_total/4))
           balance = grand_total- booking_price
           variant = Variant.objects.get(id=item.product.id)
           remaining_variants = item.product.remaining -item.quantity
@@ -75,6 +75,7 @@ def Book_now(request):
     if 'coupon_code' in request.session:
           coupon = request.session['coupon_code']
           coupon = Coupon.objects.get(coupon_code =coupon_code)
+         
           used_coupon = Used_Coupon.objects.create(coupon =coupon,user =request.user)
           used_coupon.save()
           del request.session['coupon_code']
@@ -118,6 +119,7 @@ def Book_now(request):
             'booking_price':booking_price,
             'balance': balance,
             'payment':payment,
+            'reduction':reduction,
        }
     
     return render(request,'cart/order_success.html',context)

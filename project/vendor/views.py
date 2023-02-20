@@ -153,11 +153,6 @@ def dash_board(request):
                 vehicle_list.append(vehicle.vehicles.vehicle_id.vehicle_name)
                 quantity.append(vehicle.quantity)
 
-      
-
-       
-
-
     # charts for   cancelled orders and deliverd orders
         Success_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').count()
         cancelled_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled').count()
@@ -177,14 +172,27 @@ def dash_board(request):
 def filter_dash_board(request):
     if 'vendor' in request.session:
         start_date = request.GET.get('start_date')
-        end_date = request.GET.get('end_date')
+        try:
+           end_date = request.GET.get('end_date')
+        except:
+            end_date = None
+
+        print(start_date)
+        print(end_date)
+        print('start-end')
+      
 
         #filter sales and no #
         vehicle = Vehicles.objects.filter(vendor_id = request.user)
         vehicle_list = []
         quantity = []
-        vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__gte=start_date) & Q(order__created_at__lte =end_date))
+       
+        vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__gte = start_date) & Q(order__created_at__lte = end_date))
 
+        test  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at = start_date))
+        print(test)
+        print('nonon')
+        print(str(vehicle_order))
         for vehicle in vehicle_order:
             if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
                i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
@@ -534,14 +542,13 @@ def search_sales_report(request):
 
     # Create a Q object to filter based on the date range
 
-            orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date))
+            orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date)).order_by('order__created_at')
             
             total_revenue = 0
     
             for order in orders :
-                  total_revenue += order.sub_total()
-    
-        
+                  total = order.sub_total()
+                  total_revenue += total
             context = {
 
                'orders':orders,

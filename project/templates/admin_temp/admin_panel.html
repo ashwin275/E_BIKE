@@ -13,6 +13,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+
+<!-- chart js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js" integrity="sha512-v3ygConQmvH0QehvQa6gSvTE2VdBZ6wkLOlmK7Mcy2mZ0ZF9saNbbk19QeaoTHdWIEiTlWmrwAL4hS8ElnGFbA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Document</title>
 
     <style>body{margin-top:20px;}	
@@ -37,16 +42,16 @@
         <ul class="nav navbar-nav navbar-right">
           
           
-          <li class="dropdown">
-            
-            <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-              <i class="glyphicon glyphicon-user"></i> Admin <span class="caret"></span></a>
-            <ul id="g-account-menu" class="dropdown-menu" role="menu">
-              <li><a href="#">My Profile</a></li>
-              <li><a href="#"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
-            </ul>
+          <li class="">
+            <a class="" role="button"  href="#">
+              <i class="glyphicon glyphicon-user"></i> Admin </a>
+          </li>
+          <li class="">
+            <a class="" role="button"  href="{% url 'admin_logout' %}">
+               LOGOUT</a>
           </li>
         </ul>
+      
       </div>
     </div><!-- /container -->
   </div>
@@ -63,14 +68,15 @@
         <hr>
         
         <ul class="nav nav-pills nav-stacked">
+          <li><a href="{% url 'admin_panel' %}"> Dash Boards</a></li>
           <li><a href="{% url 'vendor_mgmt' %}"> venders</a></li>
           <li><a href="{% url 'user_mgmt' %}">users</a></li>
           <li><a href="{% url 'view_category' %}"> category</a></li>
           <li><a href="{% url 'view_coupon' %}"> Coupons</a></li>
           <li><a href="{% url 'view_banner' %}"> Banners</a></li>
-          <li><a href="#" >sales</a></li>
+          <li><a href="{% url 'sales_report' %}" >sales</a></li>
           <li><a href="#" ></a></li>
-          <li><td><a href="{% url 'admin_logout' %}"><button class="del">LOGOUT</button></a> </td></li>
+          
           <!-- <li><a href="#" </a></li> -->
         </ul>
         
@@ -82,22 +88,174 @@
          <a href="#"><strong><i class="glyphicon glyphicon-dashboard"></i> My Dashboard</strong></a>     
          <hr>
 
-         {% block content %} {% endblock  %}
-      </div>
-      </div>
-        
-        </div><!--/col-span-9-->
-    </div><!--/row-->
-    <!-- /upper section -->
-  </div><!--/container-->
-  <!-- /Main -->
-  
-  
-  
- 
+         {% block content %}
+         
+         
+         <div class="row ">
+           
+          <div class="col-sm-4">
+          <label for="start_date">Start date:</label>
+          <input type="date" id="start_date" name="start_date"> </div>
+     
+          <div class="col-sm-4">
+          <label for="end_date">End date:</label>
+         <input type="date" id="end_date" name="end_date">
+          </div>
+          <!-- <div class="col-sm-4">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+         </div> -->
+       </div>
+         
     
 
+         <div class="row ">
 
+          <div class="col-sm-6">
+            <div>
+             <h4 style="margin-top: 50px;">Top 10 Saled Vehicles </h4>
+            </div>
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div>
+              <h4  style="margin-top: 35px;">Orders</h4>
+            </div>
+            <div>
+              <canvas id="orders"></canvas>
+            </div>
+          </div>
+
+         </div>
+
+        
+        
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         {% endblock  %}
+
+
+      </div>
+      </div>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+  <script>
+    var vehicle = {{top_ten_vehicle|safe}}
+    var list = {{vehicles_sold|safe}}
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: vehicle,
+        datasets: [{
+          label: 'Orders',
+          data: list,
+          backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+<script>
+  
+  var order = {{orders|safe}}
+  const ct = document.getElementById('orders');
+  new Chart(ct, {
+    type: 'pie',
+    data: {
+      labels: ['Orders','Cancelled Orders'],
+      datasets: [{
+        label: 'Orders',
+        data: order,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+
+<script>
+  var orders = Chart.getChart('orders');
+  var myChart = Chart.getChart('myChart');
+  const start_date = document.querySelector('#start_date');
+  const end_date = document.querySelector('#end_date');
+  start_date.addEventListener('change', updateChart);
+  end_date.addEventListener('change', updateChart);
+  
+  function updateChart() {
+    const start = start_date.value;
+    const end = end_date.value;
+  }
+  function updateChart() {
+    const start = start_date.value;
+    const end = end_date.value;
+    
+    $.ajax({
+      url: 'filter_admin_dashboard',
+      data: {
+        'start_date': start,
+        'end_date': end
+      },
+      success: function(data) {
+        myChart.data.labels = data.top_ten_vehicle;
+        myChart.data.datasets[0].data = data.vehicles_sold;
+        orders.data.datasets[0].data = data.data;
+        orders.update();
+        myChart.update();
+      }
+    });
+  }
+  </script>
 
 </body>
 </html>

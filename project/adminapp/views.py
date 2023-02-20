@@ -9,14 +9,31 @@ from categories.models import Category
 from django.views.decorators.cache import cache_control
 from.forms import Couponforms,Bannerforms
 from Cartapp.models import Coupon
+from orders.models import OrderVehicle
+from django.utils import timezone
+from datetime import datetime
+from django.db.models import Q
+from django.http import JsonResponse
+from django.core import serializers
+
+
+from io import BytesIO
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter, landscape
+
+from django.http import HttpResponse
+from openpyxl import Workbook
+from reportlab.lib.units import inch
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from datetime import date
 # Create your views here.
 
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
 def admin_signin(request):
     if 'admin' in request.session:
         return redirect('admin_panel')
-    
-    
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -51,10 +68,92 @@ def admin_logout(request):
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
 def admin_panel(request):
      if 'admin' in request.session:
-          return render(request,'admin_temp/admin_panel.html')
+        month = timezone.now().month
+        current_month = datetime.now().strftime('%B')
+        print(current_month)
+        orders =[]
+#=============cancelled and succuss orders of the month===================#
+        Success_orders = OrderVehicle.objects.filter(order__created_at__month= month, status ='Delivered').count()
+        cancelled_orders = OrderVehicle.objects.filter(order__created_at__month= month, status ='Cancelled').count()
+        orders.append(Success_orders)
+        orders.append(cancelled_orders)
+        print(Success_orders)
+        print(cancelled_orders)
+
+#==================Top saled vehicle of the month=========================#
+        vehicle_list = []
+        sales = []
+        Top_Saled_vehicle = OrderVehicle.objects.filter(order__created_at__month= month, status ='Delivered')
+
+        for vehicle in Top_Saled_vehicle:
+            if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
+                i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
+                sales[i]+=vehicle.quantity
+            else:
+                vehicle_list.append(vehicle.vehicles.vehicle_id.vehicle_name)
+                sales.append(vehicle.quantity)
+
+        vehicle_dict = dict(zip(vehicle_list,sales))
+        
+        sorted_dict = dict(sorted(vehicle_dict.items(), key=lambda x: x[1], reverse=True))
+
+        top_ten_vehicle = list(sorted_dict.keys())[:10]
+        vehicles_sold = list(sorted_dict.values())[:10]
+
+        
+
+
+        context = {
+            'orders':orders,
+            'top_ten_vehicle':top_ten_vehicle,
+            'vehicles_sold':vehicles_sold
+        }
+          
+          
+        return render(request,'admin_temp/admin_panel.html',context)
      return redirect('admin_signin')
 
+def filter_admin_dashboard(request):
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
 
+     #filter order and cancelled orders
+
+    Success_orders = OrderVehicle.objects.filter(Q( status ='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date)).count()
+    cancelled_orders = OrderVehicle.objects.filter(Q( status ='Cancelled') &Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date)).count()
+    print(Success_orders)
+    print(cancelled_orders)
+    
+
+    #    filter top 10 vehicles   #
+    
+    vehicle_list=[]
+    sales=[]
+    Top_Saled_vehicle = OrderVehicle.objects.filter(Q( status ='Delivered')& Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date))
+    
+    for vehicle in Top_Saled_vehicle:
+        if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
+            i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
+            sales[i]+=vehicle.quantity
+        else:
+            vehicle_list.append(vehicle.vehicles.vehicle_id.vehicle_name)
+            sales.append(vehicle.quantity)
+
+    vehicle_dict = dict(zip(vehicle_list,sales))
+        
+    sorted_dict = dict(sorted(vehicle_dict.items(), key=lambda x: x[1], reverse=True))
+
+    top_ten_vehicle = list(sorted_dict.keys())[:10]
+    vehicles_sold = list(sorted_dict.values())[:10]
+
+    data = {
+            
+            'data': [Success_orders,cancelled_orders],
+            'top_ten_vehicle':top_ten_vehicle,
+            'vehicles_sold':vehicles_sold,
+        }
+    return JsonResponse(data)
+    
 
 # ======================vendor MANAGEMENT================================================================================================#
 
@@ -239,7 +338,7 @@ def del_coupon(request,id):
 
 def view_banner(request):
     if 'admin' in request.session:
-        banner = Banner.objects.all()
+        banner = Banner.objects.all().order_by('id')
         context = {
               'banner':banner
           }
@@ -274,7 +373,7 @@ def delete_banner(request,id):
      banner.delete()
      return redirect('view_banner') 
 
-def update_banner(request):
+def update_banner(request,id):
      
      if 'admin' in request.session:
          banner = Banner.objects.get(id=id)
@@ -289,5 +388,189 @@ def update_banner(request):
          else:
              form = Bannerforms( instance=banner)
 
-     return render(request,'vendor_temp/update_variant.html',{'form':form})
+     return render(request,'admin_temp/update_banner.html',{'form':form})
      
+
+
+
+
+# def banner_status_change_main(request,id):
+#     banner = Banner.objects.get(id=id)
+#     banners = Banner.objects.all()
+#     banner.status = 'Banner-one'
+#     banners = Banner.objects.all()
+
+#     for i in banners:
+#         if i != banner and i.status != 'Banner-two':
+#             i.status = 'None'
+#             i.save()
+#     banner.save()
+#     return redirect('view_banner')
+
+# def banner_status_change_sub(request,id):
+#     banner = Banner.objects.get(id=id)
+#     banners = Banner.objects.all()
+#     banner.status = 'Banner-Two'
+#     banners = Banner.objects.all()
+#     for i in banners:
+#         if i != banner and i.status != 'Banner-one':
+#             i.status = 'None'
+#             i.save()
+#     banner.save()
+#     return redirect('view_banner')
+
+#============Sales report=======================#
+
+
+
+def sales_report(request):
+    if 'admin' in request.session:
+        month = timezone.now().month
+        current_month = datetime.now().strftime('%B')
+        print(current_month)
+        total_revenue = 0
+        orders = OrderVehicle.objects.filter( status ='Delivered',order__created_at__month= month).order_by('order__created_at')
+
+        for order in orders :
+            total_revenue += order.sub_total()
+    
+        
+        context = {
+
+              'orders':orders,
+              'total_revenue':total_revenue
+           }
+        return render(request,'admin_temp/sales_report.html',context)
+    else:
+        messages.info(request,"please login")
+        return redirect ('vendor:vendor_signin')
+    
+
+def Excel_sales_report(request):
+    # Generate sales report data
+    month = timezone.now().month
+    sales_data = [
+        ['Order Id', 'Date', 'Vehicle', 'Color', 'Quantity', 'Price', 'Total'],
+    ]
+    orders = OrderVehicle.objects.filter( status ='Delivered',order__created_at__month= month).order_by('order__created_at')
+  
+    for order in orders:
+        sub_total = order.quantity * order.price
+        sales_data.append([
+            order.order.order_number,
+            order.order.created_at.strftime('%m/%d/%Y %I:%M %p'),
+            order.vehicles.vehicle_id.vehicle_name,
+            order.vehicles.color,
+            order.quantity,
+            order.price,
+            sub_total
+        ])
+    
+    # Create an Excel file and add the sales report data to it
+    wb = Workbook()
+    ws = wb.active
+    ws.title = 'Sales Report'
+    for row in sales_data:
+        ws.append(row)
+
+    # Offer the Excel file for download
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=sales_report.xlsx'
+    wb.save(response)
+    return response
+
+
+def pdf_sales(request):
+    month = timezone.now().month
+    # Retrieve data for the report
+    orders = OrderVehicle.objects.filter( status ='Delivered',order__created_at__month= month).order_by('order__created_at')
+     # Create a buffer to receive PDF data
+    buffer = BytesIO()
+
+     # Create the PDF object, using the BytesIO object as its "file."
+    doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+    # Set up the response
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="sales_report.pdf"'
+
+    # Create the PDF object
+    doc = SimpleDocTemplate(response, pagesize=letter)
+    elements = []
+
+    # Add the report title and date to the elements list
+    title_style = getSampleStyleSheet()["Title"]
+    elements.append(Paragraph("Sales Report", title_style))
+    date_style = getSampleStyleSheet()["Normal"]
+    date_string = "Date:" + date.today().strftime("%m/%d/%Y")
+    elements.append(Paragraph(date_string, date_style))
+
+    # Create the table object and add it to the elements list
+    data = [
+        ['Order No', 'Date', 'Vehicle','Quantity','Color', 'Price', 'Total'],
+    ]
+    # Initialize the total variable
+    grand_total = 0
+    for sale in orders:
+        total = sale.quantity*sale.price
+        data.append([sale.order.order_number, sale.order.created_at.strftime("%m/%d/%Y"), sale.vehicles.vehicle_id.vehicle_name, sale.quantity,sale.vehicles.color, sale.price, total])
+        grand_total += total
+
+   # Add the grand total to the data list
+    data.append(['', '', '', '', '', 'Grand Total', grand_total])
+    table = Table(data)
+    
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+        ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 1), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+    ]))
+    elements.append(table)
+
+    # Build the PDF document and return the response
+    doc.build(elements)
+    return response
+
+
+def filter_sales_report(request):
+    start_date = request.GET.get('start')
+    end_date = request.GET.get('end')
+
+     #filter order and cancelled orders
+
+    orders = OrderVehicle.objects.filter(Q( status ='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date))
+    
+    print(orders)
+
+    data = [
+    {
+        'id': order.id,
+        'created_at': order.order.created_at.date(),
+        'order_number': order.order.order_number,
+        'vehicle_name': order.vehicles,
+        'vehicle_color': order.vehicles.color,
+        'vehicle_price':order.vehicles.price ,
+        'quantity': order.quantity,
+        'price': order.price,
+    }
+    for order in orders
+]
+
+
+    return JsonResponse(data,safe=False)
+
+                       
+  
+ 
+
+
+
+    

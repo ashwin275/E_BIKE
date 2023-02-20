@@ -100,6 +100,9 @@
                 <li class="text-muted ms-3"><span class="text-black me-4">Total</span>{{total}}</li>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Tax</span>{{tax}}</li>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Total Amount</span>{{grand_total}}</li>
+                {% if not reduction == 0 %}
+                <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Discount</span>{{reduction}}</li>
+                {% endif %}
                 <hr>
                 <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Booking Amount</span>{{booking_price}}</li>
               </ul>

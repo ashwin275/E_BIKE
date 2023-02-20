@@ -6,7 +6,12 @@ from .import views
 urlpatterns = [
     path('',views.admin_signin,name='admin_signin'),
     path('adminpanel',views.admin_panel,name='admin_panel'),
+    path('filter_admin_dashboard',views.filter_admin_dashboard,name='filter_admin_dashboard'),
+    path('sales_report',views.sales_report,name='sales_report'),
+    path('excel',views.Excel_sales_report,name='Excel_sales_report'),
     path('adminlogout',views.admin_logout,name='admin_logout'),
+    path('pdf_sales',views.pdf_sales,name='pdf_sales'),
+    path('filter_sales',views.filter_sales_report,name='filter_sales_report'),
     
     path('vendormgmt',views.vendor_mgmt,name='vendor_mgmt'),
     path('blockvendor/<int:pk>',views.block_vendor,name='block_vendor'),
@@ -34,5 +39,8 @@ urlpatterns = [
     path('view-banner',views.view_banner,name='view_banner'),
     path('delete-banner/<int:id>',views.delete_banner,name='delete_banner'),
     path('update-banner/<int:id>',views.update_banner,name='update_banner'),
+
+    # path('banner-status/<int:id>',views.banner_status_change_main,name='banner_status_change_main'),
+    # path('banner-two/<int:id>',views.banner_status_change_sub,name='banner_status_change_sub'),
 
 ]

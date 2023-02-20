@@ -15,7 +15,7 @@ urlpatterns = [
     path('review_order', views.review_order,name="review_order"),
 
     path('coupon_apply',views.coupon_apply,name='coupon_apply'),
-    path('cancel-coupon',views.cancel_coupon,name='cancel_coupon'),
+    path('cancel_coupon',views.cancel_coupon,name='cancel_coupon'),
     path('cart-count',views.cart_count,name='cart_count'),
  
    path('update_cart_quantity',views.update_cart_quantity,name='update_cart_quantity')

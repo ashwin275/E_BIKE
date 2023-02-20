@@ -3,19 +3,13 @@ from twilio.rest import Client
 
 
 def sentOTP(mobile):
-    try:
+    
          
         account_sid = settings.ACCOUNT_SID
         auth_token =   settings.AUTH_TOKEN
         client = Client(account_sid,auth_token)
         verification = client.verify.services(settings.VERIFICATION_SID).verifications.create(to='+91'+mobile,channel='sms')
-    except:
-         pass
-
-
-
-
-
+    
 
 def check_otp(mobile,otp):
         account_sid = settings.ACCOUNT_SID

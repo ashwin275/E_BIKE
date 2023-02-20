@@ -4,9 +4,9 @@ from .import views
 app_name = 'vendor'
 
 urlpatterns = [
-    path('',views.vendor_register,name='vendor_register'),
+    path('vendor-register',views.vendor_register,name='vendor_register'),
     path('verifyvender',views.verify_vender,name='verify_vender'),
-    path('vendor-signin',views.vendor_signin,name='vendor_signin'),
+    path('',views.vendor_signin,name='vendor_signin'),
     path('vendor_logout',views.vendor_logout,name='vendor_logout'),
    # path('vendordashboard',views.vendor_dashboard,name='vendor_dashboard'),
     path('vendor_profile',views.vendor_profile,name='vendor_profile'),

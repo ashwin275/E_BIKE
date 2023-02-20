@@ -1,0 +1,142 @@
+
+
+{% extends 'admin_temp\admin_panel.html' %}
+
+
+{% block content %} 
+
+
+
+
+<div class="col-12 ">
+  <div class="bg-secondary rounded h-100 p-4">
+      <h1 class="mb-4">SALES REPORT</h1>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3">
+            <a href="{% url 'Excel_sales_report' %}"> <button class=" btn btn-outline-success" ><i class="fas fa-file-excel" style="color: green;"></i> &nbsp; Excel</button></a>
+        </div>
+        <div class="col-sm-3">
+            <a href="{% url 'pdf_sales' %}"> <button class=" btn btn-outline-dark" > <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp; PDF</button></a>
+        </div>
+        
+        <div class="col-sm-6">
+              
+         <div class="row ">
+           
+            <div class="col-sm-4">
+            <label for="start">Start date:</label>
+            <input type="date" id="start" name="start"> </div>
+       
+            <div class="col-sm-4">
+            <label for="end">End date:</label>
+           <input type="date" id="end" name="end">
+            </div>
+           
+         </div>
+            </form>
+        </div>
+      
+     </div>
+      <hr>
+      <div class="table-responsive">
+         
+            <table class="table table-bordered   table-hover table-striped table-sm border-5">
+                <thead>
+                    <tr>
+                        <th scope="col">NO</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Order</th>
+                        <th scope="col">Vehicle</th>
+                        <th scope="col">Color</th>
+                        <th scope="col">Price</th>
+                
+                        <th scope="col">Quantity</th>
+
+                        
+                      
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                  {% for items in orders %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{items.order.created_at.date|date:'d-m-y'}}</td>
+                        <td>{{items.order.order_number}}</td>
+                        <td>{{items.vehicles}}</td>
+                        <td>{{items.vehicles.color}}</td>
+                        <td>{{items.vehicles.price}}</td>
+                        <td>{{items.quantity}}</td>
+                        <td>{{items.sub_total}}</td>
+                    </tr>
+             
+                    {% endfor %}
+                 
+                </tbody>
+              
+            </table>
+            <table  class="table table-bordered" >
+                <tbody>
+                    <tr>
+                        <th>
+                            Total Revenue : {{total_revenue}}
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+         
+      </div>
+  </div>
+</div>
+
+
+
+<script>
+   
+  
+    const start_Date = document.querySelector('#start');
+    const end_Date = document.querySelector('#end');
+    start_Date.addEventListener('change', updateChart);
+    end_Date.addEventListener('change', updateChart);
+    
+    function updateChart() {
+      const start = start_Date.value;
+      const end = end_Date.value;
+    }
+    function updateChart() {
+      const start = start_Date.value;
+      const end = end_Date.value;
+      
+      $.ajax({
+  url: 'filter_sales',
+  data: {
+    'start': start,
+    'end': end
+  },
+  success: function(data) {
+    console.log(data);
+    var ordersTableBody = $('#orders-table-body');
+    ordersTableBody.empty();
+    $.each(data.data, function(index, value) {
+      var row = $('<tr>');
+      row.append($('<th scope="row">' + (index + 1) + '</th>'));
+      row.append($('<td>').text(value.created_at ? value.created_at.date : 'N/A'));
+
+    row.append($('<td>').text(value.order ? value.order.order_number : 'N/A'));
+
+      row.append($('<td>').text(value.vehicles.name));
+      row.append($('<td>').text(value.vehicles.color));
+      row.append($('<td>').text(value.vehicles.price));
+      row.append($('<td>').text(value.quantity));
+      row.append($('<td>').text(value.sub_total));
+      ordersTableBody.append(row);
+    });
+  }
+});
+
+
+
+    }
+    </script>
+{% endblock  %}

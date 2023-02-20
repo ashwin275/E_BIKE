@@ -132,12 +132,15 @@ def verify_otp(request):
             # request.session['cart_id'] = str(cart)
 
             # print(request.session.get('cart_id'))
-           
-
 
             return redirect('user:user_signin')
         else:
             messages.info(request,'invalid otp number')
+            del request.session['email']
+            del request.session['first_name']
+            del request.session['last_name']
+            del request.session['mobile'] 
+
     return render(request,'register_otp.html')
 
 
@@ -188,7 +191,6 @@ def single_products(request,pk):
     category = Category.objects.get(category_name=vehicle.category)
     all_variants = Variant.objects.filter(vehicle_id =pk)
     variants = Variant.objects.filter(vehicle_id =pk)[0:3]
-   
     print(variants)
    
     #cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
@@ -243,7 +245,6 @@ def search(request):
 
 
 def auto_search_ajax(request):
-    
     #vehicles = Vehicles.objects.all
     vehicles = Vehicles.objects.filter(is_available=True).values_list('vehicle_name',flat=True,)
     vehicle_list = list(vehicles)
@@ -254,7 +255,6 @@ def auto_search_ajax(request):
 
 
 def category_filter(request,id):
-     
      vehicles = Vehicles.objects.filter(category=id,is_available=True)
      category= Category.objects.all
      context = {
