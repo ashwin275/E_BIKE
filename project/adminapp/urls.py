@@ -11,7 +11,7 @@ urlpatterns = [
     path('excel',views.Excel_sales_report,name='Excel_sales_report'),
     path('adminlogout',views.admin_logout,name='admin_logout'),
     path('pdf_sales',views.pdf_sales,name='pdf_sales'),
-    path('filter_sales',views.filter_sales_report,name='filter_sales_report'),
+   # path('filter_sales',views.filter_sales_report,name='filter_sales_report'),
     
     path('vendormgmt',views.vendor_mgmt,name='vendor_mgmt'),
     path('blockvendor/<int:pk>',views.block_vendor,name='block_vendor'),

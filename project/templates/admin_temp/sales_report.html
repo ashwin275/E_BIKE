@@ -10,32 +10,33 @@
 
 <div class="col-12 ">
   <div class="bg-secondary rounded h-100 p-4">
-      <h1 class="mb-4">SALES REPORT</h1>
-      <hr>
+    
       <div class="row">
-        <div class="col-sm-3">
+        <h1 class="mb-4">SALES REPORT</h1>
+        <hr>
+        <div class="col-sm-3 ">
             <a href="{% url 'Excel_sales_report' %}"> <button class=" btn btn-outline-success" ><i class="fas fa-file-excel" style="color: green;"></i> &nbsp; Excel</button></a>
         </div>
         <div class="col-sm-3">
             <a href="{% url 'pdf_sales' %}"> <button class=" btn btn-outline-dark" > <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp; PDF</button></a>
         </div>
         
-        <div class="col-sm-6">
+        
               
-         <div class="row ">
+        
            
-            <div class="col-sm-4">
+            <div class="col-sm-3 ">
             <label for="start">Start date:</label>
-            <input type="date" id="start" name="start"> </div>
+            <p>{{Date_input_one|date:'d-m-Y'}}</p> </div>
        
-            <div class="col-sm-4">
+            <div class="col-sm-3">
             <label for="end">End date:</label>
-           <input type="date" id="end" name="end">
+           <p>{{Date_input_two|date:'d-m-Y'}}</p>
             </div>
            
-         </div>
-            </form>
-        </div>
+         
+           
+       
       
      </div>
       <hr>

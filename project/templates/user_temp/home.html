@@ -55,13 +55,11 @@
 
 
       
-<!--
-    
-TemplateMo 559 Zay Shop
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-https://templatemo.com/tm-559-zay-shop
-
--->
 </head>
 
 <body>
@@ -88,7 +86,7 @@ https://templatemo.com/tm-559-zay-shop
 
 
     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
+    <nav class="navbar navbar-expand-lg navbar-light shadow ">
         <div class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand  logo h1 align-self-center " style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;"   href="#">
@@ -184,6 +182,8 @@ https://templatemo.com/tm-559-zay-shop
         </div>
     </div>
 
+
+    
     {% block content %} 
 
 
@@ -211,29 +211,37 @@ https://templatemo.com/tm-559-zay-shop
           }
         </style>
       
+
+
+      <section>
+
+
+      <!-- Start Banner Hero -->
+    
+    <!-- End Banner Hero -->
+
+
+
+      </section>
       
       
         <!-- Background image -->
        
 
        
-        <div id="intro-example" class="p-5 text-center bg-image"
+         <div id="intro-example" class="p-5 text-center bg-image"
           style="background-image: url('https://cdn.pixabay.com/photo/2014/07/31/23/10/biker-407123__480.jpg');">
           <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
               <div class="text-white">
                 <h1 class="mb-3" style=" font-family: IM FELL Great Primer SC;">Buy Your Dream Bike With E-BIKE</h1>
-                <!-- <h5 class="mb-4">
-                  Best & free guide of responsive web design
-                </h5> -->
-                <!-- <a class="btn btn-outline-light btn-lg m-2" href=""
-                  role="button" rel="nofollow" target="_blank"></a> -->
+              
                 <a class="btn btn-outline-light btn-lg m-2" href="{% url 'user:Shop' %}"
                   target="" role="button">Explore Now</a>
               </div>
             </div>
           </div>
-        </div>
+        </div> 
   
         <!-- Background image -->
       </header>

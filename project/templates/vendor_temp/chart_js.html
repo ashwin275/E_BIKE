@@ -19,11 +19,11 @@
            
              <div class="col-sm-4">
              <label for="start_date">Start date:</label>
-             <input type="date" id="start_date" name="start_date"> </div>
+             <input type="date" id="start_date" value="{{Date_input_one|date:'Y-m-d'}}" name="start_date"> </div>
         
              <div class="col-sm-4">
              <label for="end_date">End date:</label>
-            <input type="date" id="end_date" name="end_date">
+            <input type="date" id="end_date" value="{{Date_input_two|date:'Y-m-d'}}" name="end_date">
              </div>
              <!-- <div class="col-sm-4">
              <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -63,7 +63,19 @@
 
 
 
+    <script>
+       let startDateField = document.getElementById('start_date');
+       let endDateField = document.getElementById('end_date');
+
+     startDateField.addEventListener('change', () => {
+    endDateField.min = startDateField.value;
+  });
+    </script>
+    
+
     <!-- BAR CHART -->
+
+
       
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       
@@ -148,10 +160,7 @@ const end_date = document.querySelector('#end_date');
 start_date.addEventListener('change', updateChart);
 end_date.addEventListener('change', updateChart);
 
-function updateChart() {
-  const start = start_date.value;
-  const end = end_date.value;
-}
+
 function updateChart() {
   const start = start_date.value;
   const end = end_date.value;

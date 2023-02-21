@@ -114,21 +114,6 @@ def update_cart_quantity(request):
 
 
 
-# def update_cart(request, product_id, action):
-#     product = get_object_or_404(Variant, id=product_id)
-#     cart = CartItem.objects.filter(product=product)
-#     if action == 'add':
-#         if cart.exists():
-#             cart = cart.first()
-#             cart.quantity += 1
-#             cart.save()
-#         else:
-#             CartItem.objects.create(product=product, quantity=1)
-#     elif action == 'remove':
-#         cart.delete()
-#     return JsonResponse({'message': 'Cart updated!'})
-
-
 
 def cart_count(request):
     cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
@@ -207,7 +192,7 @@ def checkout(request):
 
    
     if request.user.is_authenticated:
-        #cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
+        
 
         address = Userdetail.objects.filter(user_id = user.id)
         context = {
@@ -263,19 +248,19 @@ def address_default(request,id):
         print('done')
 
     return redirect('Cartapp:review_order')
-    #return redirect('Cartapp:checkout')
+    
 
 
 @login_required
 def coupon_apply(request):
   
-   dixcount = 0
+   discount = 0
    if request.method =='POST':
        
         coupon_code = request.POST.get('coupon_code')
         total = request.POST.get('total')
         tax = request.POST.get('tax')
-        reduction = request.POST.get('reduction')
+       # reduction = request.POST.get('reduction')
         grand_total = request.POST.get('grandtotal')
         booking_price = request.POST.get('booking_price')
         balance = request.POST.get('balance')
@@ -315,37 +300,6 @@ def coupon_apply(request):
                          })
                   
 
-# def coupon_apply(request):
-#     if request.method == 'POST':
-#         coupon = request.POST['Coupon_Code']
-#         coupon_id = Coupon.objects.get(coupon_code=coupon)
-#         try:
-#             used_coupon = Used_Coupon.objects.get(coupon=coupon_id,user = request.user)
-#             messages.error(request,"Coupon already used")
-#             return redirect('Cartapp:review_order')
-#         except:
-#             pass
-#         print(coupon)
-#         try:
-#            coupon_exist = Coupon.objects.get(coupon_code = coupon , is_active = True )
-#            print(coupon_exist)
-#         except:
-#             messages.error(request,"Please Enter the valid coupon code")
-#             return redirect('Cartapp:review_order')
-
-#         if coupon_exist:
-#             try:
-#                 print('exist')
-#                 if Used_Coupon.objects.get(coupon=coupon_exist,user=request.user):
-#                     print('coupon used')
-#                     messages.error(request,"coupon already used")
-#                     return redirect('Cartapp:review_order')
-#             except:
-#                    print('noooo')
-#                    request.session['coupon_code'] = coupon
-#                    print('session created')
-                  
-#                    return redirect('Cartapp:review_order')
             
 
 def cancel_coupon(request):

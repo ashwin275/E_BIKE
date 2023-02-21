@@ -5,26 +5,29 @@
 
     <div class="col-12">
         <div class=" rounded h-100 p-4">
-            <h3 class="mb-4"  style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">Sales Report</h3>
+            <h3 class="mb-4"  style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">Sales Report </h3>
             
             <hr>
         <div class="row">
             <div class="col-sm-3">
-                <a href="{% url 'vendor:download_sales_report' %}"> <button class=" btn btn-outline-success" ><i class="fas fa-file-excel" style="color: green;"></i> &nbsp; Excel</button></a>
+                <button class=" btn btn-outline-success"onclick = "Excel_report()"><i class="fas fa-file-excel" style="color: green;"></i> &nbsp; Excel</button>
             </div>
             <div class="col-sm-3">
-                <a href="{% url 'vendor:pdf_download' %}"> <button class=" btn btn-outline-dark" > <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp; PDF</button></a>
+                 <button class=" btn btn-outline-dark" onclick="pdf_download()"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i>&nbsp; PDF</button>
             </div>
             
             <div class="col-sm-6">
                 <form action="{% url 'vendor:search_sales_report' %}" method="GET">
                     
-                 <input type="date" name="start_date" value="{{i.order.created_at}}">&nbsp;&nbsp;
-               
-                 <input type="date" name="end_date">
-              
+                 <input type="date" id="start_date" name="start_date" value="{{Date_input_one|date:'Y-m-d'}}">&nbsp;&nbsp;
+
+                 <input type="date" id="end_date" value="{{Date_input_two|date:'Y-m-d'}}" name="end_date">
+                 
+
+
                  <button class="btn btn-outline-secondary" type="submit">Search</button>
                 </form>
+                
             </div>
           
          </div>
@@ -55,7 +58,8 @@
                       {% for items in orders %}
                         <tr>
                             <th scope="row">{{forloop.counter}}</th>
-                            <td>{{items.order.created_at.date|date:'d-m-y'}}</td>
+                          
+                             <td>{{items.order.created_at.date|date:'d-m-y'}}</td> 
                             <td>{{items.order.order_number}}</td>
                             <td>{{items.vehicles}}</td>
                             <td>{{items.vehicles.color}}</td>
@@ -88,5 +92,88 @@
         
       </div>
 
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      
+     
+
+
+      
+      <script>
+        let startDateField = document.getElementById('start_date');
+        let endDateField = document.getElementById('end_date');
+      
+          startDateField.addEventListener('change', () => {
+          endDateField.min = startDateField.value;
+        });
+        
+
+        function Excel_report() {
+          let start = startDateField.value;
+          let end = endDateField.value;
+      
+          $.ajax({
+            url: 'Excel_sales_report',
+            data: {
+              'start_date': start,
+              'end_date': end,
+            },
+            xhrFields: {
+              responseType: 'blob'
+            },
+            success: function(data) {
+              // Create a blob URL for the PDF data
+              const blobUrl = URL.createObjectURL(data);
+      
+              // Create a link element to download the PDF
+              const link = document.createElement('a');
+              link.href = blobUrl;
+              link.download = 'sales_report.xlsx';
+              document.body.appendChild(link);
+      
+              // Click the link to download the PDF
+              link.click();
+      
+              // Clean up the link element and blob URL
+              document.body.removeChild(link);
+              URL.revokeObjectURL(blobUrl);
+            }
+          });
+        }
+
+
+
+        function pdf_download() {
+          let start = startDateField.value;
+          let end = endDateField.value;
+      
+          $.ajax({
+            url: 'pdf-download',
+            data: {
+              'start_date': start,
+              'end_date': end,
+            },
+            xhrFields: {
+              responseType: 'blob'
+            },
+            success: function(data) {
+              // Create a blob URL for the PDF data
+              const blobUrl = URL.createObjectURL(data);
+      
+              // Create a link element to download the PDF
+              const link = document.createElement('a');
+              link.href = blobUrl;
+              link.download = 'sales_report.pdf';
+              document.body.appendChild(link);
+      
+              // Click the link to download the PDF
+              link.click();
+      
+              // Clean up the link element and blob URL
+              document.body.removeChild(link);
+              URL.revokeObjectURL(blobUrl);
+            }
+          });
+        }
+      </script>
 
     {% endblock  %}

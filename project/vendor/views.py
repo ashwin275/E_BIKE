@@ -137,6 +137,10 @@ def vendor_signin(request):
 def dash_board(request):
     if 'vendor' in request.session:
         month = timezone.now().month
+        Date_input_two = datetime.today().date()
+      
+        Date_input_one = date.today().replace(day=1)
+       
         current_month = datetime.now().strftime('%B')
         print(current_month)
         vehicle = Vehicles.objects.filter(vendor_id = request.user)
@@ -163,6 +167,8 @@ def dash_board(request):
            'vehicle_list':vehicle_list,
             'quantity':quantity,
             'orders_chart':orders_chart,
+            'Date_input_two':Date_input_two,
+            'Date_input_one':Date_input_one,
           }
         return render(request,'vendor_temp/chart_js.html',context)
     else:
@@ -171,11 +177,12 @@ def dash_board(request):
 
 def filter_dash_board(request):
     if 'vendor' in request.session:
-        start_date = request.GET.get('start_date')
-        try:
-           end_date = request.GET.get('end_date')
-        except:
-            end_date = None
+        start_date_str = request.GET.get('start_date')
+        end_date_str = request.GET.get('end_date')
+       
+        
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
 
         print(start_date)
         print(end_date)
@@ -186,13 +193,13 @@ def filter_dash_board(request):
         vehicle = Vehicles.objects.filter(vendor_id = request.user)
         vehicle_list = []
         quantity = []
-       
-        vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__gte = start_date) & Q(order__created_at__lte = end_date))
 
-        test  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at = start_date))
-        print(test)
-        print('nonon')
-        print(str(vehicle_order))
+
+        #vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__date__gte = start_date) & Q(order__created_at__date__lte = end_date))
+      
+ 
+        vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__date__gte =start_date)& Q(order__created_at__date__lte =end_date)).order_by('order__created_at')
+        print('vehicles', str(vehicle_order))
         for vehicle in vehicle_order:
             if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
                i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
@@ -206,8 +213,9 @@ def filter_dash_board(request):
        
 
         # filter order and canceled orders #
-        Success_orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date)).count()
-        cancelled_orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled') &Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date) ).count()
+        Success_orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Delivered') & Q(order__created_at__date__gte =start_date)& Q(order__created_at__date__lte =end_date)).count()
+        print(Success_orders)
+        cancelled_orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled') & Q(order__created_at__date__gte =start_date)& Q(order__created_at__date__lte =end_date) ).count()
         print(Success_orders)
         print(cancelled_orders)
 
@@ -482,7 +490,6 @@ def status_change(request,pk):
          orders= OrderVehicle.objects.get(id = pk)
          if orders.status == 'Confirmed':
              orders.status = 'Shipped'
-            
          elif orders.status == 'Shipped':
              orders.status = 'Out_for_delivery'
          elif orders.status == 'Out_for_delivery':
@@ -504,15 +511,20 @@ def order_details(request,pk):
 
 
 
-    
-
-
 #===========Sales report================#
 @never_cache
 def sales_report(request):
     if 'vendor' in request.session:
+        month = timezone.now().month
+        Date_input_two = datetime.today().date()
+        print('Today = ',Date_input_two)
+        Date_input_one = date.today().replace(day=1)
+        print('first day = ',Date_input_one)
+        current_month = datetime.now().strftime('%B')
+        print(current_month)
         total_revenue = 0
-        orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').order_by('order__created_at')
+        #orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').order_by('order__created_at')
+        orders  = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,vehicles__vehicle_id__created_date__month=month,status ='Delivered').order_by('order__created_at')
 
         for order in orders :
             total_revenue += order.sub_total()
@@ -521,7 +533,9 @@ def sales_report(request):
         context = {
 
               'orders':orders,
-              'total_revenue':total_revenue
+              'total_revenue':total_revenue,
+              'Date_input_one':Date_input_one,
+              'Date_input_two':Date_input_two,
            }
         return render(request,'vendor_temp/sales report.html',context)
     else:
@@ -534,25 +548,36 @@ def search_sales_report(request):
         if request.method == 'GET':
             start_date_str = request.GET.get('start_date')
             end_date_str = request.GET.get('end_date')
+
+            print(start_date_str)
+            print(end_date_str
+            )
             
      # Convert start_date and end_date to datetime objects
 
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
             end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+            Date_input_one =start_date
+            Date_input_two =end_date
+
+            print(start_date)
+            print(end_date)
 
     # Create a Q object to filter based on the date range
 
-            orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__gte =start_date)& Q(order__created_at__lte =end_date)).order_by('order__created_at')
+            orders = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__date__gte =start_date)& Q(order__created_at__date__lte =end_date)).order_by('order__created_at')
             
             total_revenue = 0
-    
+              
             for order in orders :
                   total = order.sub_total()
                   total_revenue += total
             context = {
-
+                     
                'orders':orders,
-                'total_revenue':total_revenue
+                'total_revenue':total_revenue,
+                "Date_input_one":Date_input_one,
+                'Date_input_two':Date_input_two,
               }
             return render(request,'vendor_temp/sales report.html',context)
         else:
@@ -561,14 +586,21 @@ def search_sales_report(request):
 
 
 def download_sales_report(request):
+    start_date_str = request.GET.get('start_date')
+    end_date_str = request.GET.get('end_date')
+    print(start_date_str)
+    print(end_date_str)
+        
+    start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
     # Generate sales report data
     sales_data = [
         ['Order Id', 'Date', 'Vehicle', 'Color', 'Quantity', 'Price', 'Total'],
     ]
-    orders = OrderVehicle.objects.filter(
-        vehicles__vehicle_id__vendor_id=request.user,
-        status='Delivered'
-    ).order_by('order__created_at')
+    orders  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user)
+                                           & Q(status='Delivered') 
+                                           & Q(order__created_at__date__gte =start_date)
+                                           & Q(order__created_at__date__lte =end_date)).order_by('order__created_at') 
   
     for order in orders:
         sub_total = order.quantity * order.price
@@ -598,8 +630,21 @@ def download_sales_report(request):
 
 #===============pdf download sales report==================#
 def sales(request):
+    start_date_str = request.GET.get('start_date')
+    end_date_str = request.GET.get('end_date')
+    print(start_date_str)
+    print(end_date_str)
+        
+    start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+    end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+
+
     # Retrieve data for the report
-    orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').order_by('order__created_at')
+    orders  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user)
+                                           & Q(status='Delivered') 
+                                           & Q(order__created_at__date__gte =start_date)
+                                           & Q(order__created_at__date__lte =end_date)).order_by('order__created_at') 
+   
      # Create a buffer to receive PDF data
     buffer = BytesIO()
 
@@ -628,7 +673,9 @@ def sales(request):
     grand_total = 0
     for sale in orders:
         total = sale.quantity*sale.price
-        data.append([sale.order.order_number, sale.order.created_at.strftime("%m/%d/%Y"), sale.vehicles.vehicle_id.vehicle_name, sale.quantity,sale.vehicles.color, sale.price, total])
+        
+        data.append([sale.order.order_number, sale.order.created_at.strftime("%d %b %Y"), sale.vehicles.vehicle_id.vehicle_name, sale.quantity,sale.vehicles.color, sale.price, total])
+
         grand_total += total
 
    # Add the grand total to the data list
@@ -654,6 +701,7 @@ def sales(request):
     # Build the PDF document and return the response
     doc.build(elements)
     return response
+   
 
 
 

@@ -95,11 +95,11 @@
            
           <div class="col-sm-4">
           <label for="start_date">Start date:</label>
-          <input type="date" id="start_date" name="start_date"> </div>
+          <input type="date" id="start_date"value="{{Date_input_one|date:'Y-m-d'}}" name="start_date"> </div>
      
           <div class="col-sm-4">
           <label for="end_date">End date:</label>
-         <input type="date" id="end_date" name="end_date">
+         <input type="date" id="end_date" value="{{Date_input_two|date:'Y-m-d'}}" name="end_date">
           </div>
           <!-- <div class="col-sm-4">
           <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -149,6 +149,15 @@
         </div>
     </div>
   </div>
+
+  <script>
+    let startDateField = document.getElementById('start_date');
+    let endDateField = document.getElementById('end_date');
+
+  startDateField.addEventListener('change', () => {
+ endDateField.min = startDateField.value;
+});
+ </script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

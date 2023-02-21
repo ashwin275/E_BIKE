@@ -13,12 +13,12 @@ from.models import myuser,Userdetail
 from orders.models import Orders,OrderVehicle
 
 
-from django.views.generic import CreateView,TemplateView
+#from django.views.generic import CreateView,TemplateView
 from user.models import Userdetail
-from django.urls import reverse_lazy
-from . forms import userdetail
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
+#from django.urls import reverse_lazy
+#from . forms import userdetail
+#from django.contrib.messages.views import SuccessMessageMixin
+#from django.contrib.auth.mixins import LoginRequiredMixin
 from.helpers import send_forget_password_mail
 import uuid
 from django.http import JsonResponse
@@ -30,22 +30,19 @@ from django.http import JsonResponse
 def home(request):
        if 'username' in request.session:
             category = Category.objects.all
-            image = Category.objects.filter(category_name = 'SPORTS')
+          #  image = Category.objects.filter(category_name = 'SPORTS')
             vehicles = Vehicles.objects.filter(is_available=True)
            
-            print(image)
+           
             print('ioioi')
             context ={
            'category':category,
             'vehicles':vehicles,
-          
-            'image':image
             
              }
        else:
             category = Category.objects.all
             vehicles = Vehicles.objects.filter(is_available=True)
-
 
             context ={
                  'category':category,
