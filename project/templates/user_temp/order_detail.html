@@ -13,8 +13,8 @@
 
             <div class="card mb-4">
                 <div class="card-body text-center">
-                  <img src="" alt="avatar"
-                    class="rounded-circle img-fluid" style="width: 150px;">
+                  <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" style="width: 6em;" alt="img...."
+                  class="rounded-circle img-fluid" >
                   <h5 class="my-3"></h5>
                   <p class="text-muted mb-1">{{users.first_name}}</p>
                   <p class="text-muted mb-4">{{users.email}}</p>
@@ -42,7 +42,7 @@
             <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
           <div class="col-md-9">
 
-           {%if orderd_vehicle%}
+           <!-- {%if orderd_vehicle%}
           {% for items in orderd_vehicle %}
 
             <div class="card mb-4 mt-5">
@@ -89,7 +89,64 @@
                 </div>
               </div>
              {%endfor%}
-             {%endif%}
+             {%endif%} -->
+
+
+
+             <div class="col-12 table shadow p-3 mb-5 bg-body rounded mt-5">
+              <div class=" rounded h-100 p-4">
+              
+                  <h2 class="mb-4" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >ORDERS </h2>
+                  
+  
+                  <hr>
+                  <div class="table-responsive">
+                   
+                      <table class="table shadow p-3 mb-5 bg-body rounded table-hover">
+                          <thead >
+                              <tr >
+                              
+                                  <th scope="col">Image</th>
+                                  <th scope="col">Vehicle</th>
+                                  <th scope="col">Quantity</th>
+                                  <th scope="col">Price</th>
+                                  <th scope="col">Status</th>
+                                  <th scope="col">Sub Total</th>
+                                
+                          
+                                  
+                              </tr>
+                          </thead>
+                          <tbody c>
+
+                            {% for items in orderd_vehicle %}
+                          
+                              <tr class="shadow-lg p-3 mb-5 bg-body rounded mt-5">
+                                
+                                  <td> <img src="{{items.vehicles.image1.url}}" class="img-fluid" style="max-width:6em;" alt="Generic placeholder image"></td>
+                                  <td>{{items.vehicles}}</td>
+                                  <td>{{items.quantity}}</td>
+                                  <td>{{items.price}}</td>
+                                  <td>{{items.status}}</td>
+                                  <td>{{items.sub_total}}</td>
+
+                                  
+                                 
+                                
+                                     
+               
+                              </tr>
+                            
+                              {% endfor %}
+                              
+                         
+                          </tbody>
+                      </table>
+                  </div>
+
+               
+              </div>
+          </div>
 
 
 

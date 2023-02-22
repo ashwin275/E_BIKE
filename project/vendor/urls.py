@@ -27,7 +27,7 @@ urlpatterns = [
     path('active-variant/<int:pk>',views.active_variant,name='active_variant'),
     path('de-activevariant/<int:pk>',views.de_active_variant,name='de_active_variant'),
 
-    path('Orders',views.Orders,name='Orders'),
+    path('Orders',views.Orders_view,name='Orders'),
     path('cancelled_orders',views.cancelled_orders,name='cancelled_orders'),
     path('returned_orders',views.Returned_orders,name='Returned_orders'),
     path('cancel-order/<int:pk>',views.cancel_order,name='cancel_order'),

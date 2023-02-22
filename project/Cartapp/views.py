@@ -41,7 +41,7 @@ def add_to_cart(request,pk,):
             cartitem = CartItem.objects.get(user = request.user,product = vehicle)
             cartitem.quantity += 1
             if vehicle.remaining < cartitem.quantity :
-                 messages.info(request,'Vehicle out of stock')
+                 messages.info(request,'vehicle out of stock')
                  return redirect('Cartapp:cart')
             cartitem.save()
             #return redirect('Cartapp:cart')
@@ -92,6 +92,13 @@ def update_cart_quantity(request):
     cart_item = CartItem.objects.get(id=item_id)
     cart = CartItem.objects.filter(user = request.user)
     
+    vehicle_in_stock = cart_item.product.remaining
+
+    print(vehicle_in_stock)
+    if vehicle_in_stock < quantity:
+        print('error message')
+        return JsonResponse({'status': 'error', 'message': 'sorry only  '+ str(vehicle_in_stock) + '  vehicle in stock'})
+    
     cart_item.quantity = quantity
     cart_item.save()
     print( 'qty after'+str(cart_item.quantity))
@@ -101,7 +108,7 @@ def update_cart_quantity(request):
               
     tax = round(((18 * total) / 100))
     grand_total = (total+tax)
-    booking_price = round(( grand_total/2))
+    booking_price = 100000
     return JsonResponse({
       'quantity': quantity,
       'total': total,
@@ -132,7 +139,7 @@ def cart(request, total = 0, total_qty =0 , tax =0,cart_items=None, grand_total 
             in_stock = cart_items
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
-            booking_price = round(( grand_total/4))
+            booking_price = 100000
             context = {
                     'cart_items':cart_items,
                      'total':total,
@@ -336,7 +343,7 @@ def review_order(request, total = 0 , total_qty =0 , tax =0,cart_items=None, gra
                total_qty  +=item.quantity
             tax = round(((18 * total) / 100))
             grand_total = ((total+tax)-reduction)
-            booking_price = round(( grand_total/4))
+            booking_price = 100000
             balance = grand_total- booking_price
 
             #===========razor pay ==============#

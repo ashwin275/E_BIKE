@@ -479,6 +479,11 @@ def cancel_order(request,pk):
 
          for i in orderd_vehicle:
              i.status = 'Cancelled'
+             i.vehicles.remaining += i.quantity
+             vehicle = Variant.objects.get(id=i.vehicles.id)
+             vehicle.remaining += i.quantity
+             vehicle.save()
+             print( i.vehicles)
              i.save()
          return redirect('user:view_orders')
     return render(request,'user_temp/orders.html')
@@ -491,6 +496,11 @@ def order_details(request,pk):
     }
 
     return render(request,'user_temp/order_detail.html',context)
+
+
+
+    
+
 
 
 

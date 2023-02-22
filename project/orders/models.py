@@ -13,7 +13,6 @@ STATUS = (
         ('Delivered','Delivered'),
         ('Cancelled','Cancelled'),
         ('Returned','Returned'),
-        
     )
 
 PAYMENTS=(
@@ -37,6 +36,7 @@ class Orders(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     booking_amount = models.BigIntegerField(default=0)
+    no_of_items = models.IntegerField(default=0,blank=True,null=True)
 
 class OrderVehicle(models.Model):
     order = models.ForeignKey(Orders,on_delete=models.CASCADE)

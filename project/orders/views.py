@@ -30,6 +30,7 @@ def Book_now(request):
     grand_total =0
     total_qty =0
     balance = 0
+    total_items=0
 
     
     user = request.user
@@ -54,6 +55,7 @@ def Book_now(request):
           grand_total = ((total+tax)-reduction)
           booking_price =round(( grand_total/4))
           balance = grand_total- booking_price
+          total_items += 1
           variant = Variant.objects.get(id=item.product.id)
           remaining_variants = item.product.remaining -item.quantity
           variant.remaining = remaining_variants
@@ -91,6 +93,7 @@ def Book_now(request):
                                         discount_price = reduction,
                                         booking_amount=booking_price,
                                          payment_option =payment.payment_method,
+                                         no_of_items = total_items
                                         )
     orders.save()
     for i in cart_items:

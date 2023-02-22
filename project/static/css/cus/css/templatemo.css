@@ -104,16 +104,7 @@ body, ul, li, p, a, label, input, div {
   font-size: 15px;
   margin-top: 20px;
 }
-/* Brand */
-.brand-img {
-  filter: grayscale(100%);
-  opacity: 0.5;
-  transition: .5s;
-}
-.brand-img:hover {
-  filter: grayscale(0%);
-  opacity: 1;
-}
+
 /* Carousel Hero */
 #template-mo-zay-hero-carousel .carousel-indicators li {
   margin-top: -50px;

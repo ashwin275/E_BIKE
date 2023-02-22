@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block content %} 
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <!-- Start Content -->
     <div class="container py-5">
         <div class="row">
@@ -79,7 +80,7 @@
                     <div class="col-md-4">
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" style="height: 30vh; "src="{{items.image.url}}">
+                                <img class="card-img rounded-0 img-fluid" style="height: 10rem; "src="{{items.image.url}}">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
                                       
@@ -146,11 +147,11 @@
     <!-- End Content -->
 
     <!-- Start Brands -->
-    <section class="bg-light py-5 container mb-5">
+    <section class=" py-5 borde  m-5 shadow p-3 mb-5 bg-white rounded">
         <div class="container my-4">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Our Brands</h1>
+                    <h1 class="h1" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">OUR BRANDS</h1>
                     <p>
                        
                     </p>
@@ -158,16 +159,16 @@
                 <div class="col-lg-9 m-auto tempaltemo-carousel">
                     <div class="row d-flex flex-row">
                         <!--Controls-->
-                        <!-- <div class="col-1 align-self-center">
+                        <div class="col-1 align-self-center">
                             <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
                                 <i class="text-light fas fa-chevron-left"></i>
                             </a>
-                        </div> -->
+                        </div>
                         <!--End Controls-->
 
                         <!--Carousel Wrapper-->
-                        <div class="col ">
-                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0 container" id="multi-item-example" data-bs-ride="carousel">
+                        <div class="col">
+                            <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
                                 <!--Slides-->
                                 <div class="carousel-inner product-links-wap" role="listbox">
 
@@ -175,57 +176,57 @@
                                     <div class="carousel-item active">
                                         <div class="row">
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://i.pinimg.com/originals/12/cb/0d/12cb0dfc17bedec2de84282a0e00eaa5.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://motorcycle-logos.com/wp-content/uploads/2016/10/BMW-Logo-Meaning-400x393.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Harley-Davidson_logo.svg/2560px-Harley-Davidson_logo.svg.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://motorcycle-logos.com/wp-content/uploads/2016/10/Ducati-Logo-1967.png" alt="Brand Logo"></a>
                                             </div>
                                         </div>
                                     </div>
                                     <!--End First slide-->
 
                                     <!--Second slide-->
-                                    <!-- <div class="carousel-item">
+                                    <div class="carousel-item ">
                                         <div class="row">
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://i.pinimg.com/originals/12/cb/0d/12cb0dfc17bedec2de84282a0e00eaa5.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://motorcycle-logos.com/wp-content/uploads/2016/10/BMW-Logo-Meaning-400x393.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Harley-Davidson_logo.svg/2560px-Harley-Davidson_logo.svg.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://motorcycle-logos.com/wp-content/uploads/2016/10/Ducati-Logo-1967.png" alt="Brand Logo"></a>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <!--End Second slide-->
 
                                     <!--Third slide-->
-                                    <!-- <div class="carousel-item">
+                                    <div class="carousel-item ">
                                         <div class="row">
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_01.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://i.pinimg.com/originals/12/cb/0d/12cb0dfc17bedec2de84282a0e00eaa5.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_02.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://motorcycle-logos.com/wp-content/uploads/2016/10/BMW-Logo-Meaning-400x393.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_03.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Harley-Davidson_logo.svg/2560px-Harley-Davidson_logo.svg.png" alt="Brand Logo"></a>
                                             </div>
                                             <div class="col-3 p-md-5">
-                                                <a href="#"><img class="img-fluid brand-img" src="assets/img/brand_04.png" alt="Brand Logo"></a>
+                                                <a href="#"><img class="img-fluid brand-img" src="https://motorcycle-logos.com/wp-content/uploads/2016/10/Ducati-Logo-1967.png" alt="Brand Logo"></a>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <!--End Third slide-->
 
                                 </div>
@@ -235,11 +236,11 @@
                         <!--End Carousel Wrapper-->
 
                         <!--Controls-->
-                        <!-- <div class="col-1 align-self-center">
+                        <div class="col-1 align-self-center">
                             <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
                                 <i class="text-light fas fa-chevron-right"></i>
                             </a>
-                        </div> -->
+                        </div>
                         <!--End Controls-->
                     </div>
                 </div>
@@ -266,29 +267,32 @@
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script>
-   
-      var availableTags = [''];
+$(document).ready(function() {
+  var availableTags = [''];
 
-      $.ajax({
-        method: 'GET',
-        url:"/auto_search_ajax/",
+  $.ajax({
+    method: 'GET',
+    url:"/auto_search_ajax/",
+    success:function(response){
+      availableTags = response;
+      console.log(availableTags);
+      $.getScript("https://code.jquery.com/ui/1.12.1/jquery-ui.js", function() {
+        startAutocomplete(availableTags);
+      });
+    }
+  });
 
-        success:function(response){
-            
-            availableTags = response
-            
-            console.log(availableTags)
-            startAutocomplete(response);
-        }
-          });
-        function startAutocomplete(availableTags){
-          $( "#searchproducts" ).autocomplete({
-          source: availableTags
+  function startAutocomplete(availableTags){
+    $( "#searchproducts" ).autocomplete({
+      source: availableTags
     });
-}
-      </script>
+  }
+});
+</script>
+
+  
 
     {% endblock  %}
     <!-- End Footer -->

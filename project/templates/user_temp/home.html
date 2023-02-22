@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+    <link rel="icon" type="image/png"  href="https://www.clipartmax.com/png/middle/126-1263137_mountain-bike-logos-keep-calm-and-ride-a-bike.png">
 <!-- login -->
 
 
@@ -55,10 +55,12 @@
 
 
       
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-<!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->  
+<!-- abababbabbababababab -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"  src="https://unpkg.com/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-+ghBDtOVjkt21p33vBbTTwJZMbp+ZJ0Lp9v98xl01zjN/mcH7PzN07PvG8VY2ue5" crossorigin="anonymous"></script> -->
 
 </head>
 
@@ -126,12 +128,12 @@
                         </div> -->
                     </div> 
                     {% if 'username' not in request.session %} 
-                    <a class="nav-icon d-none d-lg-inline" href="{% url 'user:user_signin' %}" data-bs-toggle="modal" data-bs-target="#templatemo_search" style="text-decoration: none;">
+                    <a class="nav-icon d-none d-lg-inline" href="{% url 'user:user_signin' %}"   style="text-decoration: none;">
                         Login/Register
                     </a>
                     {% endif %}
                     {% if 'username' in request.session %} 
-                    <a class="nav-icon d-none d-lg-inline" href="{% url 'user:logout_user'%}" data-bs-toggle="modal" data-bs-target="#templatemo_search" style="text-decoration: none;">
+                    <a class="nav-icon d-none d-lg-inline" href="{% url 'user:logout_user'%}"   style="text-decoration: none;">
                         Logout
                     </a>
                     {% endif %}
@@ -422,31 +424,18 @@
 <!-- Banner End -->
 
 
-
+{% endblock  %}
     <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
             <div class="row">
 
-                <div class="col-md-4 pt-5">
+                <div class="col-md-4 mt-5 ">
                     <h2 class="h2 text-success border-bottom pb-3 border-light logo">E-BIKE</h2>
-                    <!-- <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">     </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com"></a>
-                        </li>
-                    </ul> -->
+                  
                 </div>
 
-                <div class="col-md-4 pt-5">
+                 <div class="col-md-4 mt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light"></h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li><a class="text-decoration-none" href="#"></a></li>
@@ -457,9 +446,9 @@
                         <li><a class="text-decoration-none" href="#"></a></li>
                         <li><a class="text-decoration-none" href="#"></a></li>
                     </ul>
-                </div>
+                </div> 
 
-                <div class="col-md-4 pt-5">
+                <div class="col-md-4 mt-5">
                     <h3 class="h2 text-light border-bottom pb-3 border-light">JOIN ON US</h3>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li><a class="text-decoration-none" href="{% url 'vendor:vendor_signin'%}">Vendor Sign in</a></li>
@@ -499,11 +488,11 @@
                         <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
                         <div class="input-group-text btn-success text-light">Subscribe</div>
                     </div>
-                </div> -->
+                </div> 
             </div>
         </div>
 
-        <!-- <div class="w-100 bg-black py-3">
+         <div class="w-100 bg-black py-3">
             <div class="container">
                 <div class="row pt-2">
                     <div class="col-12">
@@ -517,7 +506,7 @@
         </div> -->
 
     </footer>
-     {% endblock  %}
+   
     <!-- End Footer -->
 
     <!-- Start Script

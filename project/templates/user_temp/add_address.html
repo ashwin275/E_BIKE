@@ -12,8 +12,8 @@
 
             <div class="card mb-4">
                 <div class="card-body text-center">
-                  <img src="" alt="avatar"
-                    class="rounded-circle img-fluid" style="width: 150px;">
+                  <img src="https://cdn-icons-png.flaticon.com/512/64/64572.png" style="width: 6em;" alt="img...."
+                  class="rounded-circle img-fluid" >
                   <h5 class="my-3"></h5>
                   <p class="text-muted mb-1">{{users.first_name}}</p>
                   <p class="text-muted mb-4">{{users.email}}</p>
@@ -46,7 +46,7 @@
 
                     {% csrf_token  %}
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-center">Add Address</h4>
+                    <h4 class="text-center" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">Add Address</h4>
 
 
                 </div>
@@ -88,7 +88,7 @@
         </div>
      <div class="col-md-4">
             <div class="p-3 py-5">
-                <h5 class=" ">Address</h>
+                <h5 class=" " >Address</h>
                 {% for items in address %}
 
                 <div class="card mt-5" style="width: 18rem;">

@@ -3,10 +3,22 @@
 
 {% block content %} 
 
+
+ <style>
+  .message {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: red;
+}
+
+
+</style> 
+
+
 <section class="h-100 h-custom" style="background-color: #f9f9fd;">
     <div class="container py-5 h-100">
        
-
+     
 
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12">
@@ -17,12 +29,6 @@
                   <div class="p-5">
                     <div class="d-flex justify-content-between align-items-center mb-5">
                       <h1 class="fw-bold mb-0 text-black"> Cart</h1>
-                      <div style="color: rgb(95, 51, 51);">
-                  
-                        {% for messag in messages %}
-                            <h5>{{messag}}</h5>
-                        {%endfor%}
-                      </div>
                       <h6 class="mb-0 text-muted">{{cart_itemscount}}</h6>
                     </div>
                     <hr class="my-4">
@@ -36,81 +42,56 @@
         </div>
     
         {% endif %}
-                
-  
-                   
+        
+     
+
+
+
+
+
+
+
                    
                  {% for items in cart_items %}
                  
-                 
-  
+              
                     <div class="row mb-4 d-flex justify-content-between align-items-center product_data">
-                      <div class="col-md-2 col-lg-2 col-xl-2">
+                      <div class="col-sm-2 col-lg-2 col-xl-2   text-center">
                         <img
                           src="{{items.product.image1.url}}"
-                          class="img-fluid rounded-3" alt="Cotton T-shirt">
+                          class="img-fluid rounded-3" alt="img...">
                       </div>
-                      <div class="col-md-3 col-lg-3 col-xl-3">
-                        <h6 class="text-muted">{{items.product.category}}</h6>
+                      <div class="col-sm-2 col-lg-3 col-xl-3  text-center">
+                      
                         <h6 class="text-black mb-0">{{items.product}}</h6>
                       </div>
 
-                      <!-- <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                        <button class="btn btn-link px-2"
-                         >
-                     <a href="{% url 'Cartapp:decrement_quantity' items.product.id %}"><i class="fas fa-minus"></i></a>
-                        </button>
-  
-                        <input class=" fw-bold text-black" min="1" style="width: 32px;" name="" value="{{items.quantity}}"
-                          type="">
-  
-                        <button class="btn btn-link px-2">
-                            <a href="{% url 'Cartapp:add_to_cart' items.product.id %}"><i class="fas fa-plus"></i></a>
-                        </button>
-                      </div> -->
-
-
-                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex cart-item"  data-item-id="{{ items.id }}">
-                        <div class="quantity">
-                             <button class="btn btn-link px-2 minus-btn">
+                      <div class="col-sm-2 col-lg-3 col-xl-2 d-flex  justify-content-between cart-item "  data-item-id="{{ items.id }}">
+                        <div class="quantity ">
+                             <button class="btn btn-link px-2 minus-btn ">
                                   <i class="fas fa-minus"></i>
                              </button>
-                                 <input class=" fw-bold text-black qty-input" min="1" style="width: 32px;" name="" value="{{items.quantity}}" type="number">
-                              <button class="btn btn-link px-2">
+                                 <input class=" fw-bold text-black qty-input " min="1" style="width: 32px;" name="" value="{{items.quantity}}" type="number">
+                              <button class="btn btn-link px-2 text-center">
                                   <i class="fas fa-plus plus-btn"></i>
                               </button>
                           </div>
                       </div>
-                       
-
-<!-- {% for item in cart_items %}
-  <div class="cart-item" data-item-id="{{ item.id }}">
-    <div class="quantity">
-      <button class="minus-btn">-</button>
-      <input type="number" class="qty-input" value="{{ item.quantity }}" />
-      <button class="plus-btn">+</button>
-    </div>
-  
-  </div>
-  {% endfor %}
-   -->
 
                       
-
-                      
-                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                      <div class="col-sm-2 col-lg-2 col-xl-2 offset-lg-1  text-center">
                         <h6 class="mb-0"><i class="fa-sharp fa-solid fa-indian-rupee-sign"></i> {{items.sub_total}}</h6>
                       </div>
-                      <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <div class="col-sm-1 col-lg-1 col-xl-1 text-end bg-grey">
                         <a href="{% url 'Cartapp:remove_cart_item' items.product.id %}" style="color: #9b5f5f;"><i class="fas fa-trash-alt"></i></a>
                       </div>
                     </div>
                     <hr class="my-4">
 
                     {% endfor  %}
-					
+                    
   
-    
+                    <div id="message" class="message"></div>
                     <div class="pt-5">
 
                       <h6 class="mb-0"><a href="{% url 'user:Shop' %}" class="text-body">
@@ -131,17 +112,7 @@
                       <h5></h5>
                     </div>
   
-                    <h5 class="text-uppercase mb-3"></h5>
-<!--   
-                    <div class="mb-4 pb-2">
-                      <select class="select">
-                        <option value="1"></option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        <option value="4">Four</option>
-                      </select>
-                    </div>
-   -->              
+
                     <h5 class="text-uppercase mb-3"></h5>
   
                    
@@ -203,22 +174,23 @@ function updateCart(productId, action) {
   </script> -->
 
 
+<!-- jQuery (required) -->
+
+
 
 
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
 <script>
- $(document).on('click', '.plus-btn, .minus-btn', function() {
+$(document).on('click', '.plus-btn, .minus-btn', function() {
   var $cartItem = $(this).closest('.cart-item');
   var itemId = $cartItem.data('item-id');
-  console.log(itemId)
   var isAdding = $(this).hasClass('plus-btn');
   var $qtyInput = $cartItem.find('.qty-input');
   var quantity = parseInt($qtyInput.val());
-  
+
   if (isAdding) {
     quantity += 1;
   } else if (quantity > 1) {
@@ -236,18 +208,31 @@ function updateCart(productId, action) {
       csrfmiddlewaretoken: '{{ csrf_token }}'
     },
     success: function(data) {
-      console.log(data)
-      $qtyInput.val(data.quantity);
-      $('#total').text(data.total);
-      $('#tax').text(data.tax);
-      $('#booking_price').text(data.booking_price);
-      $('#grand_total').text(data.grand_total);
+      if (data.status === 'error') {
+   
+
+
+        $('#message').text(data.message);
+       
+      } else {
+        console.log(data);
+        $qtyInput.val(data.quantity);
+        $('#total').text(data.total);
+        $('#tax').text(data.tax);
+        $('#booking_price').text(data.booking_price);
+        $('#grand_total').text(data.grand_total);
+      }
+    },
+    error: function(xhr, textStatus, errorThrown) {
+      $('#errorMessage').text('An error occurred while updating the cart.');
+      $('#errorModal').modal('show');
     }
   });
 });
-
 </script>
+
 
  
 
 {% endblock  %}
+

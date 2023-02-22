@@ -9,13 +9,13 @@
     {% block content %} 
 
     <!-- Open Content -->
-    <section class="bg-light">
+    <section class="">
         <div class="container pb-5">
-            <div class="row">
+            <div class="row shadow p-3 mb-5 bg-white rounded mt-5">
                 <div class="col-md-6 mt-5">
                    
                     <div class="card mb-3 zoom-image">
-                        <img class="card-img img-fluid " id="main_image" src="{{varient.image1.url}}"  alt="" >
+                        <img class="card-img img-fluid " style="height: 20em; width: 40em;" id="main_image" src="{{varient.image1.url}}"  alt="" >
                     </div>
                     <div class="row">
                         <!--Start Controls-->
@@ -37,17 +37,17 @@
                                      
                                         <div class="col-4">
                                             <a href="#">
-                                                <img  class="card-img img-fluid"  onclick="change_image(this)" src="{{varient.image1.url}}" style="height: 18vh;" alt="">
+                                                <img  class="card-img img-fluid" style="height: 5rem; width: 8rem;"  onclick="change_image(this)" src="{{varient.image1.url}}" style="height: 18vh;" alt="">
                                             </a>
                                         </div>
                                         <div class="col-4">
                                             <a href="#">
-                                                <img class="card-img img-fluid"  onclick="change_image(this)" src="{{varient.image2.url}}" style="height: 18vh;" alt="">
+                                                <img class="card-img img-fluid" style="height: 5rem; width: 8rem;"   onclick="change_image(this)" src="{{varient.image2.url}}" style="height: 18vh;" alt="">
                                             </a>
                                         </div>
                                         <div class="col-4">
                                             <a href="#">
-                                                <img class="card-img img-fluid" onclick="change_image(this)" src="{{varient.image3.url}}" style="height: 18vh;" alt="">
+                                                <img class="card-img img-fluid" style="height: 5rem; width: 8rem;"  onclick="change_image(this)" src="{{varient.image3.url}}" style="height: 18vh;" alt="">
                                             </a>
                                         </div>
                                       
@@ -161,11 +161,11 @@
     <!-- Close Content -->
 
     <!-- Start Article -->
-    <section class="bg-light">
-        <div class="container py-5">
+    <section class="">
+        <div class="container  shadow p-3 mb-5 bg-white rounded mt-5">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1">Varients</h1>
+                    <h1 class="h1" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >Varients</h1>
                     <p>
                         <!-- Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident. -->
@@ -179,7 +179,7 @@
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img rounded-0 img-fluid" style="height: 40vh; width: 60vw;" src="{{items.image1.url}}">
+                            <img class="card-img rounded-0 img-fluid" style="height: 15rem;"  src="{{items.image1.url}}">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                   
@@ -221,99 +221,7 @@
     
 
 
-    <!-- footer start -->
-
-    <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">E-BIKE</h2>
-                    <!-- <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">     </a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com"></a>
-                        </li>
-                    </ul> -->
-                </div>
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light"></h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                        <li><a class="text-decoration-none" href="#"></a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 pt-5">
-                    <h3 class="h2 text-light border-bottom pb-3 border-light">JOIN ON US</h3>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="{% url 'vendor:vendor_register'%}">Become a  Vendor</a></li>
-                       
-                        <li ><a class="text-decoration-none" href="{% url 'user:logout_user'%}" style="color: rgb(239, 102, 102);">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a></li>
-                    </ul>
-                </div>
-              
-
-            </div>
-
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
-                </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Email address</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
-                        <div class="input-group-text btn-success text-light">Subscribe</div>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-
-        <!-- <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            &copy; 
-                            |  <a rel="sponsored" href="https://templatemo.com" target="_blank"></a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
   
-    </footer>
 
 
     <script>

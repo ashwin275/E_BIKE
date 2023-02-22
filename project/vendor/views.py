@@ -450,7 +450,7 @@ def deactive_vehicle(request,pk):
 #==============================ORDERS==============================#
 
 @cache_control(no_cache = True,must_revalidate = False,no_store = True)
-def Orders(request):
+def Orders_view(request):
     if 'vendor' in request.session:
          vendor = myuser.objects.get(email=request.user.email)
     # vehicle = Vehicles.objects.filter(vendor_id = vendor.id )
@@ -488,6 +488,10 @@ def cancel_order(request,pk):
 def status_change(request,pk):
     if 'vendor' in request.session:
          orders= OrderVehicle.objects.get(id = pk)
+        
+         Total_Order = Orders.objects.get(order_number = orders.order.order_number )
+         Total_Order.status == 'Processing'
+         Total_Order.save()
          if orders.status == 'Confirmed':
              orders.status = 'Shipped'
          elif orders.status == 'Shipped':
