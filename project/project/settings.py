@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-q=)fl0uy61y2z6#*vs5nd(=+bz^z-1o69d@!(-__l9s0^yzch0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['43.206.236.238','ebikesforu.shop','www.ebikesforu.shop','localhost']
 
 
 # Application definition
