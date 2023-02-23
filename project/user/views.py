@@ -41,8 +41,8 @@ def home(request):
             
              }
        else:
-            category = Category.objects.all
-            vehicles = Vehicles.objects.filter(is_available=True)
+            category = Category.objects.all()[:6]
+            vehicles = Vehicles.objects.filter(is_available=True)[:6]
 
             context ={
                  'category':category,
@@ -67,15 +67,16 @@ def user_register(request):
             password = request.POST['password']
             if first_name == '':
                 messages.info(request,'username is empty')
-                return redirect(user_register)
-            if email == '':
+               
+            elif email == '':
                 messages.info(request,'Email is empty')
-                return redirect(user_register)
-            if password == '':
+                
+            elif password == '':
                 messages.info(request,'password is empty')
-                return redirect(user_register)
-            if myuser.objects.filter(email=email):
+                
+            elif myuser.objects.filter(email=email):
                 messages.info(request,'Email is already taken')
+                
             #elif myuser.objects.filter(mobile=mobile):
                # messages.info(request,'Mobile alread exists')
             else:
@@ -89,6 +90,7 @@ def user_register(request):
                 #Rotp = random.randint(1000,9999)
                 #message_handler = MessaHandler(mobile,Rotp).send_otp_on_mobile()
                 return redirect('user:verify_otp')
+            return redirect('user:user_register')
             
     return render(request,'user_temp/user_signup.html')
 
@@ -168,7 +170,7 @@ def user_signin(request):
             # print(request.session.get('cart_id'))
             return redirect('user:home')
         else:
-            messages.info(request,'invalid credintial')
+            messages.warning(request,'invalid credintial')
             return redirect('user:user_signin')
 
     return render (request,'user_temp/user_signin.html')
@@ -318,7 +320,7 @@ def user_profile(request):
                     }
            
            return render(request,'user_temp/user_profile.html',context)
-    messages.info(request,'Please sign in first')
+    messages.info(request,'Please sign in')
 
     return redirect('user:user_signin')
 
@@ -498,7 +500,8 @@ def order_details(request,pk):
     return render(request,'user_temp/order_detail.html',context)
 
 
-
+def about(request):
+      return render(request,'user_temp/about.html')
     
 
 

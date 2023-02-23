@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -157,11 +158,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # twilio api
 
-ACCOUNT_SID ='AC12fac663ab8580281d15fb1dd7e39c44'
-AUTH_TOKEN ='1f273d1378515c4b37dbc0980e3aecd4'
+ACCOUNT_SID =config('ACCOUNT_SID')
+AUTH_TOKEN =config('AUTH_TOKEN')
 
 
-VERIFICATION_SID = 'VA85509cc07ea0b9550cbb765bb2025222'
+
+VERIFICATION_SID = config('VERIFICATION_SID')
 
 
 
@@ -170,12 +172,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ashwinraj275@gmail.com'
-EMAIL_HOST_PASSWORD = 'csjaaagjxzlhqphh'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 #Razor pay integration
 
 
-KEY = 'rzp_test_iDaGh3N8pyOuDO'
-SECRET = 'PNTLDNpHH9iiWAZqnMY5qVPz'
+KEY = config('KEY')
+SECRET = config('SECRET')
 

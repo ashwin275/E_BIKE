@@ -123,8 +123,12 @@ def update_cart_quantity(request):
 
 
 def cart_count(request):
-    cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
-    count = {'cart_itemscount':cart_itemscount}
+    try:
+      cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
+      count = {'cart_itemscount':cart_itemscount}
+    except:
+        cart_itemscount = 0
+        count = {'cart_itemscount':cart_itemscount}
     return JsonResponse(count)
 
         

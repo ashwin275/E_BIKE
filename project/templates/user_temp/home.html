@@ -106,14 +106,12 @@
                             <a class="nav-link" href="{% url 'user:home' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">About</a>
+                            <a class="nav-link" href="{% url 'user:about' %}">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'user:Shop' %}">Bikes</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Contact</a>
-                        </li>
+                       
                        
                     </ul>
                 </div>
@@ -232,7 +230,7 @@
 
        
          <div id="intro-example" class="p-5 text-center bg-image"
-          style="background-image: url('https://cdn.pixabay.com/photo/2014/07/31/23/10/biker-407123__480.jpg');">
+          style="background-image: url('https://cdn.pixabay.com/photo/2014/07/31/23/10/biker-407123__480.jpg'); ">
           <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
             <div class="d-flex justify-content-center align-items-center h-100">
               <div class="text-white">
@@ -251,7 +249,7 @@
 
 
 
-
+   
 
 
 
@@ -272,7 +270,7 @@
         <div class="row">
             {% for items in category %}
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="{% url 'user:category_filter' items.id %}"><img src="{{items.image.url}}" style="height: 35vh;" class="rounded-circle img-fluid border"></a>
+                <a href="{% url 'user:category_filter' items.id %}"><img src="{{items.image.url}}" style="height: 15rem; width: 20rem;" class="rounded-circle img-fluid border"></a>
                 <h5 class="text-center mt-3 mb-3">{{items.category_name}}</h5>
                 <p class="text-center"><a class=" btn btn-outline-success" href="{% url 'user:category_filter' items.id %}">Explore Now</a></p>
             </div>
@@ -426,7 +424,7 @@
 
 {% endblock  %}
     <!-- Start Footer -->
-    <footer class="bg-dark" id="tempaltemo_footer">
+    <footer class="bg-dark mt-5" id="tempaltemo_footer">
         <div class="container">
             <div class="row">
 

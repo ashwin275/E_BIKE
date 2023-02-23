@@ -19,7 +19,7 @@ urlpatterns = [
     path('variant-detail/<int:pk>',views.variant_detail,name='variant_detail'),
     path('Shop',views.Shop,name='Shop'),
 
-
+    path('about',views.about,name='about'),
          
    # path('Userdetail',Userdetail.as_view(),name='Userdetail'),
    # path('userprofile',user_profile.as_view(),name='user_profile'),
