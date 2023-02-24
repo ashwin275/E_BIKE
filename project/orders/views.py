@@ -160,7 +160,7 @@ def download_invoice(request,id):
 def handlerrequest(request):
       # user = request.user
       # request.session['user'] = user
-      if request.method == "POST":
+      #if request.method == "POST":
             try:
                   payment_id = request.POST.get('razorpay_payment_id','')
                   order_id = request.POST.get('razorpay_order_id','')
