@@ -21,7 +21,7 @@ from django.http import FileResponse
 
 # Create your views here.
 
-
+@csrf_exempt
 def Book_now(request):
     total = 0
     booking_price = 0
