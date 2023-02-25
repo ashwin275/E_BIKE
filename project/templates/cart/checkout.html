@@ -60,7 +60,7 @@
                 <h4 class="mb-3">Billing address</h4>
 
 
-                <form class="needs-validation" novalidate method="POST" role="form">
+                <form class=""  method="POST" role="form">
                     {% csrf_token  %}
 
 
@@ -81,11 +81,10 @@
                                 Valid last name is required.
                             </div>
                         </div>
-    
-    
+
                         <div class="col-12">
                             <label for="email" class="form-label"> <span class="text-muted"></span></label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
                             <div class="invalid-feedback">
                                 Please enter a valid email address for shipping updates.
                             </div>
@@ -93,7 +92,7 @@
     
                         <div class="col-12">
                             <label for="address" class="form-label"></label>
-                            <input type="text" class="form-control" name="address1" id="address" placeholder="Address" required>
+                            <input type="text" class="form-control" name="address1" id="address" placeholder="Address" required title="">
                             <div class="invalid-feedback">
                                 Please enter your shipping address.
                             </div>
@@ -101,115 +100,34 @@
     
                         <div class="col-12">
                             <label for="address2" class="form-label"> <span class="text-muted"></span></label>
-                            <input type="text" class="form-control" name="address2" id="address2" placeholder="Address 2">
+                            <input type="text" class="form-control" name="address2" id="address2" placeholder="Address 2" required>
                         </div>
     
                         <div class="col-md-3">
 
                             <label for="address2" class="form-label"><span class="text-muted"></span></label>
-                            <input type="text" class="form-control" name="country" id="country" placeholder="country">
-
-
-                            <!-- <label for="country" class="form-label">Country</label>
-                            <select class="form-select"  name="country" id="country" required>
-                                <option value="">Choose...</option>
-                                <option>India</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Please select a valid country.
-                            </div> -->
+                            <input type="text" class="form-control" name="country"  placeholder="country" required>
+                          
                         </div>
     
                         <div class="col-md-3">
                            
                             <label for="address2" class="form-label"><span class="text-muted"></span></label>
-                            <input type="text" class="form-control" name="state" id="state" placeholder="state">
+                            <input type="text" class="form-control" name="state" placeholder="state">
 
                         </div>
 
                         <div class="col-3">
                             <label for="address2" class="form-label"><span class="text-muted"></span></label>
-                            <input type="text" class="form-control" name="mobile" id="address2" placeholder="mobile">
+                            <input type="tel" class="form-control" name="mobile"  placeholder="mobile">
                         </div>
                         <div class="col-3">
                             <label for="address2" class="form-label"><span class="text-muted"></span></label>
-                            <input type="text" class="form-control" name="city" id="city" placeholder="city">
+                            <input type="text" class="form-control" name="city"  placeholder="city">
                         </div>
     
                        
                     </div>
-    
-                    <!-- <hr class="my-4">
-    
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="same-address">
-                        <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-                    </div>
-    
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="save-info">
-                        <label class="form-check-label" for="save-info">Save this information for next time</label>
-                    </div> -->
-    
-                    <!-- <hr class="my-4">
-    
-                    <h4 class="mb-3">Payment</h4>
-    
-                    <div class="my-3">
-                        <div class="form-check">
-                            <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                            <label class="form-check-label" for="credit">Credit card</label>
-                        </div>
-                        <div class="form-check">
-                            <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                            <label class="form-check-label" for="debit">Debit card</label>
-                        </div>
-                        <div class="form-check">
-                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                            <label class="form-check-label" for="paypal">Paytm</label>
-                        </div>
-                        <div class="form-check">
-                            <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                            <label class="form-check-label" for="paypal">Phonepe</label>
-                        </div>
-                    </div>
-    
-                    <div class="row gy-3">
-                        <div class="col-md-6">
-                            <label for="cc-name" class="form-label">Name on card</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                            <small class="text-muted">Full name as displayed on card</small>
-                            <div class="invalid-feedback">
-                                Name on card is required
-                            </div>
-                        </div>
-    
-                        <div class="col-md-6">
-                            <label for="cc-number" class="form-label">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                            <div class="invalid-feedback">
-                                Credit card number is required
-                            </div>
-                        </div>
-    
-                        <div class="col-md-3">
-                            <label for="cc-expiration" class="form-label">Expiration</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                            <div class="invalid-feedback">
-                                Expiration date required
-                            </div>
-                        </div>
-    
-                        <div class="col-md-3">
-                            <label for="cc-cvv" class="form-label">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                            <div class="invalid-feedback">
-                                Security code required
-                            </div>
-                        </div>
-                    </div>
-    
-                    <hr class="my-4"> -->
     
                     <button class="w-100 btn btn-danger btn-lg mt-5 mb-5" type="submit">ADD ADDRESS</button>
 

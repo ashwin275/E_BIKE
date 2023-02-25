@@ -103,13 +103,13 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user:home' %}">Home</a>
+                            <a class="nav-link mainlinks" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;"   href="{% url 'user:home' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user:about' %}">About</a>
+                            <a class="nav-link" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;"   href="{% url 'user:about' %}">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user:Shop' %}">Bikes</a>
+                            <a class="nav-link" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC; "    href="{% url 'user:Shop' %}">Bikes</a>
                         </li>
                        
                        
@@ -357,7 +357,7 @@
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="{% url 'user:single_products' items.pk%}">
-                            <img src="{{items.image.url}}" class="card-img-top  img-fluid border" alt="..." style="height: 30vh;">
+                            <img src="{{items.image.url}}" class="card-img-top  img-fluid border" alt="..." style="height: 17rem;">
                         </a>
                         <div class="card-body">
                             <!-- <ul class="list-unstyled d-flex justify-content-between">
@@ -370,7 +370,7 @@
                                 </li> -->
                                 <li class="text-muted text-right"></li>
                             </ul>
-                            <a href="{% url 'user:single_products' items.pk%}" class="h2 text-decoration-none text-dark">{{items.vehicle_name}}</a>
+                            <a href="{% url 'user:single_products' items.pk%}" class="h2 text-decoration-none text-dark"  style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;">{{items.vehicle_name}}</a>
                             <p class="card-text">
                               Range:  {{items.range}}
                             </p>
