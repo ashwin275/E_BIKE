@@ -38,7 +38,7 @@
         <h2  class="text-center">Your Cart Is Empty </h2>
         <br>
         <div class="text-center">
-            <a href="{% url 'user:home' %}" class="btn btn-primary">Explore now</a>
+            <a href="{% url 'user:Shop' %}" class="btn btn-primary">Explore now</a>
         </div>
     
         {% endif %}
@@ -71,7 +71,7 @@
                              <button class="btn btn-link px-2 minus-btn ">
                                   <i class="fas fa-minus"></i>
                              </button>
-                                 <input class=" fw-bold text-black qty-input " min="1" style="width: 32px;" name="" value="{{items.quantity}}" type="number">
+                                 <input class=" fw-bold text-black qty-input "  disabled="disabled" min="1" style="width: 32px;" name="" value="{{items.quantity}}" type="number">
                               <button class="btn btn-link px-2 text-center">
                                   <i class="fas fa-plus plus-btn"></i>
                               </button>
@@ -79,8 +79,13 @@
                       </div>
 
                       
-                      <div class="col-sm-2 col-lg-2 col-xl-2 offset-lg-1  text-center">
-                        <h6 class="mb-0"><i class="fa-sharp fa-solid fa-indian-rupee-sign"></i> {{items.sub_total}}</h6>
+                      <div class="col-sm-2 col-lg-2 col-xl-2 offset-lg-1  d-flex   ">
+                      
+                          <i class="fa-sharp fa-solid fa-indian-rupee-sign"></i>&nbsp; &nbsp;
+                          <h6 class="mb-0" id="sub-total-{{ items.id }}"> {{items.sub_total}}</h6>
+
+                       
+                       
                       </div>
                       <div class="col-sm-1 col-lg-1 col-xl-1 text-end bg-grey">
                         <a href="{% url 'Cartapp:remove_cart_item' items.product.id %}" style="color: #9b5f5f;"><i class="fas fa-trash-alt"></i></a>
@@ -218,6 +223,8 @@ $(document).on('click', '.plus-btn, .minus-btn', function() {
         console.log(data);
         $qtyInput.val(data.quantity);
         $('#total').text(data.total);
+        $('#sub-total-' + itemId).text(  data.Sub_total);
+        console.log(data.Sub_total)
         $('#tax').text(data.tax);
         $('#booking_price').text(data.booking_price);
         $('#grand_total').text(data.grand_total);

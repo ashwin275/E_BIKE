@@ -3,8 +3,71 @@
 
 {% block content %} 
 
+<section  >
+    <div class="container mt-5  ">
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-lg-12 col-xl-11 ">
+          <div class="card text-black shadow p-3 mb-5  "  style="border-radius: 20px; "   >
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+  
+                  <p class="text-center h2   fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >Sign In</p>
+                   
+                  <div style="color: red;">
+                  
+                    {% for messag in messages %}
+                        <h6 class="text-center">{{messag}}</h6>
+                    {%endfor%}
+                  </div>
+                  
+  
+                  <form class="mx-1 mx-md-4" method="POST"  role="form">
+                    {% csrf_token  %}
+  
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="email" name="email" class="form-control"  required placeholder="email"/>
+                        
+                      </div>
+                    </div>
+  
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input type="password"  name="password" class="form-control" required placeholder="password" />
+                       
+                      </div>
+                    </div>
+                 
+  
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <button type="submit" class="btn btn-outline-dark ">Submit</button>
+                    </div>
 
-<div class="container h-100 w-100">
+                    <p class="text-center text-muted mt-5 mb-0">Dont Have an account? <a href="{% url 'user:user_register' %}"
+                        class="fw-bold text-body"><u>Sign Up</u></a></p>
+  
+                  </form>
+             
+  
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+  
+                  <img src="https://www.churchstrettonmotorcycles.com/wp-content/uploads/2016/03/slider-moto.png"
+                    class="img-fluid" alt="Sample image">
+  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- <div class="container h-100 w-100">
   <div class="row h-100 w-100">
       <div class="col-12 mx-auto d-table h-100 w-50">
           <div class="d-table-cell align-middle">
@@ -63,6 +126,6 @@
           </div>
       </div>
   </div>
-</div>
+</div> -->
 
 {% endblock  %}

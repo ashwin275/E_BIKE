@@ -4,6 +4,68 @@
 {% block content %} 
 
 
+<section class="mt-5 container-fluid">
+    <div >
+      <div class="row d-flex justify-content-center align-items-center ">
+        <div class="col-md-9 col-lg-6 col-xl-5 ">
+          <img src="https://thumbs.dreamstime.com/b/motorcycle-white-background-big-powerful-54737947.jpg"
+            class="img-fluid" alt="Sample image">
+        </div>
+        <div class="col-md-8 col-lg-6 col-xl-4  shadow p-3 mb-5 mt-5 ">
+            <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >Sign Up</p>
+
+<form class=" mt-5" method="POST"  role="form"> 
+                {% csrf_token  %}
+  <!-- 2 column grid layout with text inputs for the first and last names -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" name="first_name"  class="form-control"  required placeholder="firstname" />
+        
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" name="last_name" class="form-control"  required placeholder="lastname"/>
+       
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="form-outline mb-4">
+    <input type="tel"  pattern="[0-9]{10}" name="mobile" class="form-control"  required placeholder="mobile"/>
+   
+  </div>
+
+ 
+  <div class="form-outline mb-4">
+    <input type="email"   name="email" class="form-control"  required placeholder="email"/>
+   
+  </div>
+
+  <!-- Number input -->
+  <div class="form-outline mb-4">
+   
+    <input type="password"  name="password" class="form-control" required placeholder="password" />
+  </div>
+
+  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+    <button type="submit" class="btn btn-outline-dark ">Submit</button>
+  </div>
+  <p class="text-center text-muted mt-4 mb-5">Already have an account? <a href="{% url 'user:user_signin' %}"
+      class="fw-bold text-body"><u>Sign In</u></a></p>
+</form>
+  
+        </div>
+      </div>
+    </div>
+    
+  </section>
+
+<!-- 
 <div class="container h-100 w-100">
   <div class="row h-100 w-100">
       <div class="col-12 mx-auto d-table h-100 w-50">
@@ -73,6 +135,6 @@
           </div>
       </div>
   </div>
-</div>
+</div> -->
 
 {% endblock  %}

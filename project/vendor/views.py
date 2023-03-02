@@ -6,6 +6,7 @@ from django.http import JsonResponse,response
 from django.contrib.auth import authenticate,login,logout
 #from django.db import models
 # import pandas as pd 
+from django.contrib import messages,auth 
 from django.db.models import Count,F , Sum
 
 from user.models import myuser,Userdetail
@@ -105,31 +106,38 @@ def verify_vender(request):
 def vendor_signin(request):
     if 'vendor' in request.session:
         return redirect ('vendor:dash_board')
+        
+    if 'username' in request.session:
+        del  request.session['username']
+        auth.logout(request)
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
 
-        if email == '':
-            messages.info(request,'email is empty')
-            return redirect(vendor_signin)
-        elif password == '':
-                messages.info(request,'password is empty')
-                return redirect(vendor_signin)
+        email_exsit =  myuser.objects.filter(email=email).exists()
+      
+        print(email_exsit)
+     
+        if email_exsit == False:
+            messages.info(request,'email is incorect')
+          
         else:
             vendor = authenticate(email=email,password=password)
-            if vendor is not None:
-                if vendor.is_staff == True:
-                    if vendor.is_active == True:
-                          request.session['vendor']=email
-                          login(request,vendor)
-                          return redirect('vendor:dash_board')
-                    else:
-                         messages.info(request,'you are blocked by admin')
+            if vendor is not None and vendor.is_staff == True:
+                print('true staff')
+                if vendor.is_active == True:
+                     print('true')
+                     request.session['vendor']=email
+                     login(request,vendor)
+                     return redirect('vendor:dash_board')
                 else:
-                    messages.info(request,'you are not a vendor')
+                    messages.info(request,'Your account is inactive. Please contact the administrator.')
+
             else:
-                messages.info(request,'You are blocked by admin')
-            return redirect('vendor:vendor_signin')
+                messages.info(request,'invalid credential')
+             
+        
+        return redirect('vendor:vendor_signin')
     return render (request,'vendor_temp/vendor_signin.html')
 
 
@@ -606,30 +614,34 @@ def download_sales_report(request):
                                            & Q(order__created_at__date__gte =start_date)
                                            & Q(order__created_at__date__lte =end_date)).order_by('order__created_at') 
   
-    for order in orders:
-        sub_total = order.quantity * order.price
-        sales_data.append([
-            order.order.order_number,
-            order.order.created_at.strftime('%m/%d/%Y %I:%M %p'),
-            order.vehicles.vehicle_id.vehicle_name,
-            order.vehicles.color,
-            order.quantity,
-            order.price,
-            sub_total
-        ])
-    
-    # Create an Excel file and add the sales report data to it
-    wb = Workbook()
-    ws = wb.active
-    ws.title = 'Sales Report'
-    for row in sales_data:
-        ws.append(row)
 
-    # Offer the Excel file for download
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename=sales_report.xlsx'
-    wb.save(response)
-    return response
+    if orders:
+        for order in orders:
+            sub_total = order.quantity * order.price
+            sales_data.append([
+                order.order.order_number,
+                order.order.created_at.strftime('%m/%d/%Y %I:%M %p'),
+                order.vehicles.vehicle_id.vehicle_name,
+                order.vehicles.color,
+                order.quantity,
+                order.price,
+                sub_total
+            ])
+        
+        # Create an Excel file and add the sales report data to it
+        wb = Workbook()
+        ws = wb.active
+        ws.title = 'Sales Report'
+        for row in sales_data:
+            ws.append(row)
+
+        # Offer the Excel file for download
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename=sales_report.xlsx'
+        wb.save(response)
+        return response
+    else:
+        pass
 
 
 #===============pdf download sales report==================#
@@ -649,62 +661,64 @@ def sales(request):
                                            & Q(order__created_at__date__gte =start_date)
                                            & Q(order__created_at__date__lte =end_date)).order_by('order__created_at') 
    
-     # Create a buffer to receive PDF data
-    buffer = BytesIO()
 
-     # Create the PDF object, using the BytesIO object as its "file."
-    doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
-    # Set up the response
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="sales_report.pdf"'
+    if orders:
+        # Create a buffer to receive PDF data
+        buffer = BytesIO()
 
-    # Create the PDF object
-    doc = SimpleDocTemplate(response, pagesize=letter)
-    elements = []
+        # Create the PDF object, using the BytesIO object as its "file."
+        doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+        # Set up the response
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="sales_report.pdf"'
 
-    # Add the report title and date to the elements list
-    title_style = getSampleStyleSheet()["Title"]
-    elements.append(Paragraph("Sales Report", title_style))
-    date_style = getSampleStyleSheet()["Normal"]
-    date_string = "Date:" + date.today().strftime("%m/%d/%Y")
-    elements.append(Paragraph(date_string, date_style))
+        # Create the PDF object
+        doc = SimpleDocTemplate(response, pagesize=letter)
+        elements = []
 
-    # Create the table object and add it to the elements list
-    data = [
-        ['Order No', 'Date', 'Vehicle','Quantity','Color', 'Price', 'Total'],
-    ]
-    # Initialize the total variable
-    grand_total = 0
-    for sale in orders:
-        total = sale.quantity*sale.price
+        # Add the report title and date to the elements list
+        title_style = getSampleStyleSheet()["Title"]
+        elements.append(Paragraph("Sales Report", title_style))
+        date_style = getSampleStyleSheet()["Normal"]
+        date_string = "Date:" + date.today().strftime("%m/%d/%Y")
+        elements.append(Paragraph(date_string, date_style))
+
+        # Create the table object and add it to the elements list
+        data = [
+            ['Order No', 'Date', 'Vehicle','Quantity','Color', 'Price', 'Total'],
+        ]
+        # Initialize the total variable
+        grand_total = 0
+        for sale in orders:
+            total = sale.quantity*sale.price
+            
+            data.append([sale.order.order_number, sale.order.created_at.strftime("%d %b %Y"), sale.vehicles.vehicle_id.vehicle_name, sale.quantity,sale.vehicles.color, sale.price, total])
+
+            grand_total += total
+
+    # Add the grand total to the data list
+        data.append(['', '', '', '', '', 'Grand Total', grand_total])
+        table = Table(data)
         
-        data.append([sale.order.order_number, sale.order.created_at.strftime("%d %b %Y"), sale.vehicles.vehicle_id.vehicle_name, sale.quantity,sale.vehicles.color, sale.price, total])
+        table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 14),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+            ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
+            ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
+            ('FONTSIZE', (0, 1), (-1, -1), 12),
+            ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
+        ]))
+        elements.append(table)
 
-        grand_total += total
-
-   # Add the grand total to the data list
-    data.append(['', '', '', '', '', 'Grand Total', grand_total])
-    table = Table(data)
-    
-    table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('FONTSIZE', (0, 0), (-1, 0), 14),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-        ('TEXTCOLOR', (0, 1), (-1, -1), colors.black),
-        ('ALIGN', (0, 1), (-1, -1), 'CENTER'),
-        ('FONTNAME', (0, 1), (-1, -1), 'Helvetica'),
-        ('FONTSIZE', (0, 1), (-1, -1), 12),
-        ('BOTTOMPADDING', (0, 1), (-1, -1), 8),
-    ]))
-    elements.append(table)
-
-    # Build the PDF document and return the response
-    doc.build(elements)
-    return response
+        # Build the PDF document and return the response
+        doc.build(elements)
+        return response
    
 
 

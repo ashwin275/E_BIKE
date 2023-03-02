@@ -105,7 +105,8 @@ def update_cart_quantity(request):
     print('jbbmnb')
     for item in cart:
                total += item.product.price*item.quantity
-              
+    
+    Sub_total = cart_item.product.price*cart_item.quantity
     tax = round(((18 * total) / 100))
     grand_total = (total+tax)
     booking_price = 100000
@@ -114,7 +115,8 @@ def update_cart_quantity(request):
       'total': total,
       'tax':tax,
       'grand_total':grand_total,
-      'booking_price':booking_price
+      'booking_price':booking_price,
+      'Sub_total':Sub_total,
     })
   else:
     return JsonResponse({})
@@ -154,6 +156,7 @@ def cart(request, total = 0, total_qty =0 , tax =0,cart_items=None, grand_total 
                       'booking_price':booking_price,   
                     }
             return render(request,'cart/cart.html',context)
+    
     
     else:
          messages.info(request,'Please sign in')

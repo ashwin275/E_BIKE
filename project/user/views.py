@@ -174,6 +174,7 @@ def user_signin(request):
             return redirect('user:user_signin')
 
     return render (request,'user_temp/user_signin.html')
+    #return render(request,'register_otp.html')
 
 def logout_user(request):
     if 'username' in request.session:
@@ -320,7 +321,7 @@ def user_profile(request):
                     }
            
            return render(request,'user_temp/user_profile.html',context)
-    messages.info(request,'Please sign in')
+    #messages.info(request,'Please sign in')
 
     return redirect('user:user_signin')
 

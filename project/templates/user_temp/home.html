@@ -64,7 +64,7 @@
 
 </head>
 
-<body>
+<body >
     <!-- Start Top Nav -->
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
@@ -90,11 +90,14 @@
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light shadow ">
         <div class="container d-flex justify-content-between align-items-center">
+            
 
-            <a class="navbar-brand  logo h1 align-self-center " style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;"   href="#">
+       <a class="navbar-brand  logo h1  " style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;"   href="{% url 'user:home' %}">
+      
                 E-BIKE
-            </a>
-
+           
+           
+        </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -157,7 +160,7 @@
                         <button  style="border: none;">Vendors</button>
                     </a> -->
 
-                  
+                    <img src="https://i.gifer.com/bX5.gif" style="width: 4em; height: 4em;" alt=""> 
                 </div>
             </div>
 
@@ -165,22 +168,7 @@
     </nav>
     <!-- Close Header -->
 
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+  
 
 
     
@@ -211,46 +199,91 @@
           }
         </style>
       
-
-
-      <section>
-
-
-      <!-- Start Banner Hero -->
-    
-    <!-- End Banner Hero -->
-
-
-
-      </section>
-      
-      
-        <!-- Background image -->
-       
-
-       
-         <div id="intro-example" class="p-5 text-center bg-image"
-          style="background-image: url('https://cdn.pixabay.com/photo/2014/07/31/23/10/biker-407123__480.jpg'); ">
-          <div class="mask" style="background-color: rgba(0, 0, 0, 0.7);">
-            <div class="d-flex justify-content-center align-items-center h-100">
-              <div class="text-white">
-                <h1 class="mb-3" style=" font-family: IM FELL Great Primer SC;">Buy Your Dream Bike With E-BIKE</h1>
-              
-                <a class="btn btn-outline-light btn-lg m-2" href="{% url 'user:Shop' %}"
-                  target="" role="button">Explore Now</a>
-              </div>
-            </div>
-          </div>
-        </div> 
-  
-        <!-- Background image -->
       </header>
 
 
 
 
    
+      <section>
 
+        <div class="container-fluid  mt-5 mb-5 ">
+    
+        <!-- Start Banner Hero -->
+        <div id="template-mo-zay-hero-carousel" class="carousel slide"  data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+                <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+                <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner shadow-lg p-3 mb-5 bg-body rounded-3" style="background:#fff !important;">
+                <div class="carousel-item active ">
+                    <div class="container ">
+                        <div class="row p-5">
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                <!-- <img class="img-fluid" src="https://media3.giphy.com/media/fvffSR2LqPfb2fFRlw/giphy.gif?cid=ecf05e47njuxnrcpr24desvpok323bd8j87yzi3v43op3v31&rid=giphy.gif&ct=g" alt=""> -->
+                                 <!-- <img class="img-fluid" src="https://th.bing.com/th/id/R.75623b536deded59134a60f29bdddc8a?rik=Unn1od2dWGZa7g&riu=http%3a%2f%2f2.bp.blogspot.com%2f_72OT4LFHyuQ%2fS2T95DZfuRI%2fAAAAAAAAAlw%2fTNbjvbnjn3A%2fs400%2fbullet.jpg&ehk=%2fowh3NCtRDpnXWTJG4%2fDDeV3fWXtVFBPD%2ftEcVLHKWA%3d&risl=&pid=ImgRaw&r=0" alt="">  -->
+                              
+                            </div>
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left align-self-center">
+                                    <h1 class=""><b></b> </h1>
+                                    <h3 class="" ></h3>
+                                    <img class="img-fluid" src="https://www.churchstrettonmotorcycles.com/wp-content/uploads/2016/03/slider-moto.png" alt=""> 
+                                    <p>
+                                      
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row p-5">
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                                <img class="img-fluid" src="https://th.bing.com/th/id/R.d8faf42759624fbeaab8eeb3def7e5c6?rik=hBC2Dfel7hvKBg&riu=http%3a%2f%2fwww.pngpix.com%2fwp-content%2fuploads%2f2016%2f07%2fPNGPIX-COM-BMW-K1300S-White-Sport-Motorcycle-Bike-PNG-Image.png&ehk=xTPp8iqbzGmWOpcHcmpolMF%2bSzuJEmpNzl30%2ft97JTU%3d&risl=&pid=ImgRaw&r=0" alt="">
+                            </div>
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left">
+                                    <h1 class="h1"></h1>
+                                    <h3 class="h2"></h3>
+                                    <!-- <img class="img-fluid" src="https://www.animatedimages.org/data/media/73/animated-motorbike-image-0102.gif" alt=""> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row p-5">
+                            <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                             <p></p>
+                               <!-- <img class="img-fluid" src="https://th.bing.com/th/id/R.ffc0aabf9fa00a9d78249a82f62c19a6?rik=gKsK2KyaV3pQow&riu=http%3a%2f%2fmembers.optuszoo.com.au%2f~shirleyminus%2fws4.gif&ehk=Nhye3QvTVB1yh%2bB%2f8LIfxd%2fqhNuAuIa%2fIfxWkhMNw%2fs%3d&risl=&pid=ImgRaw&r=0" alt=""> -->
+                            </div>
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left">
+                                    <h1 class="h1"></h1>
+                                    <h3 class="h2"> </h3>
+                                    <img class="img-fluid" src="https://th.bing.com/th/id/R.3a68de2895b0e28b2ec61418ee8c1bb8?rik=ynte1RcUlCV54w&riu=http%3a%2f%2fwww.zastavki.com%2fpictures%2foriginals%2f2017Motocycles___Suzuki_Bikes_Motorcycle_Suzuki_GSX250R_on_white_background_115152_.jpg&ehk=AuTu7BNfV%2fegDv6I1jIRt9kGWfzTSmWSeYv1Gb4p%2bwI%3d&risl=&pid=ImgRaw&r=0" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+                <i class="fas fa-chevron-left" style="font-size: 2em !important;"></i>
+            </a>
+            <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+                <i class="fas fa-chevron-right " style="font-size: 2em !important;"></i>
+            </a>
+        </div>
+        <!-- End Banner Hero -->
+    
+    </div>
+    
+          </section>
 
 
 
@@ -278,17 +311,6 @@
             {% endfor %}
 
 
-
-            <!-- <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_02.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Shoes</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div>
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="./assets/img/category_img_03.jpg" class="rounded-circle img-fluid border"></a>
-                <h2 class="h5 text-center mt-3 mb-3">Accessories</h2>
-                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
-            </div> -->
         </div>
     </section>
     <!-- End Categories of The Month -->

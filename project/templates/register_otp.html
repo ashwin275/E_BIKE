@@ -4,44 +4,44 @@
 {% block content %} 
 
 
-<div class="container h-100 w-100">
-  <div class="row h-100 w-100">
-      <div class="col-12 mx-auto d-table h-100 w-50">
-          <div class="d-table-cell align-middle">
+<div class="container ">
+  <div class="row">
+      <div class="col-12 d-flex justify-content-center align-items-center  ">
+          <div class="d-table-cell align-middle" style="width: 30em;">
 
               <div class="text-center mt-4">
-                  <h1 class="h2" style="color: rgb(5, 5, 6);">ENTER THE OTP </h1>
+                 
                   <p class="lead">
                         <span class="sp"></span>
                   </p>
               </div>
 
-              <div class="card">
+              <div class="card mt-5">
                   <div class="card-body">
                       <div class="m-sm-4">
-
-                          <div style="color: red;">
+                        <div style="color: red;">
                   
-                              {% for messag in messages %}
-                                  <h6>{{messag}}</h6>
-                              {%endfor%}
-                            </div>
-                              
-                          <form style="width: 5;"    method="POST" action="" role="form">
-                            {% csrf_token  %}
-                              <div class="form-group">
-                                  <label> </label>
-                                  <input class="form-control form-control-lg" type="text" name="otp" placeholder="OTP">
-                              </div>
-                             
-                              <div class="text-center mt-3">
-                                  <button type="submit" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-share-alt"></span>
-                                    submit
-                                  </button>
-                                </div> 
-                          
-                          </form>
+                            {% for messag in messages %}
+                                <h6 class="text-center">{{messag}}</h6>
+                            {%endfor%}
+                          </div>
+                       
+                         
+                          <h2 class="text-center  fw-bold mb-2 mx-1 mx-md-4 mb-4" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >ENTER THE OTP</h2>
+                          <img class="img-fluid" src="https://th.bing.com/th/id/R.ffc0aabf9fa00a9d78249a82f62c19a6?rik=gKsK2KyaV3pQow&riu=http%3a%2f%2fmembers.optuszoo.com.au%2f~shirleyminus%2fws4.gif&ehk=Nhye3QvTVB1yh%2bB%2f8LIfxd%2fqhNuAuIa%2fIfxWkhMNw%2fs%3d&risl=&pid=ImgRaw&r=0" alt="">  
+                            <form     method="POST" action="" role="form">
+                                {% csrf_token  %}
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+                                    <input class="form-control " type="tel" name="otp" placeholder="OTP" required>
+                                
+                                </div>
+                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    <button type="submit" class="btn btn-outline-dark btn">Submit</button>
+                                  </div>
+                                
+                              </form>
+                     
                       </div>
                   </div>
               </div>
