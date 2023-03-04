@@ -11,21 +11,34 @@
 
      
         <div class="col-md-3 border-right ">
+          {% if detail.DP %}
+          <div class="card mb-4 mt-4 shadow-sm p-3 mb-5 bg-body rounded ">
+              <div class="card-body text-center ">
+                <img src="{{detail.DP.url}}"  alt=""
+                  class=" rounded-circle img-fluid" style="height: 5em; " >
+              
+                <h5 class="my-3"></h5>
+                <p class="text-muted mb-1">{{users.first_name}}</p>
+                <p class="text-muted mb-4">{{users.email}}</p>
+               
+              </div>
+            </div>
+            {% else %}
 
             <div class="card mb-4 mt-4 shadow-sm p-3 mb-5 bg-body rounded ">
                 <div class="card-body text-center ">
                   <img src="https://media3.giphy.com/media/jnJtOkcwyCqrcmhbGQ/giphy.gif?cid=ecf05e47wz6kxt67s3daj3uryeno1gpzaa36xliw8qwhu02z&rid=giphy.gif&ct=g"  alt=""
                     class=" img-fluid" >
-                  <!-- <img src="https://media.giphy.com/media/7E5lFTBojaEHkokPyt/giphy.gif"  alt=""
-                    class=" img-fluid" > -->
-                  <!-- <img src="https://img.favpng.com/2/24/0/computer-icons-avatar-user-profile-png-favpng-HPjiNes3x112h0jw38sbfpDY9.jpg" alt="IMAGE"
-                    class="rounded-circle img-fluid" > -->
+                
                   <h5 class="my-3"></h5>
                   <p class="text-muted mb-1">{{users.first_name}}</p>
                   <p class="text-muted mb-4">{{users.email}}</p>
                  
                 </div>
               </div>
+              {% endif %}
+
+
               <div class="card shadow-sm p-3 mb-5 bg-body rounded  mb-5">
                 <div class="card-body text-center">
                  
@@ -44,7 +57,7 @@
          
             <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
             
-            <div class="col-md-9 ">
+            <div class="col-md-6 ">
               <div class="card mb-4 bg-light border-0">
                 <div class="card-body shadow-lg p-3 mb-5 bg-body rounded mt-5">
                   <div class="row">
@@ -74,22 +87,31 @@
                     </div>
                   </div>
                   <hr>
-<!--                 
-                  <hr>
+                  {% if detail.gender %}
                   <div class="row">
                     <div class="col-sm-3">
-                      <p class="mb-0">Address</p>
+                      <p class="mb-0">Gender</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">{{detail.addressline1}},{{detail.addressline2}} , {{detail.city}} ,{{detail.state}} ,{{detail.country}}</p>
+                      <p class="text-muted mb-0">{{detail.gender}}</p>
                     </div>
-                  </div> -->
+                  </div>
+                  <hr>
+                  {% endif %}
                 </div>
               </div>
               </div>
              
 
+       <div class="col-md-2 mt-4">
 
+        <div class="card mb-4 mt-4 shadow-sm p-3 mb-5 bg-body rounded ">
+          <div class="card-body text-center ">
+           <a href="{% url 'user:edit_profile' %}"> <button type="button" class="btn btn-outline-secondary">EDIT PROFILE</button></a>
+          </div>
+        </div>
+
+       </div>
         
     
     </div>

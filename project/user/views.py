@@ -11,8 +11,8 @@ from categories.models import Category
 from Cartapp.models import CartItem
 from.models import myuser,Userdetail
 from orders.models import Orders,OrderVehicle
-
-
+from .forms import editprofile
+from django.views.decorators.cache import never_cache
 #from django.views.generic import CreateView,TemplateView
 from user.models import Userdetail
 #from django.urls import reverse_lazy
@@ -25,8 +25,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 
-
-@cache_control(no_cache =True, must_revalidate =False, no_store =True)
+@never_cache
 def home(request):
        if 'username' in request.session:
             category = Category.objects.all
@@ -53,8 +52,7 @@ def home(request):
 
 
 
-
-@cache_control(no_cache =True, must_revalidate =False, no_store =True)
+@never_cache
 def user_register(request):
     if 'username' in request.session:
         return redirect('user:home')
@@ -94,7 +92,7 @@ def user_register(request):
             
     return render(request,'user_temp/user_signup.html')
 
-@cache_control(no_cache =True, must_revalidate =False, no_store =True)
+@never_cache
 def verify_otp(request):
     if 'username' in request.session:
         return redirect('user:home')
@@ -144,8 +142,7 @@ def verify_otp(request):
 
 
 
-
-@cache_control(no_cache =True, must_revalidate =False, no_store =True)
+@never_cache
 def user_signin(request):
     if 'username' in request.session:
         return redirect('user:home')
@@ -300,7 +297,7 @@ def category_filter(request,id):
 #         messages.error(self.request, self.error_message)
 #         return super().form_invalid(form)
         
-
+@never_cache
 def user_profile(request):
     if 'username' in request.session:
            email =  request.user.email
@@ -324,6 +321,54 @@ def user_profile(request):
     #messages.info(request,'Please sign in')
 
     return redirect('user:user_signin')
+
+@never_cache
+def edit_profile(request):
+        if 'username' in request.session:
+            email =  request.user.email
+      
+            user = myuser.objects.get(email = email)
+            form =  editprofile( instance=user)
+
+            if request.method == 'POST':
+                form = editprofile(request.POST, request.FILES,instance=user)
+                if form.is_valid():
+               
+                    updated_email = form.cleaned_data['email']
+                    form.save()
+                    if updated_email == email:
+                        
+                        return redirect('user:user_profile')
+                    else:
+                        del request.session['username']
+                        auth.logout(request)
+                        messages.info(request,'please login with updated email')
+                        return redirect('user:user_signin')
+                else:
+                   messages.info(request,'data not valid')
+            return render(request,'user_temp/edit_profile.html',{'form':form})
+        else:
+            return redirect('user:user_signin')
+
+
+
+
+
+# def edit_variant(request,pk):
+#      if 'vendor' in request.session:
+#          variant = Variant.objects.get(id =pk)
+#          if request.method == 'POST':
+#             form = Variantform(request.POST, request.FILES,instance=variant)
+#             if form.is_valid():
+#                 form.instance.vehicle_id = variant.vehicle_id  
+#                 form.save()
+#                 messages.success(request, ('VARIANT updated!'))
+#             else:
+#                  messages.success(request, ('Data is not valid!'))
+#             return redirect('vendor:view_vehicles')
+#          else:
+#              form = Variantform( instance=variant)
+#      return render(request,'vendor_temp/update_variant.html',{'form':form})
 
 
 @cache_control(no_cache =True,  no_store =True)

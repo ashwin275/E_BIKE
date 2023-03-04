@@ -24,7 +24,8 @@ urlpatterns = [
    # path('Userdetail',Userdetail.as_view(),name='Userdetail'),
    # path('userprofile',user_profile.as_view(),name='user_profile'),
 
-     path('userprofile',views.user_profile,name='user_profile'),
+    path('userprofile',views.user_profile,name='user_profile'),
+    path('edit-profile',views.edit_profile,name='edit_profile'),
     path('addaddress',views.add_address,name='add_address'),
     path('deleteaddress/<int:pk>',views.delete_address,name='delete_address'),
     path('editaddress/<int:pk>',views.edit_address,name='delete_address'),

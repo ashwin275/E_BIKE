@@ -224,8 +224,21 @@ def checkout(request):
             country = request.POST['country']
             city = request.POST['city']
             user_id = user
+            print(first_name)
+            print(last_name)
+            print(email)
+            print(mobile)
+            print(address1)
+            print(address2)
+            print(state)
+            print(country)
+            print(city)
+            print(state)
+            print(user_id)
+
             try:
-                    newaddress = Userdetail.objects.create(first_name = first_name,
+            
+                newaddress = Userdetail.objects.create(first_name = first_name,
                                                last_name=last_name,
                                                email = email,
                                                mobile=mobile,
@@ -234,16 +247,17 @@ def checkout(request):
                                                state = state,
                                                city =city,
                                                country=country,user_id=user_id)
-                    newaddress.default = True
-                    newaddress.save()
-                    others = Userdetail.objects.filter(user_id = user.id).exclude(id = newaddress.id )
-                    for i in others:
-                        i.default = False
-                        i.save()
-                        print('done')
+                newaddress.default = True
+                newaddress.save()
+                others = Userdetail.objects.filter(user_id = user.id).exclude(id = newaddress.id )
+                for i in others:
+                    i.default = False
+                    i.save()
+                    print('done')
                     messages.info(request,'Successfully created')
                     return redirect('Cartapp:review_order')
             except:
+                    
                     messages.info(request,'Data not valid please try again')
                     return redirect('Cartapp:checkout')
     return render(request,'cart/checkout.html',context)
