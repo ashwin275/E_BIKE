@@ -8,6 +8,7 @@ from product.models import Vehicles,Variant
 
 STATUS = (
         ('Confirmed','Confirmed'),
+        ('order processing','order processing'),
         ('Shipped','Shipped'),
         ('Out_for_delivery','Out_for_delivery'),
         ('Delivered','Delivered'),
@@ -31,7 +32,7 @@ class Orders(models.Model):
     pending_amount=models.BigIntegerField(default=0)
     tax=models.FloatField()
     discount_price=models.FloatField(default=0)
-    status=models.CharField(max_length=100,default='Confirmed')
+    status=models.CharField(max_length=30,choices=STATUS,default='Confirmed')
     is_ordered=models.BooleanField(default=False)   
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)

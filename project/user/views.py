@@ -9,6 +9,7 @@ from django.views.decorators.cache import cache_control
 from product.models import Vehicles,Variant
 from categories.models import Category
 from Cartapp.models import CartItem
+from adminapp.models import Banner
 from.models import myuser,Userdetail
 from orders.models import Orders,OrderVehicle
 from .forms import editprofile
@@ -28,25 +29,28 @@ from django.http import JsonResponse
 @never_cache
 def home(request):
        if 'username' in request.session:
-            category = Category.objects.all
+            category = Category.objects.all()
           #  image = Category.objects.filter(category_name = 'SPORTS')
-            vehicles = Vehicles.objects.filter(is_available=True)
-           
-           
-            print('ioioi')
+            vehicles = Vehicles.objects.filter(is_available=True)[:6]
+            banner = Banner.objects.filter(status ='Active')
             context ={
            'category':category,
             'vehicles':vehicles,
+            'banner':banner,
             
              }
        else:
             category = Category.objects.all()[:6]
-            vehicles = Vehicles.objects.filter(is_available=True)[:6]
-
+            vehicles = Vehicles.objects.filter(is_available=True)[:9]
+            banner = Banner.objects.filter(status ='Active')
+           
             context ={
                  'category':category,
                  'vehicles':vehicles,
+                 'banner':banner,
              }
+       
+       
        return render(request,'user_temp/home.html',context)
 
 
@@ -326,6 +330,7 @@ def user_profile(request):
 def edit_profile(request):
         if 'username' in request.session:
             email =  request.user.email
+            detail = myuser.objects.get(email = email)
       
             user = myuser.objects.get(email = email)
             form =  editprofile( instance=user)
@@ -346,7 +351,11 @@ def edit_profile(request):
                         return redirect('user:user_signin')
                 else:
                    messages.info(request,'data not valid')
-            return render(request,'user_temp/edit_profile.html',{'form':form})
+            context  ={
+                'detail':detail,
+                'form':form
+            }
+            return render(request,'user_temp/edit_profile.html',context)
         else:
             return redirect('user:user_signin')
 

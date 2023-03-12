@@ -57,6 +57,9 @@
          
             <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
             
+            {% block profile %} 
+
+
             <div class="col-md-6 ">
               <div class="card mb-4 bg-light border-0">
                 <div class="card-body shadow-lg p-3 mb-5 bg-body rounded mt-5">
@@ -102,7 +105,7 @@
               </div>
               </div>
              
-
+  
        <div class="col-md-2 mt-4">
 
         <div class="card mb-4 mt-4 shadow-sm p-3 mb-5 bg-body rounded ">
@@ -112,7 +115,7 @@
         </div>
 
        </div>
-        
+        {% endblock %}
     
     </div>
 </div>

@@ -1,53 +1,20 @@
-{% extends './home.html' %}
+{% extends 'user_temp/user_profile.html' %}
 
-
-{% block content %} 
 
 {% load crispy_forms_tags %} 
 
 
 
-<div class="container rounded bg-light mt-5 mb-5">
-    <div class="row">
-
-     
-        <div class="col-md-3 border-right ">
-
-            <div class="card mb-4 mt-4 shadow-sm p-3 mb-5 bg-body rounded ">
-                <div class="card-body text-center ">
-                  <img src="https://media3.giphy.com/media/jnJtOkcwyCqrcmhbGQ/giphy.gif?cid=ecf05e47wz6kxt67s3daj3uryeno1gpzaa36xliw8qwhu02z&rid=giphy.gif&ct=g"  alt=""
-                    class=" img-fluid" >
-                  <!-- <img src="https://media.giphy.com/media/7E5lFTBojaEHkokPyt/giphy.gif"  alt=""
-                    class=" img-fluid" > -->
-                  <!-- <img src="https://img.favpng.com/2/24/0/computer-icons-avatar-user-profile-png-favpng-HPjiNes3x112h0jw38sbfpDY9.jpg" alt="IMAGE"
-                    class="rounded-circle img-fluid" > -->
-                  <h5 class="my-3"></h5>
-                  <p class="text-muted mb-1">{{users.first_name}}</p>
-                  <p class="text-muted mb-4">{{users.email}}</p>
-                 
-                </div>
-              </div>
-              <div class="card shadow-sm p-3 mb-5 bg-body rounded  mb-5">
-                <div class="card-body text-center">
-                 
-                    <div class="list-group">
-                       
-                        <a href="{% url 'user:user_profile' %}" class="list-group-item list-group-item-action list-group-item-success">PROFILE</a>
-                        <a href="{% url 'user:add_address' %}" class="list-group-item list-group-item-action list-group-item-success">ADD ADDRESS</a>
-                        <a href="{% url 'user:view_orders' %}" class="list-group-item list-group-item-action list-group-item-success">ORDERS</a>
-                        <a href="{% url 'user:forgot_password' %}" class="list-group-item list-group-item-action list-group-item-success">CHANGE PASSWORD</a>
-                       
-                      </div>
-
-                </div>
-              </div>
-            </div>
          
+
+            {% block profile %} 
             <!-- <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="" alt="image....."><span class="font-weight-bold">{{users.first_name}}</span><span class="text-black-50">{{users.email}}</span><span> </span></div> -->
             
-            <div class="col-md-6 ">
+            <div class="  col-md-6 ">
+
               <div class="card mb-4 bg-light border-0">
                 <div class="card-body shadow-lg p-3 mb-5 mt-5 bg-body rounded mt-5">
+                  
                 
                   <div style="color: red;">
                   
@@ -74,14 +41,7 @@
                 </div>
               </div>
               </div>
-             <p class="ashwin" >xcvbnmnbvcxcvbnm</p>
+           
 
-     
-    </div>
-</div>
-</div>
-</div>
-
-
-
-{% endblock  %}
+             {% endblock  %}
+   

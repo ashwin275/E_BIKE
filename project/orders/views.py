@@ -23,6 +23,9 @@ from django.http import FileResponse
 
 @csrf_exempt
 def Book_now(request):
+    
+
+    
     total = 0
     booking_price = 0
     cart_items =None
@@ -73,6 +76,8 @@ def Book_now(request):
           
     else:
           payment = Payment.objects.create(user = request.user, payment_method='COD',status='NOT PAID',amount_paid ='NOT PAID' )
+          booking_price =0
+          balance = grand_total- booking_price
           payment.save()
     if 'coupon_code' in request.session:
           coupon = request.session['coupon_code']
@@ -128,6 +133,7 @@ def Book_now(request):
     return render(request,'cart/order_success.html',context)
 
 
+
 def download_invoice(request,id):
     user = request.user
     order = Orders.objects.get(id=id)
@@ -151,10 +157,6 @@ def download_invoice(request,id):
         return HttpResponse("Error generating PDF: %s" % pisa_status.err)
 
     return response
-
-
-
-
 
 @csrf_exempt
 def handlerrequest(request):
@@ -183,14 +185,6 @@ def handlerrequest(request):
            
             return redirect('Orders:Book_now')
                   
-
-
-# def payment_failed(request):
-#       return render(request,'cart/payment_failed.html')
-# @csrf_exempt
-# def payment_success(request):
-#       print('njknjnf')
-#       return render(request,'cart/payment_failed.html')
 
 
  

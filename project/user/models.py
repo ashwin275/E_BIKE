@@ -109,7 +109,7 @@ class Userdetail(models.Model):
           
         first_name = models.CharField(max_length=50)
         last_name = models.CharField(max_length=50)
-        email = models.EmailField(max_length=100,unique=True)
+        email = models.EmailField(max_length=100)
         mobile = models.CharField(max_length=15,null=True)
         
         addressline1 = models.CharField(max_length=300)

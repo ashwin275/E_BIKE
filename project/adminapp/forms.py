@@ -15,6 +15,6 @@ class Bannerforms(forms.ModelForm):
 
     class Meta:
         model = Banner
-        fields = ('Description','image','status')
+        fields = ('Description','image','status','texts')
 
     

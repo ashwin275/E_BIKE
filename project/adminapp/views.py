@@ -346,6 +346,8 @@ def view_banner(request):
               'banner':banner
           }
         return render(request,'admin_temp/view_banner.html',context)
+    else:
+        return redirect('admin_signin')
 
 
 
@@ -386,27 +388,7 @@ def update_banner(request,id):
          if request.method == 'POST':
             form = Bannerforms(request.POST, request.FILES,instance=banner)
             if form.is_valid():
-                banner_status = form.cleaned_data.get('status')
-                print(banner_status)
-                if banner_status == 'Banner-one':
-                    for i in Banners:
-                        if i.status == 'Banner-one':
-                            i.status = 'Banner-Two'
-                        else:
-                            i.status = 'None'
-                        i.save()
-                elif banner_status == 'Banner-Two':
-                    for i in Banners:
-                        if i.status == 'Banner-Two':
-                            i.status == 'Banner-one'
-                        else:
-                            i.status = 'None'
-                            i.save()
-                else:
-                    for i in Banners:
-                        if (i.status != 'Banner-Two') and (i.status != 'Banner-one'):
-                            i.status = 'None'
-                            i.save()
+               
 
                 form.save()
                 messages.success(request, ('Banner updated!'))

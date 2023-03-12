@@ -498,7 +498,9 @@ def status_change(request,pk):
          orders= OrderVehicle.objects.get(id = pk)
         
          Total_Order = Orders.objects.get(order_number = orders.order.order_number )
-         Total_Order.status == 'Processing'
+       
+
+         Total_Order.status = 'order processing'
          Total_Order.save()
          if orders.status == 'Confirmed':
              orders.status = 'Shipped'

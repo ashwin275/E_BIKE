@@ -224,17 +224,6 @@ def checkout(request):
             country = request.POST['country']
             city = request.POST['city']
             user_id = user
-            print(first_name)
-            print(last_name)
-            print(email)
-            print(mobile)
-            print(address1)
-            print(address2)
-            print(state)
-            print(country)
-            print(city)
-            print(state)
-            print(user_id)
 
             try:
             
@@ -255,7 +244,7 @@ def checkout(request):
                     i.save()
                     print('done')
                     messages.info(request,'Successfully created')
-                    return redirect('Cartapp:review_order')
+                return redirect('Cartapp:review_order')
             except:
                     
                     messages.info(request,'Data not valid please try again')
@@ -370,7 +359,8 @@ def review_order(request, total = 0 , total_qty =0 , tax =0,cart_items=None, gra
             #===========razor pay ==============#
             client = razorpay.Client(auth = (settings.KEY,settings.SECRET))
             payment = client.order.create({'amount':booking_price *100,'currency': 'INR',})
-            print(payment)
+           
+           
             context = {
                     'cart_items':cart_items,
                      'total':total,
