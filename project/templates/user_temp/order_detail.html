@@ -65,8 +65,6 @@
                                   <th scope="col">Status</th>
                                   <th scope="col">Sub Total</th>
                                 
-                          
-                                  
                               </tr>
                           </thead>
                           <tbody c>
@@ -81,6 +79,9 @@
                                   <td>{{items.price}}</td>
                                   <td>{{items.status}}</td>
                                   <td>{{items.sub_total}}</td>
+                                  {% if items.status == 'Delivered' %}
+                                  <td> <a href="{% url 'user:add_review' items.vehicles.vehicle_id.id %}"> <button type="button" class="btn btn-outline-success btn-sm me-2">Add Revies</button></a></td>
+                                 {% endif %}
                                               
                               </tr>
                             
@@ -94,15 +95,6 @@
                
               </div>
           </div>
-
-
-
-
-       
-
-
-
-
 
 
    </div>

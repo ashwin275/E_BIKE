@@ -413,10 +413,8 @@ def edit_variant(request,pk):
             if form.is_valid():
                 form.instance.vehicle_id = variant.vehicle_id  
                 form.save()
-                messages.success(request, ('VARIANT updated!'))
-            else:
-                 messages.success(request, ('Data is not valid!'))
-            return redirect('vendor:view_vehicles')
+            
+            
          else:
              form = Variantform( instance=variant)
      return render(request,'vendor_temp/update_variant.html',{'form':form})

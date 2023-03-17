@@ -38,3 +38,14 @@ class Variant(models.Model):
         return self.vehicle_id.vehicle_name
 
 
+class Review(models.Model):
+    user = models.ForeignKey(myuser, on_delete=models.CASCADE)
+    product = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
+    review = models.TextField(max_length=300)
+    rating = models.FloatField()
+    created_date = models.DateTimeField(auto_now=True)
+    subject = models.CharField(max_length=50,null=True)
+
+
+    def __str__(self):
+        return self.product.vehicle_name

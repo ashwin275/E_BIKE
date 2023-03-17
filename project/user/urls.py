@@ -43,6 +43,7 @@ urlpatterns = [
     path('auto_search_ajax/',views.auto_search_ajax,name='auto_search_ajax'),
 
     path('category/<int:id>',views.category_filter,name="category_filter"),
+    path('add_review/<int:id>',views.add_review,name='add_review'),
     
 
 

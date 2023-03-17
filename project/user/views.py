@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate
 from user.otp import check_otp,sentOTP
 #from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
-from product.models import Vehicles,Variant
+from product.models import Vehicles,Variant,Review
 from categories.models import Category
 from Cartapp.models import CartItem
 from adminapp.models import Banner
@@ -14,12 +14,9 @@ from.models import myuser,Userdetail
 from orders.models import Orders,OrderVehicle
 from .forms import editprofile
 from django.views.decorators.cache import never_cache
-#from django.views.generic import CreateView,TemplateView
+from product.forms import Reviewforms
 from user.models import Userdetail
-#from django.urls import reverse_lazy
-#from . forms import userdetail
-#from django.contrib.messages.views import SuccessMessageMixin
-#from django.contrib.auth.mixins import LoginRequiredMixin
+
 from.helpers import send_forget_password_mail
 import uuid
 from django.http import JsonResponse
@@ -67,8 +64,16 @@ def user_register(request):
             email = request.POST['email']
             mobile = request.POST['mobile']
             password = request.POST['password']
+           
+
+
             if first_name == '':
+               
                 messages.info(request,'username is empty')
+            elif first_name.strip() == '':
+                messages.info(request,'username first letter should be capital')
+            elif first_name != first_name.capitalize():
+                messages.info(request,'username first letter should be capital')
                
             elif email == '':
                 messages.info(request,'Email is empty')
@@ -192,7 +197,14 @@ def single_products(request,pk):
     category = Category.objects.get(category_name=vehicle.category)
     all_variants = Variant.objects.filter(vehicle_id =pk)
     variants = Variant.objects.filter(vehicle_id =pk)[0:3]
-    print(variants)
+    try:
+        review_first = Review.objects.filter(product=pk).order_by('id').last()
+        review = Review.objects.filter(product = pk).order_by('id').exclude(id = review_first.id)
+    except :
+       review = None
+    
+
+    
    
     #cart_itemscount  = CartItem.objects.filter(user = request.user, is_active = True).count()
     #variant = Variant.objects.get(vehicle_id=pk)
@@ -202,6 +214,8 @@ def single_products(request,pk):
         'featured':featured,
         'variants': variants,
         'all_variants':all_variants,
+        'review':review,
+        'review_first':review_first,
         
         #'variant':variant,
     }
@@ -553,6 +567,48 @@ def order_details(request,pk):
     }
 
     return render(request,'user_temp/order_detail.html',context)
+
+
+def add_review(request,id):
+    print('get')
+    vehicle = Vehicles.objects.get(id=id)
+    review = Review.objects.filter(user = request.user,product = vehicle)
+    print(review)
+    if request.method == 'POST':
+        try:
+            review = Review.objects.get(user = request.user,product = vehicle)
+            print('updation')
+            form    =   Reviewforms(request.POST , instance=review)
+            form.save()
+            messages.info(request,'Thank you... Your review has been updated')
+            return redirect('review',id)
+        except:
+                form = Reviewforms(request.POST)
+            
+                if form.is_valid():
+                    print('dfghjkgff')
+                    data            =   Reviewforms()
+                    data.rating     =   form.cleaned_data['rating']
+                    data.subject    =   form.cleaned_data['subject']
+                    data.review     =   form.cleaned_data['review']
+                    form.instance.user = request.user
+                    form.instance.product = vehicle
+                    form.save()
+                    messages.info(request, ('Review  added!'))
+           
+                else:
+                    messages.info(request, ('Data is not valid!'))
+                    return redirect('user:add_review',id=id)
+
+      
+
+    print(vehicle)
+    print(vehicle.vehicle_name)
+    context ={
+    'vehicle':vehicle
+         }
+
+    return render(request,'user_temp/review.html',context)
 
 
 def about(request):

@@ -14,6 +14,16 @@
         <div class="col-md-8 col-lg-6 col-xl-4  shadow p-3 mb-5 mt-5 ">
             <p class="text-center h2 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >Sign Up</p>
 
+
+            <div style="color: red;">
+                  
+              {% for messag in messages %}
+                  <h6 class="text-center">{{messag}}</h6>
+              {%endfor%}
+            </div>
+
+
+
 <form class=" mt-5" method="POST"  role="form"> 
                 {% csrf_token  %}
   <!-- 2 column grid layout with text inputs for the first and last names -->

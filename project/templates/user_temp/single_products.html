@@ -86,8 +86,17 @@
                                 <li class="list-inline-item">
                                     <p class="text-muted"><strong>{{vehicle.range}}</strong></p>
                                 </li> <br>
+                                <li class="list-inline-item">
+                                    <h6>Available Colors</h6>
+                                </li>
                                 <div class="row pb-3">
-                                   
+                                   <div class="mb-4 d-flex">
+                                    <div class="d-flex  "> 
+                                    {% for items in all_variants %}
+                                 <a href="{% url 'user:variant_detail' items.pk %}"><div class="m-2 rounded-5 " style="width: 2.5em; height: 2em; background-color: {{items.color}} ;"></div></a>
+                                    {% endfor %}
+                                   </div>
+                                </div>
                                     <div class=>
                                         <button type="submit" class="btn btn-outline-secondary btn-sm " name="submit" value="addtocard"><a href="#varients" style="text-decoration: none; color: rgb(98, 98, 90);">VIEW VARIENTS</a></button>
                                     </div>
@@ -101,6 +110,107 @@
         </div>
     </section>
     <!-- Close Content -->
+
+{% if review_first %}
+
+<!-- Carousel wrapper -->
+<div class="container-fluid mt-5 mb-5 text-center">
+    <h1 style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >Reviews</h1>
+<div id="carouselExampleControls" class="carousel slide text-center carousel-dark mt-5 mb-5" data-mdb-ride="carousel">
+  
+    <div class="carousel-inner">
+    
+        <div class="carousel-item active" data-bs-interval="3000">
+            {% if review_first.user.DP %}
+            <img class="rounded-circle shadow-1-strong mb-4"
+              src="{{ review_first.user.DP.url }}" alt="avatar"
+              style="width: 150px; height: 150px;" />
+              {% else %}
+              <img class="rounded-circle shadow-1-strong mb-4"
+              src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" alt="avatar"
+              style="width: 150px;" />
+              {% endif %}
+              <ul class="list-unstyled d-flex justify-content-center text-warning mb-0 mt-2">
+                <li><i class="fas fa-star fa-sm"></i></li>
+                <li><i class="fas fa-star fa-sm"></i></li>
+                <li><i class="fas fa-star fa-sm"></i></li>
+                <li><i class="fas fa-star fa-sm"></i></li>
+                <li><i class="far fa-star fa-sm"></i></li>
+              </ul>
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-8">
+                <h5 class="mb-3">{{review_first.user.first_name}} {{review_first.user.last_name}}</h5>
+                <p> {{review_first.subject}}</p>
+                <p class="text-muted">
+                 
+                  {{review_first.review}}
+                 
+                </p>
+                <p> {{review_first.created_date}}</p>
+              </div>
+            </div>
+        
+          </div>
+        
+     
+
+        {% for i in review %}
+
+      <div class="carousel-item " data-bs-interval="3000">
+        {% if i.user.DP %}
+            <img class="rounded-circle shadow-1-strong mb-4"
+              src="{{ i.user.DP.url }}" alt="avatar"
+              style="width: 150px;" />
+              {% else %}
+              <img class="rounded-circle shadow-1-strong mb-4"
+              src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" alt="avatar"
+              style="width: 150px;" />
+              {% endif %}
+
+          <ul class="list-unstyled d-flex justify-content-center text-warning mb-0 mt-2">
+            <li><i class="fas fa-star fa-sm"></i></li>
+            <li><i class="fas fa-star fa-sm"></i></li>
+            <li><i class="fas fa-star fa-sm"></i></li>
+            <li><i class="fas fa-star fa-sm"></i></li>
+            <li><i class="far fa-star fa-sm"></i></li>
+          </ul>
+        <div class="row d-flex justify-content-center">
+          <div class="col-lg-8">
+            <h5 class="mb-3">{{i.user.first_name}} {{i.user.last_name}}</h5>
+            <p>{{ i.subject }}</p>
+            <p class="text-muted">
+              <i class="fas fa-quote-left pe-2"></i>
+              {{ i.review }}
+            
+            </p>
+            <p> {{i.created_date}}</p>
+          </div>
+        </div>
+    
+      </div>
+     {% endfor %}
+     
+    </div>
+
+
+    <button class="carousel-control-prev" type="button" data-bS-target="#carouselExampleControls"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+
+    
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- Carousel wrapper -->
+  {% endif %}
+
+      </div>
+    
 
     <!-- Start Article -->
     <section class="bg-white   " id ='varients'>
