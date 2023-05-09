@@ -9,14 +9,16 @@
     {% block content %} 
 
     <!-- Open Content -->
-    <section class="">
-        <div class="container pb-5">
-            <div class="row shadow p-3 mb-5 bg-white rounded mt-5">
+    <section class="bg-white">
+        <div class="container mb-5 shadow-lg  mt-5 bg-body rounded">
+            <div class="row ">
                 <div class="col-md-6 mt-5">
-                   
-                    <div class="card mb-3 zoom-image">
-                        <img class="card-img img-fluid " style="height: 20em; width: 40em;" id="main_image" src="{{varient.image1.url}}"  alt="" >
+                    <div class="card mb-3 ">
+                        <div class="zoom-image" data-image="{{varient.image1.url}}">
+                        <img class="card-img img-fluid"style="height: 20em; width: 40em;" id="main_image" src="{{varient.image1.url}}"  alt="" id="">
                     </div>
+                    </div>
+                   
                     <div class="row">
                         <!--Start Controls-->
                         <div class="col-1 align-self-center">
@@ -32,23 +34,23 @@
                             <div class="carousel-inner product-links-wap" role="listbox">
 
                                 <!--First slide-->
-                                <div class="carousel-item active">
+                                <div class="carousel-item active  mb-5">
                                     <div class="row">
                                      
                                         <div class="col-4">
-                                            <a href="#">
-                                                <img  class="card-img img-fluid" style="height: 5rem; width: 8rem;"  onclick="change_image(this)" src="{{varient.image1.url}}" style="height: 18vh;" alt="">
-                                            </a>
+                                           
+                                                <img  class="card-img img-fluid" style="height: 5rem; width: 8rem;"  onclick="change_image(this)" src="{{varient.image1.url}}" style="height: 18vh" alt="">
+                                       
                                         </div>
                                         <div class="col-4">
-                                            <a href="#">
+                                           
                                                 <img class="card-img img-fluid" style="height: 5rem; width: 8rem;"   onclick="change_image(this)" src="{{varient.image2.url}}" style="height: 18vh;" alt="">
-                                            </a>
+                                        
                                         </div>
                                         <div class="col-4">
-                                            <a href="#">
+                                           
                                                 <img class="card-img img-fluid" style="height: 5rem; width: 8rem;"  onclick="change_image(this)" src="{{varient.image3.url}}" style="height: 18vh;" alt="">
-                                            </a>
+                                          
                                         </div>
                                       
                                         

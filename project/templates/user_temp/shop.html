@@ -7,22 +7,13 @@
     <!-- Start Content -->
     <div class="container py-5">
         <div class="row">
-            <div class="col-md-5 mx-auto">
+            <div class="col-md-7 mx-auto d-flex">
                 
-                <div class="input-group d-flex ">
-                    <form class="d-flex" method="GET" action="{% url 'user:search' %}">
-                      
-                    <input class="form-control  border-end-0 border rounded-pill  " name="query" type="search" placeholder="Search" id ="searchproducts" >
-                    
-                        <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    
-                </form>
+               
 
-                
-                </div>
             </div>
+
+
         </div>
        
         <div class="row mt-5">
@@ -48,27 +39,88 @@
 
             <div class="col-lg-9">
                 <div class="row">
-                    <div class="col-md-6">
-                        <ul class="list-inline shop-top-menu pb-3 pt-1">
+                    <div class="  col-md-5 mb-4">
+                        <div class="input-group d-flex ">
+                            <form class="d-flex" method="GET" action="{% url 'user:search' %}">
+                              
+                            <input class="form-control  border-end-0 border rounded-pill  " name="query" type="search" placeholder="Search" id ="searchproducts" >
+                            
+                                <button class="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                        </form>
+        
+                        
+                        </div>
+                         <!-- <ul class="list-inline shop-top-menu pb-3 pt-1">
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#"></a>
+                                <a class="h3 text-dark text-decoration-none mr-3" href="#">vhjbnkl</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#"></a>
+                                <a class="h3 text-dark text-decoration-none mr-3" href="#">gfhjkl</a>
                             </li>
                             <li class="list-inline-item">
                                 <a class="h3 text-dark text-decoration-none" href="#"></a>
                             </li>
-                        </ul>
+                        </ul> --> 
                     </div>
-                    <div class="col-md-6 pb-4">
-                        <div class="d-flex">
+                    <div class="  col-md-3 pb-4 ">
+                      
+                            
+<!--                
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Top Rated</option><br>
+                            <option >Newest</option><br>
+                            <option >Most Saled</option>
+                            <option ></option>
+                          </select> -->
+        
+                   
+                                <!-- <select class="form-control">
+                                    <option></option>
+                                    <option></option>
+                                    <option></option>
+                                </select> -->
+                          
+                        </div>
+                    <div class="  col-md-4 pb-4 ">
+                      
+                            
+
+                        <!-- Example single danger button -->
+
+<!--                
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Filter By</option>
+                        <option >Price Low To High</option>
+                        <option >Price High To Low</option>
+                        <option ></option>
+                      </select>
+
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-primary dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-mdb-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          Dropdown button
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <li><a class="dropdown-item" href="#">Action</a></li>
+                          <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                      </div> -->
+    
+               
                             <!-- <select class="form-control">
                                 <option></option>
                                 <option></option>
                                 <option></option>
                             </select> -->
-                        </div>
+                      
                     </div>
                 </div>
                 {% if vehicles %}
@@ -249,11 +301,19 @@
     </section>
 
 
-    <a href="#" id="circular-image-link" style="display: none; position: fixed; bottom: 0; right: 0; width: 3em; height: 3em; border-radius: 50%; overflow: hidden;" class="m-3 mb-5">
+    <!-- <a href="#" id="circular-image-link" style="display: none; position: fixed; bottom: 0; right: 0; width: 5em; height: 5em; border-radius: 50%; overflow: hidden;" class="m-3 mb-5">
         <div id="circular-image">
-            <img src="https://media.giphy.com/media/dYqxTBYzw4FyRoqhUX/giphy.gif" class="img-fluid" style="width: 100%; height: 100%;" alt="">
+            <img src="https://media.tenor.com/3JJkvfH_vncAAAAM/arrow-green.gif" class="img-fluid" style="width: 100%; height: 100%;" alt="">
         </div>
-    </a>
+    </a> -->
+    <a href="#" id="circular-image-link"
+    style="display: none; position: fixed; bottom: 0; right: 0; width: 3em; height: 3em; border-radius: 50%; overflow: hidden;"
+    class="m-3 mb-5 arrow ">
+    <div id="circular-image">
+        <img src="https://media.tenor.com/LUNANcnXLiUAAAAS/up-arrow.gif" class="img-fluid"
+            style="width: 100%; height: 100%;" alt="">
+    </div>
+</a>
     <!--End Brands-->
 
 

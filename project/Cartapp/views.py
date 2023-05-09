@@ -101,8 +101,7 @@ def update_cart_quantity(request):
     
     cart_item.quantity = quantity
     cart_item.save()
-    print( 'qty after'+str(cart_item.quantity))
-    print('jbbmnb')
+  
     for item in cart:
                total += item.product.price*item.quantity
     

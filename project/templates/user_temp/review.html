@@ -75,10 +75,10 @@ content: '\2605';
 
 
 
-             <div class="col-12 table shadow p-3 mb-5 bg-body rounded ">
-              <div class=" rounded p-4">
+             <div class="col-12 table shadow  mb-5 bg-body rounded ">
+              <div class=" rounded " style="background-color: #ccdbd7;">
               
-                  <h2 class="mb-4" style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" > </h2>
+        
   
                   <hr>
                 
@@ -88,10 +88,10 @@ content: '\2605';
                         <div class="col-lg-8 col-xl-6">
                           <div class="card rounded-3">
                             <img src="{{ vehicle.image.url }}"
-                              class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;"
+                              class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem; height: 14em;"
                               alt="Sample photo">
                             <div class="card-body p-4 p-md-5">
-                              <div style="color: red;">
+                              <div style="color: rgb(116, 250, 38);">
                   
                                 {% for messag in messages %}
                                     <h6 class="text-center">{{messag}}</h6>
@@ -116,7 +116,7 @@ content: '\2605';
                                   <label class="star star-3" for="star-3"></label>
                                   <input value="2" class="star star-4" id="star-4" type="radio" name="rating"/>
                                   <label class="star star-4" for="star-4"></label>
-                                  <input value="1" class="star star-5" id="star-5" type="radio" name="rating"/>
+                                  <input value="1" class="star star-5" id="star-5" type="radio" checked="checked" name="rating"/>
                                   <label class="star star-5" for="star-5"></label>
                                
                               </div>
@@ -127,12 +127,12 @@ content: '\2605';
                                 <br>
                                     <!-- Rating stars -->
                                     Review Title :  
-                                    <input type="text" class="form-control" name="subject" id="">
+                                    <input type="text" class="form-control" name="subject" id="" required>
                                     <br>
                                     Review:
                                     <textarea name="review" id="" class="form-control"  rows="4"></textarea>
                                     <br>
-                                    <input type="submit" value="Submit" class="btn btn-success" name="" id="">
+                                    <input type="submit" value="Submit" class="btn btn-success" name="" id="" required>
 
                                 </div>
                                 

@@ -4,12 +4,11 @@
     <!-- Close Header -->
 
     <!-- Modal -->
-    
+
 
     {% block content %} 
-
     <style>
-        
+
     </style>
 
     <!-- Open Content -->
@@ -62,6 +61,28 @@
                 <div class="col-md-6 mt-5">
                     <div class="card">
                         <div class="card-body">
+                            <a href="#review">
+                            <div class="float-end m-3">
+
+                                <div style="color:rgb(250, 218, 7) ;" class="rating">
+                                    {% if vehicle.reviews >= 1 %}
+                                    <i  class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                                    {% if vehicle.reviews >= 2 %}
+                                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                                    {% if vehicle.reviews >= 3 %}
+                                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                                    {% if vehicle.reviews >= 4 %}
+                                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                                    {% if vehicle.reviews >= 5 %}
+                                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                                    
+                                    <span style="color:black">( {{ vehicle.reviews }}/5) &nbsp;({{vehicle.review_count}} reviews)</span> 
+                                </div>
+
+                            </div>
+                        </a>
+                           
+                            
                             <h1 class="h2">{{vehicle.vehicle_name}}</h1>
                             <p class="h3 py-2"></p>
         
@@ -110,12 +131,15 @@
         </div>
     </section>
     <!-- Close Content -->
+   
+
+
 
 {% if review_first %}
 
 <!-- Carousel wrapper -->
-<div class="container-fluid mt-5 mb-5 text-center">
-    <h1 style="color: rgb(32, 30, 30); font-family: IM FELL Great Primer SC;" >Reviews</h1>
+<div class="container-fluid mt-5 mb-5 text-center" id="review">
+    <h1 style="color: rgb(32, 30, 30); font-family: Times New Roman, serif; " >Reviews</h1>
 <div id="carouselExampleControls" class="carousel slide text-center carousel-dark mt-5 mb-5" data-mdb-ride="carousel">
   
     <div class="carousel-inner">
@@ -128,25 +152,36 @@
               {% else %}
               <img class="rounded-circle shadow-1-strong mb-4"
               src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" alt="avatar"
-              style="width: 150px;" />
+              style="width: 150px; height: 150px;" />
               {% endif %}
               <ul class="list-unstyled d-flex justify-content-center text-warning mb-0 mt-2">
-                <li><i class="fas fa-star fa-sm"></i></li>
-                <li><i class="fas fa-star fa-sm"></i></li>
-                <li><i class="fas fa-star fa-sm"></i></li>
-                <li><i class="fas fa-star fa-sm"></i></li>
-                <li><i class="far fa-star fa-sm"></i></li>
+                <div style="color:gold ;" class="rating">
+                    {% if review_first.rating >= 1 %}
+                    <i  class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                    {% if review_first.rating >= 2 %}
+                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                    {% if review_first.rating >= 3 %}
+                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                    {% if review_first.rating >= 4 %}
+                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                    {% if review_first.rating >= 5 %}
+                    <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                    {% if review_first.rating %}
+                    <span style="color:black">( {{ review_first.rating }}/5)</span> {% endif %}
+                </div>
               </ul>
-            <div class="row d-flex justify-content-center">
+            
+            <div class="row d-flex justify-content-center mt-3">
               <div class="col-lg-8">
                 <h5 class="mb-3">{{review_first.user.first_name}} {{review_first.user.last_name}}</h5>
                 <p> {{review_first.subject}}</p>
-                <p class="text-muted">
+                <p class="text-muted" style="font-family: Comic Sans MS, cursive;">
                  
                   {{review_first.review}}
                  
                 </p>
                 <p> {{review_first.created_date}}</p>
+              
               </div>
             </div>
         
@@ -160,25 +195,37 @@
         {% if i.user.DP %}
             <img class="rounded-circle shadow-1-strong mb-4"
               src="{{ i.user.DP.url }}" alt="avatar"
-              style="width: 150px;" />
+              style="width: 150px; height: 150px;" />
               {% else %}
               <img class="rounded-circle shadow-1-strong mb-4"
               src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" alt="avatar"
-              style="width: 150px;" />
+              style="width: 150px; height: 150px;" />
               {% endif %}
 
+           
+
           <ul class="list-unstyled d-flex justify-content-center text-warning mb-0 mt-2">
-            <li><i class="fas fa-star fa-sm"></i></li>
-            <li><i class="fas fa-star fa-sm"></i></li>
-            <li><i class="fas fa-star fa-sm"></i></li>
-            <li><i class="fas fa-star fa-sm"></i></li>
-            <li><i class="far fa-star fa-sm"></i></li>
+            <div style="color:gold ;" class="rating">
+                {% if i.rating >= 1 %}
+                <i  class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                {% if i.rating >= 2 %}
+                <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                {% if i.rating >= 3 %}
+                <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                {% if i.rating >= 4 %}
+                <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                {% if i.rating >= 5 %}
+                <i class="fa fa-star"></i>{% else %}<i style="color:grey" class="fa fa-star"></i>{% endif %}
+                {% if i.rating %}
+                <span style="color:black">( {{ i.rating }}/5)</span> {% endif %}
+            </div>
+
           </ul>
         <div class="row d-flex justify-content-center">
           <div class="col-lg-8">
             <h5 class="mb-3">{{i.user.first_name}} {{i.user.last_name}}</h5>
             <p>{{ i.subject }}</p>
-            <p class="text-muted">
+            <p class="text-muted" style="font-family: Comic Sans MS, cursive;">
               <i class="fas fa-quote-left pe-2"></i>
               {{ i.review }}
             

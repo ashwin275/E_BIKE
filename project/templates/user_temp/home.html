@@ -230,6 +230,8 @@
         </style>
 
     </header>
+  
+   
 
 
     <section>
@@ -381,8 +383,7 @@
         <div class="container py-5 shadow-lg p-3 mb-5 bg-body rounded mt-5">
             <div class="row text-center py-3">
                 <div class="col-lg-6 m-auto">
-                    <h1 class="h1" style="color: rgb(28, 20, 20); font-family: IM FELL Great Primer SC;">Featured
-                        Product</h1>
+                    <h1 class="h1" style="color: rgb(28, 20, 20); font-family: IM FELL Great Primer SC;">Top Rated</h1>
                     <p>
                         <!-- Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                         Excepteur sint occaecat cupidatat non proident. -->
@@ -438,9 +439,9 @@
 
     <a href="#" id="circular-image-link"
         style="display: none; position: fixed; bottom: 0; right: 0; width: 3em; height: 3em; border-radius: 50%; overflow: hidden;"
-        class="m-3 mb-5 arrow">
+        class="m-3 mb-5 arrow ">
         <div id="circular-image">
-            <img src="https://media.giphy.com/media/dYqxTBYzw4FyRoqhUX/giphy.gif" class="img-fluid"
+            <img src="https://media.tenor.com/LUNANcnXLiUAAAAS/up-arrow.gif" class="img-fluid"
                 style="width: 100%; height: 100%;" alt="">
         </div>
     </a>
@@ -451,14 +452,18 @@
     <footer>
 
         <footer class="bg-dark text-center text-white mt-5">
+           <a href="{% url 'user:home' %}" style="text-decoration: none;">
+            <div class="mt-5 p-5">
+              <h1 style="color: rgb(249, 242, 242); font-family: IM FELL Great Primer SC;">E-BIKE</h1>
+            </div></a>
             
             <!-- Grid container -->
             <div class="container p-5 pb-0">
             <div class="d-flex justify-content-between">
                 <div>
-                <a class="btn btn-outline-secondary btn-sm btn-floating m-1" href="{% url 'vendor:vendor_signin'%}" role="button" >Vendor Sign In</a>
-                <a class="btn btn-outline-secondary btn-sm btn-floating m-1" href="{% url 'admin_signin' %}" role="button" > Admin Sign In</a>
-                <a class="btn btn-outline-danger btn-sm btn-floating m-1" href="{% url 'user:logout_user'%}" role="button" > Logout <i class="fa-solid fa-right-from-bracket"></i></a>
+                <a class="btn btn-outline-secondary  rounded-circle btn-floating m-1" href="{% url 'vendor:vendor_signin'%}" role="button" >Vendor Sign In</a>
+                <a class="btn btn-outline-secondary  rounded-circle btn-floating m-1" href="{% url 'admin_signin' %}" role="button" > Admin Sign In</a>
+                <a class="btn btn-outline-danger  rounded-circle btn-floating m-1" href="{% url 'user:logout_user'%}" role="button" > Logout <i class="fa-solid fa-right-from-bracket"></i></a>
             </div>
               <!-- Section: Social media -->
               <section class="mb-4">

@@ -16,7 +16,7 @@ from .forms import editprofile
 from django.views.decorators.cache import never_cache
 from product.forms import Reviewforms
 from user.models import Userdetail
-
+from django.db.models import Avg ,Count
 from.helpers import send_forget_password_mail
 import uuid
 from django.http import JsonResponse
@@ -28,7 +28,10 @@ def home(request):
        if 'username' in request.session:
             category = Category.objects.all()
           #  image = Category.objects.filter(category_name = 'SPORTS')
-            vehicles = Vehicles.objects.filter(is_available=True)[:6]
+            
+            vehicles =  Vehicles.objects.filter(is_available=True).annotate(avg_rating=Avg('review__rating')).order_by('avg_rating')[:6]
+            
+            
             banner = Banner.objects.filter(status ='Active')
             context ={
            'category':category,
@@ -40,7 +43,7 @@ def home(request):
             category = Category.objects.all()[:6]
             vehicles = Vehicles.objects.filter(is_available=True)[:9]
             banner = Banner.objects.filter(status ='Active')
-           
+            vehicles =  Vehicles.objects.filter(is_available=True).annotate(avg_rating=Avg('review__rating')).order_by('avg_rating')[:6]
             context ={
                  'category':category,
                  'vehicles':vehicles,
@@ -193,8 +196,8 @@ def logout_user(request):
 def single_products(request,pk):
 
     vehicle = Vehicles.objects.get(id=pk)
+  
     featured = Vehicles.objects.filter(is_available=True)
-    category = Category.objects.get(category_name=vehicle.category)
     all_variants = Variant.objects.filter(vehicle_id =pk)
     variants = Variant.objects.filter(vehicle_id =pk)[0:3]
     try:
@@ -210,7 +213,7 @@ def single_products(request,pk):
     #variant = Variant.objects.get(vehicle_id=pk)
     context = {
         'vehicle': vehicle,
-        'category': category,
+      
         'featured':featured,
         'variants': variants,
         'all_variants':all_variants,
@@ -280,6 +283,14 @@ def category_filter(request,id):
      return render(request,'user_temp/shop.html',context)
     
     
+def all_flters(request,filter):
+      if filter == 'DESC':
+           vehicles = Vehicles.objects.filter(category=id,is_available=True)
+      
+      context ={
+          'vehicles':vehicles
+      }
+      return render(request,'user_temp/shop.html',context)
 
 #=======================================user Profile=================================================================
 # class user_profile(TemplateView):
@@ -373,25 +384,6 @@ def edit_profile(request):
         else:
             return redirect('user:user_signin')
 
-
-
-
-
-# def edit_variant(request,pk):
-#      if 'vendor' in request.session:
-#          variant = Variant.objects.get(id =pk)
-#          if request.method == 'POST':
-#             form = Variantform(request.POST, request.FILES,instance=variant)
-#             if form.is_valid():
-#                 form.instance.vehicle_id = variant.vehicle_id  
-#                 form.save()
-#                 messages.success(request, ('VARIANT updated!'))
-#             else:
-#                  messages.success(request, ('Data is not valid!'))
-#             return redirect('vendor:view_vehicles')
-#          else:
-#              form = Variantform( instance=variant)
-#      return render(request,'vendor_temp/update_variant.html',{'form':form})
 
 
 @cache_control(no_cache =True,  no_store =True)
@@ -570,6 +562,7 @@ def order_details(request,pk):
 
 
 def add_review(request,id):
+    print('123456')
     print('get')
     vehicle = Vehicles.objects.get(id=id)
     review = Review.objects.filter(user = request.user,product = vehicle)
@@ -577,16 +570,16 @@ def add_review(request,id):
     if request.method == 'POST':
         try:
             review = Review.objects.get(user = request.user,product = vehicle)
-            print('updation')
+           
             form    =   Reviewforms(request.POST , instance=review)
             form.save()
             messages.info(request,'Thank you... Your review has been updated')
-            return redirect('review',id)
-        except:
+         
+            return redirect('user:add_review',id)
+        except Review.DoesNotExist:
                 form = Reviewforms(request.POST)
-            
                 if form.is_valid():
-                    print('dfghjkgff')
+                   
                     data            =   Reviewforms()
                     data.rating     =   form.cleaned_data['rating']
                     data.subject    =   form.cleaned_data['subject']
@@ -600,10 +593,7 @@ def add_review(request,id):
                     messages.info(request, ('Data is not valid!'))
                     return redirect('user:add_review',id=id)
 
-      
-
-    print(vehicle)
-    print(vehicle.vehicle_name)
+ 
     context ={
     'vehicle':vehicle
          }

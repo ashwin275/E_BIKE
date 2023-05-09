@@ -23,6 +23,7 @@ from django.db.models import Q
 
 
 
+
 from io import BytesIO
 from django.http import HttpResponse
 from reportlab.lib.pagesizes import letter, landscape
@@ -156,7 +157,7 @@ def dash_board(request):
         vehicle_list = []
         quantity = []
         orders_chart =[]
-        vehicle_order  = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,vehicles__vehicle_id__created_date__month=month)
+        vehicle_order  = OrderVehicle.objects.filter( Q(vehicles__vehicle_id__vendor_id=request.user) & Q(status='Delivered') & Q(order__created_at__month = month))
         for vehicle in vehicle_order:
             if vehicle.vehicles.vehicle_id.vehicle_name in vehicle_list:
                i = vehicle_list.index(vehicle.vehicles.vehicle_id.vehicle_name)
@@ -164,13 +165,14 @@ def dash_board(request):
             else:
                 vehicle_list.append(vehicle.vehicles.vehicle_id.vehicle_name)
                 quantity.append(vehicle.quantity)
-
+        print(vehicle_list,'121')
+        print(vehicle_order,'1212')
     # charts for   cancelled orders and deliverd orders
-        Success_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').count()
-        cancelled_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled').count()
+        Success_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered',order__created_at__month = month).count()
+        cancelled_orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Cancelled',order__created_at__month = month).count()
         orders_chart.append(Success_orders)
         orders_chart.append(cancelled_orders)
-        print(orders_chart)
+      
         context = {
            'vehicle_list':vehicle_list,
             'quantity':quantity,
@@ -340,7 +342,9 @@ def add_vehicles(request):
     return render(request,'vendor_temp/add_vehicles.html',{'form':form})
 
 
-
+# def add_offer(request,pk):
+    
+#     return render(request,'vendor_temp/offer.html',{'form':form})
 def delete_vehicle(request,pk):
     
     vehicle= Vehicles.objects.get(id=pk)
@@ -407,12 +411,18 @@ def view_variant(request,pk):
      
 def edit_variant(request,pk):
      if 'vendor' in request.session:
+         
          variant = Variant.objects.get(id =pk)
+       
+       
+         vehicle = Vehicles.objects.get(vehicle_name = variant.vehicle_id.vehicle_name)
+         id = vehicle.id
          if request.method == 'POST':
             form = Variantform(request.POST, request.FILES,instance=variant)
             if form.is_valid():
                 form.instance.vehicle_id = variant.vehicle_id  
                 form.save()
+                return redirect('vendor:view_variant',id)
             
             
          else:
@@ -529,15 +539,15 @@ def sales_report(request):
     if 'vendor' in request.session:
         month = timezone.now().month
         Date_input_two = datetime.today().date()
-        print('Today = ',Date_input_two)
+   
         Date_input_one = date.today().replace(day=1)
-        print('first day = ',Date_input_one)
-        current_month = datetime.now().strftime('%B')
-        print(current_month)
+     
+        #current_month = datetime.now().strftime('%B')
+      
         total_revenue = 0
         #orders = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,status ='Delivered').order_by('order__created_at')
-        orders  = OrderVehicle.objects.filter( vehicles__vehicle_id__vendor_id = request.user,vehicles__vehicle_id__created_date__month=month,status ='Delivered').order_by('order__created_at')
-
+        orders  = OrderVehicle.objects.filter(Q( vehicles__vehicle_id__vendor_id = request.user) & Q(order__created_at__month =month) & Q(status ='Delivered')).order_by('order__created_at')
+     
         for order in orders :
             total_revenue += order.sub_total()
     
@@ -561,9 +571,6 @@ def search_sales_report(request):
             start_date_str = request.GET.get('start_date')
             end_date_str = request.GET.get('end_date')
 
-            print(start_date_str)
-            print(end_date_str
-            )
             
      # Convert start_date and end_date to datetime objects
 
@@ -572,8 +579,7 @@ def search_sales_report(request):
             Date_input_one =start_date
             Date_input_two =end_date
 
-            print(start_date)
-            print(end_date)
+        
 
     # Create a Q object to filter based on the date range
 

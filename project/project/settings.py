@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'Cartapp',
     'orders',
     'crispy_forms',
+    'Offers'
    
 
    

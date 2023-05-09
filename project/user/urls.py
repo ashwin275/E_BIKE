@@ -44,7 +44,7 @@ urlpatterns = [
 
     path('category/<int:id>',views.category_filter,name="category_filter"),
     path('add_review/<int:id>',views.add_review,name='add_review'),
-    
+    path('all_flters/<str:filter>',views.all_flters,name='all_flters'),
 
 
 ]

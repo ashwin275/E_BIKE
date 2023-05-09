@@ -19,8 +19,29 @@ class Vehicles(models.Model):
     modified_date = models.DateTimeField(auto_now_add=True)
     is_available = models.BooleanField(default=True)
    
+    def reviews(self):
+        average = 0
+        review = Review.objects.filter(product = self)
+        count = review.count()
+        
+        for i in review:
+            average += i.rating
+
+        try:
+            average = average/count
+
+        except:
+            average = 0
+        return round(average)
+
+    def review_count(self):
+        return  Review.objects.filter(product = self).count()
+
+
     def __str__(self) :
         return self.vehicle_name
+
+
 
 
 class Variant(models.Model):
@@ -42,7 +63,7 @@ class Review(models.Model):
     user = models.ForeignKey(myuser, on_delete=models.CASCADE)
     product = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
     review = models.TextField(max_length=300)
-    rating = models.FloatField()
+    rating = models.IntegerField()
     created_date = models.DateTimeField(auto_now=True)
     subject = models.CharField(max_length=50,null=True)
 
