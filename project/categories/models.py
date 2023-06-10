@@ -7,6 +7,8 @@ class Category(models.Model):
     description = models.CharField(max_length=100)
     slug = models.SlugField(max_length=50,unique=True)
     image = models.ImageField(upload_to='category' ,default='',null=True)
+    gif_image = models.URLField(max_length=200, null=True, default=None)
+
     
     
 

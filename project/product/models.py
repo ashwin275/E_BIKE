@@ -18,6 +18,7 @@ class Vehicles(models.Model):
     created_date =models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now_add=True)
     is_available = models.BooleanField(default=True)
+    gif_image_vehicle = models.URLField(max_length=200, null=True, default=None)
    
     def reviews(self):
         average = 0

@@ -37,6 +37,8 @@ def admin_signin(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
+        print(email,password)
+
         try:
             admin = authenticate(email = email,password = password)
 
@@ -262,10 +264,14 @@ def edit_category(request,pk):
     edit = Category.objects.get(id=pk)
     if request.method == 'POST':
         try:
+            
             category_name = request.POST['category']
             image = request.FILES['image']
             description = request.POST['description']
             slug = request.POST['slug']
+          
+            url = request.POST['url']
+           
             if image == '':
                 messages.info(request,'images is empty')
                 return redirect('view_category')
@@ -279,7 +285,10 @@ def edit_category(request,pk):
         category.description =description
         category.image = image
         category.slug = slug
+        category.gif_image = url
+
         category.save()
+       
         return redirect('view_category')
 
     except:

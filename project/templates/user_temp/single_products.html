@@ -19,7 +19,13 @@
                    
                     <div class="card mb-3 ">
                         <div class="zoom-image" data-image="{{vehicle.image.url}}">
+
+                            {% if vehicle.gif_image_vehicle %}
+                            <img class="card-img img-fluid"style="height: 20em; width: 40em;" id="main_image" src="{{vehicle.gif_image_vehicle}}"  alt="" id="">
+
+                            {% else %}
                         <img class="card-img img-fluid"style="height: 20em; width: 40em;" id="main_image" src="{{vehicle.image.url}}"  alt="" id="">
+                        {% endif %}
                     </div>
                     </div>
                     <div class="row">

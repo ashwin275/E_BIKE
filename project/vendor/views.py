@@ -361,6 +361,7 @@ def edit_vehicle(request,pk):
         speed = request.POST['speed']
         slug = request.POST['slug']
         image = request.FILES['image']
+        gif_image_vehicle = request.POST['gif']
         
         #try:
         vehicle.vehicle_name =vehicle_name
@@ -369,6 +370,7 @@ def edit_vehicle(request,pk):
         vehicle.top_speed=speed
         vehicle.slug=slug
         vehicle.image=image
+        vehicle.gif_image_vehicle = gif_image_vehicle
         vehicle.save()
         return redirect('vendor:view_vehicles')
         #except:

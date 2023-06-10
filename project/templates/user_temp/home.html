@@ -33,7 +33,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 
+<!-- google fonts -->
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
 
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -240,13 +244,14 @@
 
             <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active rounded-circle"
+                      aria-current="true" aria-label="Slide 1"></button>
                     {% for i in banner %}
-                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to=" {{forloop.counter}}"
-                        aria-label="Slide {{forloop.counter}}"></button>
+                    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ forloop.counter }}"
+                      class="rounded-circle" aria-label="Slide {{ forloop.counter }}"></button>
                     {% endfor %}
-                </div>
+                  </div>
+                  
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="3000">
                       
@@ -255,8 +260,10 @@
                            
 
                         <div class="carousel-caption d-none d-md-block">
-                            <h3>BIkeS</h3>
-                            <p></p>
+                            <p style="color: #fff; font-family: 'Josefin Sans', sans-serif;
+                            font-family: 'Playfair Display', serif;"
+                            >Riding a motorcycle is like an art</p>
+                            <p> something you do because you feel something inside</p>
                         </div>
                     </div>
 
@@ -323,15 +330,20 @@
         <div class="row">
             {% for items in category %}
             <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="{% url 'user:category_filter' items.id %}"><img src="{{items.image.url}}"
-                        style="height: 15rem; width: 20rem;" class="rounded-circle img-fluid border"></a>
-                <h5 class="text-center mt-3 mb-3">{{items.category_name}}</h5>
-                <p class="text-center"><a class=" btn btn-outline-success"
-                        href="{% url 'user:category_filter' items.id %}">Explore Now</a></p>
+                <a href="{% url 'user:category_filter' items.id %}">
+                    {% if items.gif_image %}
+                        <img src="{{ items.gif_image }}" style="height: 15rem; width: 20rem;" class="rounded-circle img-fluid border">
+                    {% else %}
+                        <img src="{{ items.image.url }}" style="height: 15rem; width: 20rem;" class="rounded-circle img-fluid border">
+                    {% endif %}
+                </a>
+                <h5 class="text-center mt-3 mb-3">{{ items.category_name }}</h5>
+                <p class="text-center">
+                    <a class="btn btn-outline-success" href="{% url 'user:category_filter' items.id %}">Explore Now</a>
+                </p>
             </div>
-
-            {% endfor %}
-
+        {% endfor %}
+        
 
         </div>
     </section>
@@ -398,18 +410,17 @@
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                         <a href="{% url 'user:single_products' items.pk%}">
-                            <img src="{{items.image.url}}" class="card-img-top  img-fluid border" alt="..."
+                            {% if items.gif_image_vehicle %}
+                            <img src="{{items.gif_image_vehicle}}" class="card-img-top  img-fluid border" alt="..."
                                 style="height: 17rem;">
+                                {% else %}
+                                <img src="{{items.image.url}}" class="card-img-top  img-fluid border" alt="..."
+                                style="height: 17rem;">
+
+                                {% endif %}
                         </a>
                         <div class="card-body">
-                            <!-- <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-warning fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                    <i class="text-muted fa fa-star"></i>
-                                </li> -->
+                           
                             <li class="text-muted text-right"></li>
                             </ul>
                             <a href="{% url 'user:single_products' items.pk%}" class="h2 text-decoration-none text-dark"
