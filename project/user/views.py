@@ -464,7 +464,7 @@ def forgot_password(request):
        # profile_obj = myuser.objects.get(user = user_obj)
            user_obj.forgot_password_token = token
            user_obj.save()
-           send_forget_password_mail(user_obj,token)
+           send_forget_password_mail(email,token)
            messages.info(request,'an email is sent to your account')
         except:
              messages.info(request,'Email is not matching')

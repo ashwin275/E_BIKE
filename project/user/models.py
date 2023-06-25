@@ -118,7 +118,7 @@ class Userdetail(models.Model):
         state = models.CharField(max_length=100)
         country = models.CharField(max_length=100)
         user_id = models.ForeignKey(myuser,on_delete=models.CASCADE)
-
+           
         default = models.BooleanField(default=False)
 
         def __str__(self) :

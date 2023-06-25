@@ -23,7 +23,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+    
     <link rel="stylesheet" href="{% static 'user_css/assets/css/bootstrap.min.css' %}">
+
     <link rel="stylesheet" href="{% static 'user_css/assets/css/templatemo.css' %}">
     <link rel="stylesheet" href="{% static 'user_css/assets/css/custom.css' %}">
     <!-- <link rel="stylesheet" href="{% static 'user_css/customiz_css/ebike.css' %}"> -->
@@ -332,9 +334,9 @@
             <div class="col-12 col-md-4 p-5 mt-3">
                 <a href="{% url 'user:category_filter' items.id %}">
                     {% if items.gif_image %}
-                        <img src="{{ items.gif_image }}" style="height: 15rem; width: 20rem;" class="rounded-circle img-fluid border">
+                        <img src="{{ items.gif_image }}" style="height: 20rem; width: 20rem;" class="rounded-circle img-fluid border">
                     {% else %}
-                        <img src="{{ items.image.url }}" style="height: 15rem; width: 20rem;" class="rounded-circle img-fluid border">
+                        <img src="{{ items.image.url }}" style="height: 20rem; width: 20rem;" class="rounded-circle img-fluid border">
                     {% endif %}
                 </a>
                 <h5 class="text-center mt-3 mb-3">{{ items.category_name }}</h5>
@@ -458,6 +460,17 @@
     </a>
 
 
+    <!-- <a href="https://wa.me/919645640108" id="" class="m-3 mb-5 arrow" style="position: fixed; bottom: 0; left: 0;">
+        <div>
+            <img src="https://media.tenor.com/3MtdCRIPZUMAAAAj/whatsapp.gif" class="img-fluid"
+                alt="" style="width: 50px; height: 50px;">
+        </div>
+    </a> -->
+    
+
+   
+
+
     {% endblock %}
     <!-- Start Footer -->
     <footer>
@@ -539,6 +552,9 @@
             }
         });
     </script>
+
+
+
 
 
 
