@@ -49,7 +49,7 @@ Follow these steps to set up and run the app locally:
 
 3. **pip install -r requirements.txt**
      ```bash
-     pip install -r requirements.txt
+     pip install -r requirement.txt
 4. **Set up the PostgreSQL Database:**
 
     . Create a PostgreSQL database and update the database configuration in the settings.
